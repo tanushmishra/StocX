@@ -29,7 +29,7 @@ from agents.macro_parser import macro_parser_node
 from agents.quant_node import quant_engine_node
 from agents.risk_verifier import risk_verifier_node
 from agents.screener import screener_node
-from agents.state import HedgeBuilderState
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
 logger = logging.getLogger(__name__)
 
@@ -62,9 +62,10 @@ def should_continue_or_retry(
         "cro_reporter" if approved or if retry attempts are exhausted.
         "screener" if rejected and retry attempts remain.
     """
-    is_approved = bool(_get(state, "approved", False))
-    attempts = int(_get(state, "attempt_count", 0))
-    max_attempts = int(_get(state, "max_attempts", 5))
+    state = wrap_state(state)
+    is_approved = bool(state.approved)
+    attempts = int(state.attempt_count)
+    max_attempts = int(state.max_attempts)
 
     if is_approved:
         logger.info(

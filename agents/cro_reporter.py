@@ -27,7 +27,7 @@ from typing import Any
 from langchain_core.messages import HumanMessage, SystemMessage
 from agents.gemini_client import extract_message_text, get_gemini_client, invoke_with_retry
 
-from agents.state import HedgeBuilderState
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
 logger = logging.getLogger(__name__)
 
@@ -122,10 +122,11 @@ def cro_reporter_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
         Partial state dict setting ``cro_report`` and appending the report
         as an assistant message.
     """
-    is_approved = bool(_get(state, "approved", False))
-    data_source = _get(state, "data_source", "yfinance")
-    attempt_count = _get(state, "attempt_count", 0)
-    max_attempts = _get(state, "max_attempts", 5)
+    state = wrap_state(state)
+    is_approved = bool(state.approved)
+    data_source = state.data_source or "yfinance"
+    attempt_count = int(state.attempt_count or 0)
+    max_attempts = int(state.max_attempts or 5)
 
     logger.info(
         "CROReporter ▸ Generating %s memo (attempts used: %d/%d, data_source: %s)",
@@ -188,24 +189,25 @@ def _build_data_payload(state: HedgeBuilderState | dict[str, Any]) -> str:
     Returns:
         Formatted markdown string containing every data point the LLM needs.
     """
-    pm = _get(state, "pair_metrics", {}) or {}
-    hs = _get(state, "hedged_stats", {}) or {}
-    us = _get(state, "unhedged_stats", {}) or {}
-    sr = _get(state, "stress_results", {}) or {}
-    wt = _get(state, "weights", {}) or {}
-    fno = _get(state, "fno_execution", {}) or {}
-    data_source = _get(state, "data_source", "yfinance")
-    rejection_log = _get(state, "rejection_log", []) or []
-    is_approved = bool(_get(state, "approved", False))
-    selected_long = _get(state, "selected_long", "")
-    selected_short = _get(state, "selected_short", "")
-    stress_regime = _get(state, "stress_regime", "COVID_2020")
-    thesis = _get(state, "thesis", "")
-    target_sector = _get(state, "target_sector", "")
-    benchmark = _get(state, "benchmark", "^NSEI")
-    lookback_days = _get(state, "lookback_days", 252)
-    attempt_count = _get(state, "attempt_count", 0)
-    max_attempts = _get(state, "max_attempts", 5)
+    state = wrap_state(state)
+    pm = state.pair_metrics or {}
+    hs = state.hedged_stats or {}
+    us = state.unhedged_stats or {}
+    sr = state.stress_results or {}
+    wt = state.weights or {}
+    fno = state.fno_execution or {}
+    data_source = state.data_source or "yfinance"
+    rejection_log = state.rejection_log or []
+    is_approved = bool(state.approved)
+    selected_long = state.selected_long or ""
+    selected_short = state.selected_short or ""
+    stress_regime = state.stress_regime or "COVID_2020"
+    thesis = state.thesis or ""
+    target_sector = state.target_sector or ""
+    benchmark = state.benchmark or "^NSEI"
+    lookback_days = int(state.lookback_days or 252)
+    attempt_count = int(state.attempt_count or 0)
+    max_attempts = int(state.max_attempts or 5)
 
     data_warning = ""
     if data_source == "synthetic_fallback":

@@ -174,3 +174,63 @@ class TestFullPipelineEndToEnd:
             assert final_state["rejection_log"][0]["long"] == "INFY.NS"
             assert final_state["rejection_log"][0]["short"] == "WIPRO.NS"
             assert final_state["selected_long"] == "TCS.NS"
+
+    def test_run_hedge_builder_rejection_exhaustion(self, mock_prices):
+        """Pipeline exhausts all attempts and generates unapproved CRO post-mortem."""
+        from agents.macro_parser import MacroIntent
+        from agents.screener import PairSelection
+        from agents.state import wrap_state
+
+        mock_macro = MacroIntent(
+            target_sector="NIFTY IT",
+            benchmark="^NSEI",
+            lookback_days=100,
+            stress_regime="COVID_2020",
+            reasoning="Testing exhaustion path",
+        )
+
+        pairs = [
+            PairSelection(selected_long="INFY.NS", selected_short="WIPRO.NS", long_rationale="A", short_rationale="B", overall_reasoning="C"),
+            PairSelection(selected_long="TCS.NS", selected_short="WIPRO.NS", long_rationale="A", short_rationale="B", overall_reasoning="C"),
+        ]
+
+        with patch("agents.macro_parser.get_gemini_client"), patch(
+            "agents.macro_parser.invoke_with_retry", return_value=mock_macro
+        ), patch(
+            "agents.screener.get_sector_constituents",
+            return_value=["TCS.NS", "INFY.NS", "WIPRO.NS"],
+        ), patch(
+            "agents.screener.get_fundamentals",
+            return_value={"pe_ratio": 25.0, "roe": 0.25, "revenue_growth": 0.08, "debt_to_equity": 0.1, "data_source": "cache", "is_synthetic": False},
+        ), patch(
+            "agents.screener.fetch_ticker_news", return_value=[]
+        ), patch(
+            "agents.screener.get_gemini_client"
+        ), patch(
+            "agents.screener.invoke_with_retry",
+            side_effect=pairs,
+        ), patch(
+            "engine.data_fetcher.fetch_prices", return_value=mock_prices
+        ), patch(
+            "engine.verifier.verify_pair",
+            return_value={"approved": False, "reason": "Persistent cointegration failure (p=0.45)", "gates": {"cointegration": False}},
+        ), patch(
+            "agents.risk_verifier.get_gemini_client"
+        ), patch(
+            "agents.risk_verifier.invoke_with_retry", return_value=MagicMock(content="Diagnostic: Spread drifted non-stationary")
+        ), patch(
+            "agents.cro_reporter.get_gemini_client"
+        ), patch(
+            "agents.cro_reporter.invoke_with_retry", return_value=MagicMock(content="# CRO Report: Pair Unapproved - Risk Limits Exhausted")
+        ):
+            final_state = run_hedge_builder("Bearish tech crash test", max_attempts=2)
+
+            # Test StateProxy wrapping on final output
+            proxy = wrap_state(final_state)
+            assert proxy.approved is False
+            assert proxy["approved"] is False
+            assert proxy.attempt_count == 2
+            assert len(proxy.rejection_log) == 2
+            assert "Risk Limits Exhausted" in proxy.cro_report
+            assert proxy.data_source == "yfinance"
+            assert proxy.benchmark == "^NSEI"

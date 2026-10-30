@@ -26,7 +26,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from agents.state import HedgeBuilderState
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
 logger = logging.getLogger(__name__)
 
@@ -68,11 +68,12 @@ def quant_engine_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
         Does not raise – all exceptions are caught and surfaced as
         degraded results so the pipeline can continue to the verifier.
     """
-    long_ticker = _get(state, "selected_long", "")
-    short_ticker = _get(state, "selected_short", "")
-    benchmark = _get(state, "benchmark", "^NSEI")
-    lookback = _get(state, "lookback_days", 252)
-    stress_regime = _get(state, "stress_regime", "COVID_2020")
+    state = wrap_state(state)
+    long_ticker = state.selected_long or ""
+    short_ticker = state.selected_short or ""
+    benchmark = state.benchmark or "^NSEI"
+    lookback = int(state.lookback_days or 252)
+    stress_regime = state.stress_regime or "COVID_2020"
 
     logger.info(
         "QuantEngine ▸ Running pipeline: LONG=%s SHORT=%s BENCH=%s "

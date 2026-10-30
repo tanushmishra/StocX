@@ -27,7 +27,7 @@ from typing import Any
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from agents.gemini_client import extract_message_text, get_gemini_client, invoke_with_retry
-from agents.state import HedgeBuilderState
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
 logger = logging.getLogger(__name__)
 
@@ -94,11 +94,12 @@ def risk_verifier_node(state: HedgeBuilderState) -> dict:
         Partial state dict updating ``verifier_result``, ``approved``,
         ``attempt_count``, and (on rejection) appending to ``rejection_log``.
     """
-    long_ticker = _get(state, "selected_long", "")
-    short_ticker = _get(state, "selected_short", "")
-    attempt = _get(state, "attempt_count", 0)
-    max_attempts = _get(state, "max_attempts", 5)
-    rejection_log = _get(state, "rejection_log", []) or []
+    state = wrap_state(state)
+    long_ticker = state.selected_long or ""
+    short_ticker = state.selected_short or ""
+    attempt = int(state.attempt_count or 0)
+    max_attempts = int(state.max_attempts or 5)
+    rejection_log = state.rejection_log or []
 
     logger.info(
         "RiskVerifier ▸ Verifying pair LONG=%s SHORT=%s (attempt %d/%d)",
@@ -198,14 +199,15 @@ def _build_report(state: HedgeBuilderState, verifier_result: dict) -> str:
     Returns:
         A formatted markdown string with all key numbers.
     """
-    pm = _get(state, "pair_metrics", {}) or {}
-    hs = _get(state, "hedged_stats", {}) or {}
-    us = _get(state, "unhedged_stats", {}) or {}
-    sr = _get(state, "stress_results", {}) or {}
-    wt = _get(state, "weights", {}) or {}
-    selected_long = _get(state, "selected_long", "")
-    selected_short = _get(state, "selected_short", "")
-    stress_regime = _get(state, "stress_regime", "")
+    state = wrap_state(state)
+    pm = state.pair_metrics or {}
+    hs = state.hedged_stats or {}
+    us = state.unhedged_stats or {}
+    sr = state.stress_results or {}
+    wt = state.weights or {}
+    selected_long = state.selected_long or ""
+    selected_short = state.selected_short or ""
+    stress_regime = state.stress_regime or ""
 
     lines = [
         f"## Verification Report: {selected_long} (L) / {selected_short} (S)",

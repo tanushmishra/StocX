@@ -26,7 +26,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from agents.gemini_client import get_gemini_client, invoke_with_retry
 from pydantic import BaseModel, Field
 
-from agents.state import HedgeBuilderState
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
 logger = logging.getLogger(__name__)
 
@@ -129,7 +129,7 @@ _FALLBACK_INTENT = MacroIntent(
 # ────────────────────────────────────────────────────────────────────────────
 
 
-def macro_parser_node(state: HedgeBuilderState) -> dict:
+def macro_parser_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
     """Parse a natural-language thesis into structured macro parameters.
 
     This function is registered as a **LangGraph node**.  It:
@@ -146,7 +146,8 @@ def macro_parser_node(state: HedgeBuilderState) -> dict:
         ``lookback_days``, ``stress_regime``, and an appended assistant
         message summarising the extraction.
     """
-    thesis = _get(state, "thesis", "")
+    state = wrap_state(state)
+    thesis = state.thesis or state.get("thesis", "")
     logger.info("MacroParser ▸ Parsing thesis: %s", thesis[:120])
 
     try:

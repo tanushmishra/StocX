@@ -26,7 +26,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from pydantic import BaseModel, Field
 
 from agents.gemini_client import get_gemini_client, invoke_with_retry
-from agents.state import HedgeBuilderState
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 from engine.data_fetcher import get_fundamentals, get_sector_constituents
 from engine.news_fetcher import fetch_ticker_news, format_news_for_screener
 from engine.verifier import score_candidate
@@ -153,11 +153,12 @@ def screener_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
         ``short_candidates``, ``selected_long``, ``selected_short``, and
         appending an assistant message with reasoning.
     """
-    sector = _get(state, "target_sector", "NIFTY IT")
-    thesis = _get(state, "thesis", "")
-    attempt = _get(state, "attempt_count", 0)
-    max_attempts = _get(state, "max_attempts", 5)
-    rejection_log = _get(state, "rejection_log", []) or []
+    state = wrap_state(state)
+    sector = state.target_sector or "NIFTY IT"
+    thesis = state.thesis or ""
+    attempt = int(state.attempt_count)
+    max_attempts = int(state.max_attempts)
+    rejection_log = state.rejection_log or []
 
     logger.info(
         "Screener ▸ Attempt %d | Sector: %s | Rejected pairs so far: %d",
