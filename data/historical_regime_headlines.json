@@ -1,0 +1,115 @@
+{
+  "description": "Authentic historical news catalysts and macroeconomic headlines for StocX crisis regimes.",
+  "compiled_by": "Anay Tiwari (Data Engineer)",
+  "purpose": "Provides genuine news catalysts for Dhairya's Screener Agent and Dashboard CRO reporting.",
+  "regimes": {
+    "COVID_2020": {
+      "regime_name": "March 2020 COVID Lockdown & Market Crash",
+      "date_range": "2020-01-01 to 2020-06-30",
+      "headlines": [
+        {
+          "date": "2020-03-23",
+          "source": "Mint / Livemint",
+          "title": "Sensex crashes 3,934 points in worst single-day plunge; 45-minute circuit breaker triggered",
+          "impact": "Market-wide liquidity freeze and rapid flight to defensive quality assets."
+        },
+        {
+          "date": "2020-03-24",
+          "source": "The Economic Times",
+          "title": "PM Narendra Modi announces 21-day nationwide lockdown over coronavirus",
+          "impact": "Complete physical economic shutdown; acute pressure on cyclical and automotive manufacturing."
+        },
+        {
+          "date": "2020-03-27",
+          "source": "Reuters",
+          "title": "RBI cuts repo rate by 75 bps to 4.40%, announces 3-month moratorium on term loans",
+          "impact": "Historic emergency monetary easing; major regulatory relief for Indian banking sector."
+        },
+        {
+          "date": "2020-04-17",
+          "source": "Business Standard",
+          "title": "RBI cuts reverse repo rate by 25 bps to 3.75% to push banks to lend",
+          "impact": "Disincentivizes banks from parking surplus liquidity with the central bank."
+        }
+      ]
+    },
+    "ELECTION_2024": {
+      "regime_name": "June 4, 2024 General Election Results Shock",
+      "date_range": "2024-05-15 to 2024-06-15",
+      "headlines": [
+        {
+          "date": "2024-06-03",
+          "source": "The Economic Times",
+          "title": "Exit polls predict landslide majority for ruling NDA; Sensex surges 2,507 points to record high",
+          "impact": "Euphoric pre-results positioning across high-beta public sector undertakings and capital goods."
+        },
+        {
+          "date": "2024-06-04",
+          "source": "Business Standard",
+          "title": "Sensex tanks 4,390 points, Nifty falls 5.9% as BJP falls short of solo majority in election results",
+          "impact": "Violent liquidation of high-beta PSU banks; sharp defensive rotation into private banks and FMCG."
+        },
+        {
+          "date": "2024-06-05",
+          "source": "Reuters",
+          "title": "Nifty rebounds 736 points as key coalition partners endorse NDA government formation",
+          "impact": "Political continuity confirmed; rapid recovery in broad market benchmark."
+        }
+      ]
+    },
+    "TECH_SELLOFF_2022": {
+      "regime_name": "2022 Global Tech & Valuation Selloff",
+      "date_range": "2022-01-01 to 2022-12-31",
+      "headlines": [
+        {
+          "date": "2022-01-26",
+          "source": "Reuters",
+          "title": "Federal Reserve signals aggressive rate hikes starting in March to tame multi-decade high inflation",
+          "impact": "Sharp contraction in global tech multiples and growth equity valuations."
+        },
+        {
+          "date": "2022-05-04",
+          "source": "The Economic Times",
+          "title": "RBI shocks market with surprise 40 bps off-cycle repo rate hike; CRR raised by 50 bps",
+          "impact": "First rate hike in nearly four years; yields jump across the Indian sovereign curve."
+        },
+        {
+          "date": "2022-06-16",
+          "source": "Mint",
+          "title": "Nifty IT index plunges 30% from peak amid US recession fears and IT discretionary budget cuts",
+          "impact": "Severe multi-quarter valuation derating for Indian tier-1 and tier-2 IT services exporters."
+        }
+      ]
+    },
+    "2008_GFC": {
+      "regime_name": "2008 Global Financial Crisis & Credit Freeze",
+      "date_range": "2008-01-01 to 2009-03-31",
+      "headlines": [
+        {
+          "date": "2008-01-22",
+          "source": "The Economic Times",
+          "title": "Black Monday on Dalal Street: Sensex plunges 1,408 points; trading halted for 1 hour",
+          "impact": "First massive signs of global subprime credit contagion reaching Indian equity markets."
+        },
+        {
+          "date": "2008-09-15",
+          "source": "Reuters",
+          "title": "Lehman Brothers files for Chapter 11 bankruptcy; Merrill Lynch acquired by Bank of America",
+          "impact": "Global counterparty trust collapses; complete international commercial paper freeze."
+        },
+        {
+          "date": "2008-10-24",
+          "source": "Business Standard",
+          "title": "Sensex crashes below 9,000 as FIIs pull out Rs 47,000 crore in relentless margin call liquidation",
+          "impact": "Massive foreign institutional outflows trigger sharp rupee depreciation."
+        },
+        {
+          "date": "2008-10-27",
+          "source": "Mint",
+          "title": "Nifty touches 2,524 trough in severe liquidity squeeze; RBI slashes CRR and opens repo windows",
+          "impact": "Terminal capitulation low of the 2008 crisis before systematic central bank stabilization."
+        }
+      ]
+    }
+  }
+}
