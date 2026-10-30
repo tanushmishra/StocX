@@ -42,7 +42,6 @@ ENV/
 # Data cache (large CSV files)
 # CSVs: ignore stray ones, but keep the shared real-data folders
 *.csv
-!data_cache/*.csv
 !data/*.csv
 
 # Streamlit

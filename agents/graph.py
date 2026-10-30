@@ -34,13 +34,20 @@ from agents.state import HedgeBuilderState
 logger = logging.getLogger(__name__)
 
 
+def _get(state: Any, key: str, default: Any = None) -> Any:
+    """Safely get an attribute or dictionary key from state."""
+    if isinstance(state, dict):
+        return state.get(key, default)
+    return getattr(state, key, default)
+
+
 # ────────────────────────────────────────────────────────────────────────────
 # Conditional Edge Router
 # ────────────────────────────────────────────────────────────────────────────
 
 
 def should_continue_or_retry(
-    state: HedgeBuilderState,
+    state: HedgeBuilderState | dict[str, Any],
 ) -> Literal["cro_reporter", "screener"]:
     """Conditional router function for the Risk Verifier node.
 
@@ -55,9 +62,9 @@ def should_continue_or_retry(
         "cro_reporter" if approved or if retry attempts are exhausted.
         "screener" if rejected and retry attempts remain.
     """
-    is_approved = state.approved
-    attempts = state.attempt_count
-    max_attempts = state.max_attempts
+    is_approved = bool(_get(state, "approved", False))
+    attempts = int(_get(state, "attempt_count", 0))
+    max_attempts = int(_get(state, "max_attempts", 5))
 
     if is_approved:
         logger.info(

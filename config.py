@@ -29,11 +29,17 @@ DEFAULT_CAPITAL: float = float(os.getenv("DEFAULT_CAPITAL", "100000"))
 TRADING_DAYS_PER_YEAR: int = 252
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Agent Configuration
+# Agent & LLM Configuration
 # ──────────────────────────────────────────────────────────────────────────────
+GOOGLE_API_KEY: str | None = os.getenv("GOOGLE_API_KEY")
+TAVILY_API_KEY: str | None = os.getenv("TAVILY_API_KEY")
+
 MAX_PAIR_ATTEMPTS: int = int(os.getenv("MAX_PAIR_ATTEMPTS", "5"))
-FAST_LLM_MODEL: str = os.getenv("FAST_LLM_MODEL", "gemini-2.5-flash")
-REASONING_LLM_MODEL: str = os.getenv("REASONING_LLM_MODEL", "gemini-2.5-pro")
+FAST_LLM_MODEL: str = os.getenv("FAST_LLM_MODEL", "gemini-3-flash-preview")
+REASONING_LLM_MODEL: str = os.getenv("REASONING_LLM_MODEL", "gemini-3-flash-preview")
+LLM_MAX_RETRIES: int = int(os.getenv("LLM_MAX_RETRIES", "3"))
+LLM_RETRY_BACKOFF: float = float(os.getenv("LLM_RETRY_BACKOFF", "2.0"))
+ALLOW_SYNTHETIC: bool = os.getenv("ALLOW_SYNTHETIC", "false").lower() in ("true", "1", "yes")
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Verification Guardrail Thresholds

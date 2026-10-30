@@ -20,15 +20,22 @@ applied so the pipeline never crashes at this stage.
 from __future__ import annotations
 
 import logging
-from typing import Optional
+from typing import Any, Optional
 
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
+from agents.gemini_client import get_gemini_client, invoke_with_retry
 from pydantic import BaseModel, Field
 
 from agents.state import HedgeBuilderState
 
 logger = logging.getLogger(__name__)
+
+
+def _get(state: Any, key: str, default: Any = None) -> Any:
+    """Safely get an attribute or dictionary key from state."""
+    if isinstance(state, dict):
+        return state.get(key, default)
+    return getattr(state, key, default)
 
 # ────────────────────────────────────────────────────────────────────────────
 # Structured output schema for the LLM
@@ -139,22 +146,23 @@ def macro_parser_node(state: HedgeBuilderState) -> dict:
         ``lookback_days``, ``stress_regime``, and an appended assistant
         message summarising the extraction.
     """
-    thesis = state.thesis
+    thesis = _get(state, "thesis", "")
     logger.info("MacroParser ▸ Parsing thesis: %s", thesis[:120])
 
     try:
         # ── Invoke LLM with structured output ──────────────────────────
-        llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash",
-            temperature=0.2,  # low temp for deterministic extraction
+        structured_llm = get_gemini_client(
+            model_type="fast",
+            temperature=0.2,
+            structured_schema=MacroIntent,
         )
-        structured_llm = llm.with_structured_output(MacroIntent)
 
-        result: MacroIntent = structured_llm.invoke(
+        result: MacroIntent = invoke_with_retry(
+            structured_llm,
             [
                 SystemMessage(content=_SYSTEM_PROMPT),
                 HumanMessage(content=f"Thesis: {thesis}"),
-            ]
+            ],
         )
         logger.info(
             "MacroParser ▸ Extracted sector=%s benchmark=%s lookback=%d stress=%s",

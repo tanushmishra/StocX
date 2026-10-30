@@ -96,7 +96,10 @@ def verify_pair(
     # ------------------------------------------------------------------
     # 1. Correlation check  (must be >= 0.65)
     # ------------------------------------------------------------------
-    corr = float(pair_metrics.get("correlation", 0.0))
+    raw_corr = pair_metrics.get("correlation")
+    if raw_corr is None:
+        raw_corr = pair_metrics.get("pair_correlation", 0.0)
+    corr = float(raw_corr)
     passed_corr = corr >= _MIN_CORRELATION
     gates["correlation"] = passed_corr
     if not passed_corr:
@@ -108,7 +111,11 @@ def verify_pair(
     # ------------------------------------------------------------------
     # 2. Cointegration p-value  (must be < 0.05)
     # ------------------------------------------------------------------
-    coint_p = float(pair_metrics.get("cointegration_pvalue", 1.0))
+    raw_p = pair_metrics.get("cointegration_pvalue")
+    if raw_p is None:
+        coint_dict = pair_metrics.get("cointegration", {})
+        raw_p = coint_dict.get("p_value", 1.0) if isinstance(coint_dict, dict) else 1.0
+    coint_p = float(raw_p)
     passed_coint = coint_p < _MAX_COINT_PVALUE
     gates["cointegration"] = passed_coint
     if not passed_coint:
@@ -184,7 +191,7 @@ def verify_pair(
     }
 
 
-def score_candidate(fundamentals: dict) -> float:
+def score_candidate(fundamentals: dict | str = None, *args: Any, **kwargs: Any) -> float:
     """Compute a composite fundamental score for a candidate stock.
 
     The score is a weighted sum of four normalised components:
@@ -203,9 +210,13 @@ def score_candidate(fundamentals: dict) -> float:
 
     Missing or ``None`` components are treated as zero.
 
+    Supports both ``score_candidate(fundamentals)`` and
+    ``score_candidate(ticker, fundamentals)``.
+
     Args:
         fundamentals: Dict with optional keys ``roe``, ``revenue_growth``,
-            ``pe_ratio``, ``debt_to_equity``.
+            ``pe_ratio``, ``debt_to_equity``. Alternatively, a ticker string
+            if passed as the first positional argument with dict second.
 
     Returns:
         A float score (higher is better).  Not bounded to [0, 1].
@@ -215,10 +226,19 @@ def score_candidate(fundamentals: dict) -> float:
         ...                  "pe_ratio": 30, "debt_to_equity": 0.5})
         0.139
     """
-    roe = _safe_float(fundamentals.get("roe"), 0.0)
-    rev_growth = _safe_float(fundamentals.get("revenue_growth"), 0.0)
-    pe = _safe_float(fundamentals.get("pe_ratio"), None)
-    de = _safe_float(fundamentals.get("debt_to_equity"), None)
+    if len(args) >= 1 and isinstance(args[0], dict):
+        fund_dict = args[0]
+    elif isinstance(fundamentals, dict):
+        fund_dict = fundamentals
+    elif "fundamentals" in kwargs:
+        fund_dict = kwargs["fundamentals"]
+    else:
+        fund_dict = {}
+
+    roe = _safe_float(fund_dict.get("roe"), 0.0)
+    rev_growth = _safe_float(fund_dict.get("revenue_growth"), 0.0)
+    pe = _safe_float(fund_dict.get("pe_ratio"), None)
+    de = _safe_float(fund_dict.get("debt_to_equity"), None)
 
     # Inverse PE: higher is better (i.e., lower PE is preferred).
     inv_pe = (1.0 / pe) if (pe is not None and pe > 0) else 0.0

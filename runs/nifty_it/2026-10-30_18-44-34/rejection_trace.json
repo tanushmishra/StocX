@@ -1,0 +1,14 @@
+{
+  "total_attempts": 2,
+  "max_attempts": 5,
+  "approved": true,
+  "rejections": [
+    {
+      "long": "COFORGE.NS",
+      "short": "WIPRO.NS",
+      "reason": "2 check(s) failed: correlation, cointegration.",
+      "attempt": 1,
+      "llm_diagnostic": "As the Senior Risk Officer, I have reviewed the failed proposal for COFORGE.NS / WIPRO.NS. This pair is fundamentally disconnected and does not meet our minimum standards for a mean-reversion strategy.\n\n*   **Explanation of Gate Failures:**\n    *   **Correlation Failure:** The pair correlation is only 0.482, which is far too low for a pair trade. In plain English, these two stocks do not move in lockstep; when one goes up, the other doesn't reliably follow, meaning the \"hedge\" in this pair is non-existent.\n    *   **Cointegration Failure:** The Engle-Granger p-value of 0.9288 is a massive red flag. This indicates there is no statistical evidence that the price gap between these stocks will ever return to a \"normal\" level. You are essentially betting on a relationship that the data says doesn't exist.\n\n*   **The Single Most Critical Flaw:**\n    *   The **p-value of 0.9288** is the terminal flaw in this proposal. A p-value this high means the spread is a \"random walk,\" and the calculated OU half-life of 243 days confirms that even if the spread did eventually revert, it would take nearly a year to do so. We cannot tie up capital in a trade that lacks a mathematical \"anchor\" to pull the prices back together.\n\n*   **Requirements for the Next Pair:**\n    *   **Stronger Cointegration:** Only submit pairs with an Engle-Granger p-value of **p < 0.05** to ensure a statistically significant mean-reverting relationship.\n    *   **Higher Correlation:** Target a pair correlation of **at least 0.75** to ensure the short position effectively offsets the systematic risk of the long position.\n    *   **Faster Mean Reversion:** Look for an OU half-life of **under 40 days**; we need trades that resolve quickly rather than drifting for hundreds of days."
+    }
+  ]
+}

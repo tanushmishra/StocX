@@ -36,6 +36,8 @@ class HedgeBuilderState(MessagesState):
         lookback_days: Number of trailing calendar days for price history.
         stress_regime: Named stress window for scenario analysis
             (e.g. ``"COVID_2020"``, ``"TAPER_TANTRUM_2013"``).
+        data_source: Provenance of price data used in analysis
+            (``"yfinance"``, ``"cache"``, or ``"synthetic_fallback"``).
 
         sector_tickers: Universe of tickers returned by
             ``engine.data_fetcher.get_sector_constituents()``.
@@ -62,12 +64,13 @@ class HedgeBuilderState(MessagesState):
         fno_execution: F&O lot sizing and execution plan dict.
     """
 
-    # ── Macro intent ─────────────────────────────────────────────────────
+    # ── Macro intent & provenance ────────────────────────────────────────
     thesis: str = ""
     target_sector: str = ""
     benchmark: str = "^NSEI"
     lookback_days: int = 252
     stress_regime: str = "COVID_2020"
+    data_source: Literal["yfinance", "cache", "synthetic_fallback"] = "yfinance"
 
     # ── Screening results ────────────────────────────────────────────────
     sector_tickers: list[str] = Field(default_factory=list)

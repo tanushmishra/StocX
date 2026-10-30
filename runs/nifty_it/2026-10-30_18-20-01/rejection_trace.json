@@ -1,0 +1,42 @@
+{
+  "total_attempts": 5,
+  "max_attempts": 5,
+  "approved": false,
+  "rejections": [
+    {
+      "long": "COFORGE.NS",
+      "short": "INFY.NS",
+      "reason": "2 check(s) failed: correlation, cointegration.",
+      "attempt": 1,
+      "llm_diagnostic": "Pair rejected by engine.  LLM commentary unavailable.  Engine reason: ## Verification Report: COFORGE.NS (L) / INFY.NS (S)\n\n### Betas\n- Static \u03b2 (long): 0.9822150588832248\n- Static \u03b2 (short): 0.734519341098965\n- EWMA \u03b2 (long): 1.1546870901618997\n- EWMA \u03b2 (short): 1.106582194218822\n\n### Cointegration\n- Engle-Granger p-value: 0.7083372745275391\n- Spread z-score: 0.14740605339034493\n- OU half-life: 175.87978807403402 days\n- Pair correlation: 0.6127557019609107\n\n### Portfolio Weights\n- Long weight: 0.4278584626175052\n- Short weight: -0.5721415373824947\n\n### Backtest \u2013 Hedged\n- Sharpe: N/A\n- Max drawdown: -0.067876\n- Annual return: N/A\n- Volatility: N/A\n\n### Backtest \u2013 Unhedged (long only)\n- Sharpe: N/A\n- Max drawdown: -0.166873\n\n### Stress Test\n- Regime: COVID_2020\n- Max drawdown: N/A%\n- Recovery days: N/A\n\n### Engine Verdict\n- Approved: False\n- Reason: 2 check(s) failed: correlation, cointegration.\n- Gate details: {'correlation': False, 'cointegration': False, 'max_drawdown_reduction': True, 'realized_beta': True}"
+    },
+    {
+      "long": "COFORGE.NS",
+      "short": "MPHASIS.NS",
+      "reason": "1 check(s) failed: cointegration.",
+      "attempt": 2,
+      "llm_diagnostic": "Pair rejected by engine.  LLM commentary unavailable.  Engine reason: ## Verification Report: COFORGE.NS (L) / MPHASIS.NS (S)\n\n### Betas\n- Static \u03b2 (long): 0.9822150588832248\n- Static \u03b2 (short): 0.8352324105476199\n- EWMA \u03b2 (long): 1.1546870901618997\n- EWMA \u03b2 (short): 1.0050771173173318\n\n### Cointegration\n- Engle-Granger p-value: 0.32586507418656824\n- Spread z-score: -0.30326442520087726\n- OU half-life: 88.49399689671559 days\n- Pair correlation: 0.6764539216866992\n\n### Portfolio Weights\n- Long weight: 0.45956343971206104\n- Short weight: -0.540436560287939\n\n### Backtest \u2013 Hedged\n- Sharpe: N/A\n- Max drawdown: -0.059056\n- Annual return: N/A\n- Volatility: N/A\n\n### Backtest \u2013 Unhedged (long only)\n- Sharpe: N/A\n- Max drawdown: -0.166873\n\n### Stress Test\n- Regime: COVID_2020\n- Max drawdown: N/A%\n- Recovery days: N/A\n\n### Engine Verdict\n- Approved: False\n- Reason: 1 check(s) failed: cointegration.\n- Gate details: {'correlation': True, 'cointegration': False, 'max_drawdown_reduction': True, 'realized_beta': True}"
+    },
+    {
+      "long": "COFORGE.NS",
+      "short": "HCLTECH.NS",
+      "reason": "3 check(s) failed: correlation, cointegration, max_drawdown_reduction.",
+      "attempt": 3,
+      "llm_diagnostic": "Pair rejected by engine.  LLM commentary unavailable.  Engine reason: ## Verification Report: COFORGE.NS (L) / HCLTECH.NS (S)\n\n### Betas\n- Static \u03b2 (long): 0.9822150588832248\n- Static \u03b2 (short): 0.7693585711568497\n- EWMA \u03b2 (long): 1.1546870901618997\n- EWMA \u03b2 (short): 1.1044382532688828\n\n### Cointegration\n- Engle-Granger p-value: 0.9594477647403459\n- Spread z-score: -0.5764556975174351\n- OU half-life: 79.9660951566762 days\n- Pair correlation: 0.5744272365641065\n\n### Portfolio Weights\n- Long weight: 0.4392384984348317\n- Short weight: -0.5607615015651684\n\n### Backtest \u2013 Hedged\n- Sharpe: N/A\n- Max drawdown: -0.094849\n- Annual return: N/A\n- Volatility: N/A\n\n### Backtest \u2013 Unhedged (long only)\n- Sharpe: N/A\n- Max drawdown: -0.166873\n\n### Stress Test\n- Regime: COVID_2020\n- Max drawdown: N/A%\n- Recovery days: N/A\n\n### Engine Verdict\n- Approved: False\n- Reason: 3 check(s) failed: correlation, cointegration, max_drawdown_reduction.\n- Gate details: {'correlation': False, 'cointegration': False, 'max_drawdown_reduction': False, 'realized_beta': True}"
+    },
+    {
+      "long": "COFORGE.NS",
+      "short": "LTTS.NS",
+      "reason": "3 check(s) failed: correlation, cointegration, max_drawdown_reduction.",
+      "attempt": 4,
+      "llm_diagnostic": "Pair rejected by engine.  LLM commentary unavailable.  Engine reason: ## Verification Report: COFORGE.NS (L) / LTTS.NS (S)\n\n### Betas\n- Static \u03b2 (long): 0.9822150588832248\n- Static \u03b2 (short): 0.896092268682592\n- EWMA \u03b2 (long): 1.1546870901618997\n- EWMA \u03b2 (short): 1.0297523383820129\n\n### Cointegration\n- Engle-Granger p-value: 0.8314995927327549\n- Spread z-score: -2.3408548145268195\n- OU half-life: 49.9386225285227 days\n- Pair correlation: 0.3928160737850354\n\n### Portfolio Weights\n- Long weight: 0.47707436133142195\n- Short weight: -0.5229256386685781\n\n### Backtest \u2013 Hedged\n- Sharpe: N/A\n- Max drawdown: -0.112942\n- Annual return: N/A\n- Volatility: N/A\n\n### Backtest \u2013 Unhedged (long only)\n- Sharpe: N/A\n- Max drawdown: -0.166873\n\n### Stress Test\n- Regime: COVID_2020\n- Max drawdown: N/A%\n- Recovery days: N/A\n\n### Engine Verdict\n- Approved: False\n- Reason: 3 check(s) failed: correlation, cointegration, max_drawdown_reduction.\n- Gate details: {'correlation': False, 'cointegration': False, 'max_drawdown_reduction': False, 'realized_beta': True}"
+    },
+    {
+      "long": "COFORGE.NS",
+      "short": "WIPRO.NS",
+      "reason": "2 check(s) failed: correlation, cointegration.",
+      "attempt": 5,
+      "llm_diagnostic": "Pair rejected by engine.  LLM commentary unavailable.  Engine reason: ## Verification Report: COFORGE.NS (L) / WIPRO.NS (S)\n\n### Betas\n- Static \u03b2 (long): 0.9822150588832248\n- Static \u03b2 (short): 0.727466335341932\n- EWMA \u03b2 (long): 1.1546870901618997\n- EWMA \u03b2 (short): 1.2819106013524129\n\n### Cointegration\n- Engle-Granger p-value: 0.8194375289894712\n- Spread z-score: -0.5657091412752048\n- OU half-life: 140.58275793328664 days\n- Pair correlation: 0.4563783681711768\n\n### Portfolio Weights\n- Long weight: 0.4254981880244572\n- Short weight: -0.5745018119755427\n\n### Backtest \u2013 Hedged\n- Sharpe: N/A\n- Max drawdown: -0.082991\n- Annual return: N/A\n- Volatility: N/A\n\n### Backtest \u2013 Unhedged (long only)\n- Sharpe: N/A\n- Max drawdown: -0.166873\n\n### Stress Test\n- Regime: COVID_2020\n- Max drawdown: N/A%\n- Recovery days: N/A\n\n### Engine Verdict\n- Approved: False\n- Reason: 2 check(s) failed: correlation, cointegration.\n- Gate details: {'correlation': False, 'cointegration': False, 'max_drawdown_reduction': True, 'realized_beta': True}"
+    }
+  ]
+}
