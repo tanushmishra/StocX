@@ -358,13 +358,13 @@ def render_news_panel(
     l_ticker = (long_ticker or "Long Leg").strip()
     s_ticker = (short_ticker or "Short Leg").strip()
 
-    st.subheader("📰 Financial News Intelligence & Catalyst Audit")
+    st.subheader("Financial News Intelligence & Catalyst Audit")
     st.caption("Verified cached news intelligence retrieved for catalyst screening.")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown(f"#### 📈 {html.escape(l_ticker)} — Long Catalyst Intelligence", unsafe_allow_html=True)
+        st.markdown(f"#### {html.escape(l_ticker)} — Long Catalyst Intelligence", unsafe_allow_html=True)
         if not long_news:
             st.info(f"No recent news intelligence cached for {html.escape(l_ticker)}.")
         else:
@@ -372,7 +372,7 @@ def render_news_panel(
                 _render_single_news_card(item)
 
     with col2:
-        st.markdown(f"#### 📉 {html.escape(s_ticker)} — Short Catalyst Intelligence", unsafe_allow_html=True)
+        st.markdown(f"#### {html.escape(s_ticker)} — Short Catalyst Intelligence", unsafe_allow_html=True)
         if not short_news:
             st.info(f"No recent news intelligence cached for {html.escape(s_ticker)}.")
         else:
@@ -394,7 +394,7 @@ def render_agent_trace(
     Supports both DashboardViewModel input or legacy arguments:
     render_agent_trace(rejection_log, approved=...)
     """
-    st.subheader("🤖 Multi-Agent Execution Audit Trail")
+    st.subheader("Multi-Agent Execution Audit Trail")
 
     messages: List[Dict[str, Any]] = []
     rej_log: List[Dict[str, Any]] = []
@@ -415,11 +415,11 @@ def render_agent_trace(
 
     # Verification status banner
     if is_approved is True:
-        st.success("✅ **Strategy Approved**: The Adversarial Risk Verifier passed this portfolio.")
+        st.success("**Strategy Approved**: The Adversarial Risk Verifier passed this portfolio.")
     elif is_approved is False:
-        st.error("❌ **Strategy Rejected**: The Adversarial Risk Verifier rejected this pair.")
+        st.error("**Strategy Rejected**: The Adversarial Risk Verifier rejected this pair.")
     else:
-        st.warning("⚪ **Risk Verification Status**: Not evaluated or pending.")
+        st.warning("**Risk Verification Status**: Not evaluated or pending.")
 
     # Show agent messages if present
     if messages:
@@ -443,7 +443,7 @@ def render_agent_trace(
 
     # Rejection history if any pairs were screened out
     if rej_log:
-        st.markdown("##### ⚠️ Rejection & Risk Filter History")
+        st.markdown("##### Rejection & Risk Filter History")
         for i, rej in enumerate(rej_log, 1):
             if not isinstance(rej, dict):
                 continue
@@ -509,7 +509,7 @@ def render_pair_details(
             short_data = short_stock
             short_ticker = str(short_stock.get("symbol") or short_stock.get("ticker", "Short Hedge"))
 
-    st.subheader("🔍 Selected Pair Fundamental Comparison")
+    st.subheader("Selected Pair Fundamental Comparison")
 
     def _fmt(val: Any, is_pct: bool = False, is_ratio: bool = False) -> str:
         if val is None or val == "":
@@ -553,7 +553,7 @@ def render_pair_details(
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown(f"#### 📈 {html.escape(long_ticker)} (Long)")
+        st.markdown(f"#### {html.escape(long_ticker)} (Long)")
         if not long_data:
             st.info(f"Fundamental data unavailable for {html.escape(long_ticker)}.")
         else:
@@ -563,7 +563,7 @@ def render_pair_details(
             st.table(df_long.set_index("Metric"))
 
     with col2:
-        st.markdown(f"#### 📉 {html.escape(short_ticker)} (Short)")
+        st.markdown(f"#### {html.escape(short_ticker)} (Short)")
         if not short_data:
             st.info(f"Fundamental data unavailable for {html.escape(short_ticker)}.")
         else:
@@ -582,7 +582,7 @@ def render_verification_summary(view_model: Any) -> None:
 
     Shows verification status, individual risk gates, diagnostics, and attempt count.
     """
-    st.subheader("🛡️ Adversarial Risk Gate Verification")
+    st.subheader("Adversarial Risk Gate Verification")
 
     if view_model is None or not hasattr(view_model, "verification"):
         st.info("No verification data available.")
@@ -601,13 +601,13 @@ def render_verification_summary(view_model: Any) -> None:
 
     # Status badge
     if is_app is True:
-        badge_text = "APPROVED ✅"
+        badge_text = "APPROVED"
         badge_color = "#10b981"
     elif is_app is False:
-        badge_text = "REJECTED ❌"
+        badge_text = "REJECTED"
         badge_color = "#ef4444"
     else:
-        badge_text = "NOT EVALUATED ⚪"
+        badge_text = "NOT EVALUATED"
         badge_color = "#94a3b8"
 
     header_html = f"""
@@ -635,9 +635,9 @@ def render_verification_summary(view_model: Any) -> None:
 
     for col, (gate_name, status) in zip(gate_cols, gates):
         with col:
-            icon = "✅" if status == "passed" else ("❌" if status == "failed" else "⏳")
+            icon = ""
             status_text = "PASS" if status == "passed" else ("FAIL" if status == "failed" else "PENDING")
-            st.metric(label=gate_name, value=status_text, delta=icon)
+            st.metric(label=gate_name, value=status_text)
 
     if failed:
         st.markdown(f"**Failed Verification Criteria:** `{', '.join(html.escape(str(c)) for c in failed)}`")
@@ -657,7 +657,7 @@ def render_verification_summary(view_model: Any) -> None:
 
 def render_fno_table(fno_data: Any) -> None:
     """Render the F&O contract specification table."""
-    st.subheader("📋 Derivatives (F&O) Execution Specifications")
+    st.subheader("Derivatives (F&O) Execution Specifications")
 
     if not fno_data:
         st.info("No F&O contract specifications available for this strategy.")

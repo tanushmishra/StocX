@@ -313,11 +313,11 @@ def quant_engine_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
     source_display = {
         "yfinance": "Live (Yahoo Finance)",
         "cache": "Cached Market Data (Local CSV)",
-        "synthetic_fallback": "⚠️ SYNTHETIC SIMULATION (NOT REAL DATA)",
+        "synthetic_fallback": "SYNTHETIC SIMULATION (NOT REAL DATA)",
     }.get(data_source, data_source)
 
-    status = "✅ All computations succeeded." if not errors else (
-        "⚠️ Some computations failed:\n" + "\n".join(f"- {e}" for e in errors)
+    status = "All computations succeeded." if not errors else (
+        "Some computations failed:\n" + "\n".join(f"- {e}" for e in errors)
     )
     summary_msg = (
         f"**Quant Engine – Results**\n\n"

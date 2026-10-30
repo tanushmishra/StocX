@@ -149,7 +149,7 @@ def risk_verifier_node(state: HedgeBuilderState) -> dict:
 
     if is_approved:
         summary_msg = (
-            f"**Risk Verifier – APPROVED ✅ (Attempt {new_attempt_count})**\n\n"
+            f"**Risk Verifier – APPROVED (Attempt {new_attempt_count})**\n\n"
             f"{llm_commentary}"
         )
         return {
@@ -169,7 +169,7 @@ def risk_verifier_node(state: HedgeBuilderState) -> dict:
         }
 
         summary_msg = (
-            f"**Risk Verifier – REJECTED ❌ (Attempt {new_attempt_count}/{max_attempts})**\n\n"
+            f"**Risk Verifier – REJECTED (Attempt {new_attempt_count}/{max_attempts})**\n\n"
             f"**Engine reason:** {reason}\n\n"
             f"**Diagnostic:**\n{llm_commentary}"
         )
