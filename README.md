@@ -212,6 +212,38 @@ pytest --cov=engine --cov=agents --cov-report=html
 
 # Run specific test module
 pytest tests/test_beta_calculator.py -v
+
+# Run data engineering validation tests
+pytest tests/test_download_historical_data.py -v
+```
+
+---
+
+## 💾 Data Engineering & Historical Datasets
+
+The project uses authentic market data stored in `data/` adhering to the StocX Data Contract (no synthetic data, missing prices strictly preserved as `NaN`, `Date` first, benchmark `^NSEI` last).
+
+### Running Historical Data Ingestion
+```bash
+# Ingest or audit all 24 historical sector/regime datasets sequentially
+python scripts/execute_phase1_loop.py
+
+# Ingest a single sector and regime programmatically
+python -c "from scripts.download_historical_data import download_sector_regime; download_sector_regime('NIFTY_BANK', 'COVID_2020')"
+
+# Fetch/refresh current company fundamentals
+python scripts/download_fundamentals.py
+
+# Fetch/refresh official NSE F&O lot sizes from NSE India
+python scripts/download_nse_lot_sizes.py
+```
+
+### Generated Datasets & Specifications
+- **Historical Prices:** `data/<SECTOR>__<regime>.csv` (24 files covering 6 sectors × 4 historical stress regimes).
+- **Fundamentals:** `data/fundamentals_2026-10-30.csv` (51 companies with separate `trailing_pe` and `forward_pe`).
+- **F&O Lot Sizes:** `data/nse_lot_sizes.csv` (46 matched NSE derivative lots, near-month `NOV-26`).
+- **Comprehensive Audit:** [data/PHASE_1_DATA_AUDIT.md](data/PHASE_1_DATA_AUDIT.md)
+- **Data Dictionary:** [data/DATA_DICTIONARY.md](data/DATA_DICTIONARY.md)
 ```
 
 ---
