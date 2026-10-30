@@ -258,8 +258,8 @@ def quant_engine_node(state: HedgeBuilderState) -> dict:
             errors.append(msg)
 
     # ── Build informational message ────────────────────────────────────
-    status = "✅ All computations succeeded." if not errors else (
-        "⚠️ Some computations failed:\n" + "\n".join(f"- {e}" for e in errors)
+    status = "All computations succeeded." if not errors else (
+        "Some computations failed:\n" + "\n".join(f"- {e}" for e in errors)
     )
     summary_msg = (
         f"**Quant Engine – Results**\n\n"

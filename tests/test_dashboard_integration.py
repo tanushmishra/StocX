@@ -299,7 +299,7 @@ def test_8_approval_status_matches_state(mock_streamlit, sample_complete_pipelin
     vm_approved = map_state_to_dashboard(sample_complete_pipeline_state)
     app._render_dashboard(vm_approved)
     rendered_app = "".join(str(c) for c in mock_comp_st.markdown.call_args_list)
-    assert "APPROVED ✅" in rendered_app
+    assert "APPROVED" in rendered_app
 
     # 2. Rejected state
     mock_comp_st.reset_mock()
@@ -307,7 +307,7 @@ def test_8_approval_status_matches_state(mock_streamlit, sample_complete_pipelin
     vm_rejected = map_state_to_dashboard(sample_complete_pipeline_state)
     app._render_dashboard(vm_rejected)
     rendered_rej = "".join(str(c) for c in mock_comp_st.markdown.call_args_list)
-    assert "REJECTED ❌" in rendered_rej
+    assert "REJECTED" in rendered_rej
 
 
 def test_9_charts_handle_real_pandas_series_with_datetime_index():
@@ -476,7 +476,7 @@ def test_18_verifier_not_evaluated_status(mock_streamlit):
 
     markdown_calls = [str(call) for call in mock_comp_st.markdown.call_args_list]
     rendered = "".join(markdown_calls)
-    assert "NOT EVALUATED ⚪" in rendered
+    assert "NOT EVALUATED" in rendered
 
 
 @patch("app.run_hedge_builder")

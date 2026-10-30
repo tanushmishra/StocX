@@ -301,6 +301,6 @@ def run_full_hedge_analysis(
 
     logger.info(
         "═══ Pipeline DONE — Verification: %s ═══",
-        "PASSED ✅" if verification["passed"] else "FAILED ❌",
+        "PASSED" if verification["passed"] else "FAILED",
     )
     return result

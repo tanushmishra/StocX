@@ -1,4 +1,4 @@
-"""🛡️ Market-Neutral Hedge Builder — Streamlit Dashboard
+"""Market-Neutral Hedge Builder — Streamlit Dashboard
 ======================================================
 
 Main entry point for the interactive dashboard. Executes the autonomous
@@ -22,7 +22,7 @@ import streamlit as st
 # ── Page configuration (MUST be the first Streamlit call) ─────────────────
 st.set_page_config(
     page_title="Market-Neutral Hedge Builder",
-    page_icon="🛡️",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -66,11 +66,11 @@ except Exception as _import_exc:
 def _render_sidebar() -> Dict[str, Any]:
     """Render the sidebar controls and return the collected parameters."""
     with st.sidebar:
-        st.markdown("## ⚙️ Configuration")
+        st.markdown("## Configuration")
         st.markdown("---")
 
         capital = st.number_input(
-            "💰 Capital (₹)",
+            "Capital (INR)",
             min_value=10_000,
             max_value=100_000_000,
             value=100_000,
@@ -80,7 +80,7 @@ def _render_sidebar() -> Dict[str, Any]:
         )
 
         lookback = st.selectbox(
-            "📅 Lookback Period",
+            "Lookback Period",
             options=["1Y", "2Y", "3Y"],
             index=0,
             help="Historical trailing window for statistical estimation.",
@@ -89,20 +89,20 @@ def _render_sidebar() -> Dict[str, Any]:
         lookback_days = lookback_days_map.get(lookback, 252)
 
         benchmark = st.text_input(
-            "🏛️ Market Benchmark",
+            "Market Benchmark",
             value="^NSEI",
             help="NSE benchmark index ticker (default: ^NSEI for NIFTY 50).",
         )
 
         st.markdown("---")
-        st.markdown("### 🕳️ Black Swan Stress Testing")
+        st.markdown("### Black Swan Stress Testing")
         st.caption("Stress-test the statistical hedge against historical crisis regimes:")
 
         stress_scenario_map = {
-            "🦠 COVID 2020": "COVID_2020",
-            "💥 2008 GFC": "2008_GFC",
-            "📉 Tech Selloff 2022": "TECH_SELLOFF_2022",
-            "🗳️ Election Day 2024": "ELECTION_2024",
+            "COVID 2020": "COVID_2020",
+            "2008 GFC": "2008_GFC",
+            "Tech Selloff 2022": "TECH_SELLOFF_2022",
+            "Election Day 2024": "ELECTION_2024",
         }
 
         stress_regime = st.selectbox(
@@ -141,7 +141,7 @@ def main() -> None:
     # ── Hero Header ──────────────────────────────────────────────────────
     st.markdown("""
     <div class="hero-header">
-        <h1>🛡️ Market-Neutral Hedge Builder</h1>
+        <h1>Market-Neutral Hedge Builder</h1>
         <p>Autonomous Multi-Agent Quantitative Architecture &nbsp;|&nbsp; Zero-Hallucination Risk Engineering</p>
     </div>
     """, unsafe_allow_html=True)
@@ -156,15 +156,15 @@ def main() -> None:
             key="thesis_text_input",
         )
     with col_btn:
-        run_clicked = st.button("🚀 Build Hedge", type="primary", use_container_width=True)
+        run_clicked = st.button("Build Hedge", type="primary", use_container_width=True)
 
     # ── Trigger Pipeline Run On User Submission ──────────────────────────
     if run_clicked:
         thesis_clean = (thesis_input or "").strip()
         if not thesis_clean:
-            st.warning("⚠️ Please enter a market thesis before building a hedge.")
+            st.warning("Please enter a market thesis before building a hedge.")
         elif not _ENGINE_AVAILABLE:
-            st.error("❌ Quantitative pipeline (`agents.graph.run_hedge_builder`) is unavailable in the environment.")
+            st.error("Quantitative pipeline (`agents.graph.run_hedge_builder`) is unavailable in the environment.")
             st.session_state["view_model"] = None
             st.session_state["pipeline_error"] = "Engine module unavailable"
         else:
@@ -173,7 +173,7 @@ def main() -> None:
             st.session_state["pipeline_traceback"] = None
             st.session_state["view_model"] = None
 
-            with st.spinner("🤖 Autonomous Multi-Agent Pipeline executing... Math Engine running deterministic models..."):
+            with st.spinner("Autonomous Multi-Agent Pipeline executing... Math Engine running deterministic models..."):
                 try:
                     logger.info("Executing run_hedge_builder for thesis: '%s'", thesis_clean)
                     raw_state = run_hedge_builder(
@@ -200,9 +200,9 @@ def main() -> None:
 
     # ── Display Pipeline Error If Any ────────────────────────────────────
     if st.session_state.get("pipeline_error"):
-        st.error(f"❌ **Hedge Builder Pipeline Error**: {st.session_state['pipeline_error']}")
+        st.error(f"**Hedge Builder Pipeline Error**: {st.session_state['pipeline_error']}")
         if st.session_state.get("pipeline_traceback"):
-            with st.expander("🔍 Pipeline Error Traceback"):
+            with st.expander("Pipeline Error Traceback"):
                 st.code(st.session_state["pipeline_traceback"])
         return
 
@@ -215,7 +215,7 @@ def main() -> None:
         st.markdown(
             """
             <div style='text-align:center; padding:4rem 1rem; color:#78716c;'>
-                <p style='font-size:3rem; margin-bottom:0.5rem;'>🛡️</p>
+                <p style='font-size:1.5rem; font-weight:700; letter-spacing:1px; color:#92400e; margin-bottom:0.5rem;'>STOCX QUANT ENGINE</p>
                 <p style='font-size:1.15rem; font-weight:600; color:#44403c;'>Enter an investment thesis and hit <strong>Build Hedge</strong> to begin.</p>
                 <p style='font-size:0.85rem; margin-top:0.5rem; color:#78716c;'>
                     Example: <em>"I am bullish on Indian IT companies but want protection against a broad market crash."</em>
@@ -239,7 +239,7 @@ def _render_dashboard(vm: DashboardViewModel) -> None:
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ── Section 2: Before vs After Hedging Metric Cards ──────────────────
-    st.markdown('<div class="section-title">📊 Quantitative Risk & Performance Metrics</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Quantitative Risk & Performance Metrics</div>', unsafe_allow_html=True)
     c1, c2, c3, c4 = st.columns(4, gap="medium")
     with c1:
         render_metric_card(
@@ -307,7 +307,7 @@ def _render_dashboard(vm: DashboardViewModel) -> None:
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ── Section 3: Performance & Risk Analytics Charts ───────────────────
-    st.markdown('<div class="section-title">📈 Performance & Risk Analytics</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Performance & Risk Analytics</div>', unsafe_allow_html=True)
 
     row1_left, row1_right = st.columns(2, gap="medium")
     with row1_left:
@@ -341,7 +341,7 @@ def _render_dashboard(vm: DashboardViewModel) -> None:
         render_beta_chart(vm.quant.rolling_beta)
 
     # ── Section 4: Statistical Cointegration & Correlation ───────────────
-    st.markdown('<div class="section-title">🔬 Statistical Cointegration & Correlation</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Statistical Cointegration & Correlation</div>', unsafe_allow_html=True)
     row2_left, row2_right = st.columns(2, gap="medium")
     with row2_left:
         render_zscore_chart(vm.quant.spread_zscore)
@@ -351,13 +351,13 @@ def _render_dashboard(vm: DashboardViewModel) -> None:
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ── Section 5: Pair Fundamentals Comparison ──────────────────────────
-    st.markdown('<div class="section-title">🏢 Pair Fundamental Comparison</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Pair Fundamental Comparison</div>', unsafe_allow_html=True)
     render_pair_details(vm)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ── Section 6: News Intelligence Panel ───────────────────────────────
-    st.markdown('<div class="section-title">📰 News Intelligence & Catalyst Audit</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">News Intelligence & Catalyst Audit</div>', unsafe_allow_html=True)
     long_ticker = vm.run_info.selected_long or "Long Leg"
     short_ticker = vm.run_info.selected_short or "Short Hedge"
     long_news = load_cached_news_for_ticker(long_ticker)
@@ -372,16 +372,16 @@ def _render_dashboard(vm: DashboardViewModel) -> None:
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ── Section 7: Multi-Agent Execution Trace ───────────────────────────
-    st.markdown('<div class="section-title">🤖 Multi-Agent Execution Audit Trail</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Multi-Agent Execution Audit Trail</div>', unsafe_allow_html=True)
     render_agent_trace(vm)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
     # ── Section 8: CRO Executive Summary & F&O Execution Table ───────────
-    st.markdown('<div class="section-title">📋 Institutional CRO Report & Execution Plan</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">Institutional CRO Report & Execution Plan</div>', unsafe_allow_html=True)
     col_cro, col_fno = st.columns([3, 2], gap="medium")
     with col_cro:
-        st.markdown("#### 📝 Chief Risk Officer Memo")
+        st.markdown("#### Chief Risk Officer Memo")
         if vm.reporting.cro_report:
             st.markdown(
                 f'<div class="cro-report">{vm.reporting.cro_report}</div>',
@@ -391,7 +391,7 @@ def _render_dashboard(vm: DashboardViewModel) -> None:
             st.info("CRO executive summary memo is unavailable for this run.")
 
     with col_fno:
-        st.markdown("#### 📦 F&O Lot-Size Execution Plan")
+        st.markdown("#### F&O Lot-Size Execution Plan")
         render_fno_table(vm.portfolio.fno_execution)
 
     st.markdown("<br>", unsafe_allow_html=True)

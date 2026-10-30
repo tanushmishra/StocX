@@ -224,7 +224,7 @@ def _build_data_payload(state: HedgeBuilderState) -> str:
 - Stress regime: {state.stress_regime}
 
 ## Attempts Used: {state.attempt_count} / {state.max_attempts}
-## Final Verdict: {"APPROVED ✅" if state.approved else "NOT APPROVED ❌"}
+## Final Verdict: {"APPROVED" if state.approved else "NOT APPROVED"}
 
 {final_pair_section}
 

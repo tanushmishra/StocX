@@ -380,7 +380,7 @@ def test_15_verification_summary_with_failed_checks(mock_streamlit):
 
     markdown_calls = [str(call) for call in mock_streamlit.markdown.call_args_list]
     rendered_text = "".join(markdown_calls)
-    assert "REJECTED ❌" in rendered_text
+    assert "REJECTED" in rendered_text
     assert "Attempt 2 of 3" in rendered_text
     assert "Engle-Granger test p-value" in rendered_text
     assert "cointegration, correlation" in rendered_text
