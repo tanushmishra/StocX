@@ -177,7 +177,10 @@ def run_full_hedge_analysis(
     # 4. Cointegration & spread analysis
     # ------------------------------------------------------------------
     logger.info("Stage 4/8 — Cointegration analysis …")
-    coint_result = engle_granger_test(prices[long_ticker], prices[short_ticker])
+    # Cointegration on log prices
+    coint_result = engle_granger_test(
+        np.log(prices[long_ticker]), np.log(prices[short_ticker])
+    )
 
     spread_zs = compute_spread_zscore(
         prices[long_ticker], prices[short_ticker], window=60

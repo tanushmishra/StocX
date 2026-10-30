@@ -77,8 +77,9 @@ def _approx_coint(series_a: pd.Series, series_b: pd.Series) -> tuple[float, floa
 
 
 def engle_granger_test(
-    series_a: pd.Series,
-    series_b: pd.Series,
+    series_a: pd.Series | str,
+    series_b: pd.Series | str,
+    *args: Any,
 ) -> dict:
     """Run the Engle-Granger two-step cointegration test on two price series.
 
@@ -87,27 +88,13 @@ def engle_granger_test(
     ADF test.  A significant (small) *p*-value means the spread is
     stationary, i.e. the pair is cointegrated.
 
-    Args:
-        series_a: Price (level) series of asset A.
-        series_b: Price (level) series of asset B.
-
-    Returns:
-        A dict with keys:
-
-        * ``t_stat`` – ADF t-statistic of the residuals.
-        * ``p_value`` – MacKinnon approximate p-value.
-        * ``critical_values`` – dict of critical values at 1 %, 5 %, 10 %.
-        * ``cointegrated`` – ``True`` if *p_value* < 0.05.
-
-    Raises:
-        ValueError: If either series is empty or they have different
-            lengths.
-
-    Example:
-        >>> result = engle_granger_test(prices_a, prices_b)
-        >>> result["cointegrated"]
-        True
+    Supports both (series_a, series_b) and (ticker_a, ticker_b, prices_df).
     """
+    if isinstance(series_a, str) and isinstance(series_b, str) and args and isinstance(args[0], pd.DataFrame):
+        prices = args[0]
+        series_a = np.log(prices[series_a])
+        series_b = np.log(prices[series_b])
+
     _validate_price_series(series_a, series_b)
 
     if coint is not None:
@@ -145,46 +132,17 @@ def engle_granger_test(
 
 
 def compute_spread_zscore(
-    series_a: pd.Series,
-    series_b: pd.Series,
+    series_a: pd.Series | str,
+    series_b: pd.Series | str,
+    *args: Any,
     window: int = 60,
 ) -> pd.Series:
-    """Compute the rolling Z-score of the log price ratio (spread).
+    """Compute the rolling Z-score of the log price ratio (spread)."""
+    if isinstance(series_a, str) and isinstance(series_b, str) and args and isinstance(args[0], pd.DataFrame):
+        prices = args[0]
+        series_a = prices[series_a]
+        series_b = prices[series_b]
 
-    The spread is defined as:
-
-    .. math::
-
-        S_t = \\ln(P^A_t) - \\ln(P^B_t)
-
-    The Z-score is:
-
-    .. math::
-
-        Z_t = \\frac{S_t - \\bar{S}_{t,w}}{\\hat{\\sigma}_{S,t,w}}
-
-    where the rolling mean and standard deviation are computed over the
-    trailing *window* observations.
-
-    Args:
-        series_a: Price series of asset A (must be > 0).
-        series_b: Price series of asset B (must be > 0).
-        window: Lookback window for rolling mean and standard deviation
-            (default 60 trading days).
-
-    Returns:
-        A ``pd.Series`` of Z-scores.  The first *window − 1* entries are
-        ``NaN``.
-
-    Raises:
-        ValueError: If prices contain non-positive values, or inputs are
-            invalid.
-
-    Example:
-        >>> zs = compute_spread_zscore(prices_a, prices_b, window=60)
-        >>> zs.dropna().iloc[-1]
-        -1.23
-    """
     _validate_price_series(series_a, series_b)
     if (series_a <= 0).any() or (series_b <= 0).any():
         raise ValueError("Price series must be strictly positive for log transform.")
@@ -203,39 +161,19 @@ def compute_spread_zscore(
     return zscore
 
 
-def ou_half_life(spread: pd.Series) -> float:
+def ou_half_life(spread: pd.Series | str, *args: Any) -> float:
     """Estimate the Ornstein-Uhlenbeck half-life of mean reversion.
 
     Fits an AR(1) model on the spread via OLS:
-
-    .. math::
-
-        \\Delta S_t = \\theta \\, S_{t-1} + \\epsilon_t
-
-    The mean-reversion speed is θ (should be negative for a stationary
-    spread).  The half-life is:
-
-    .. math::
-
-        t_{1/2} = -\\frac{\\ln 2}{\\theta}
-
-    Args:
-        spread: The spread series (e.g. log price ratio or cointegration
-            residual).
-
-    Returns:
-        The half-life in the same time units as the series index
-        (typically trading days).  Returns ``float('inf')`` if θ ≥ 0
-        (no mean reversion detected).
-
-    Raises:
-        ValueError: If *spread* has fewer than 3 observations or contains
-            only NaNs.
-
-    Example:
-        >>> hl = ou_half_life(spread_series)
-        >>> hl  # e.g. 14.3 trading days
+    Delta S_t = theta * S_{t-1} + eps_t.
+    If theta >= 0: returns float('inf') indicating no mean reversion.
     """
+    if isinstance(spread, str) and len(args) >= 2 and isinstance(args[1], pd.DataFrame):
+        long_t = spread
+        short_t = args[0]
+        prices = args[1]
+        spread = np.log(prices[long_t]) - np.log(prices[short_t])
+
     clean = spread.dropna()
     if len(clean) < 3:
         raise ValueError(
