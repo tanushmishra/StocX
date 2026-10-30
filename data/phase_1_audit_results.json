@@ -1,0 +1,2964 @@
+{
+  "NIFTY_IT__COVID_2020": {
+    "sector": "NIFTY_IT",
+    "regime": "COVID_2020",
+    "file_relative": "data/NIFTY_IT__covid_2020.csv",
+    "file_size_bytes": 22981,
+    "row_count": 122,
+    "column_count": 11,
+    "date_range": [
+      "2020-01-01",
+      "2020-06-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "TCS.NS",
+      "INFY.NS",
+      "HCLTECH.NS",
+      "WIPRO.NS",
+      "TECHM.NS",
+      "MPHASIS.NS",
+      "COFORGE.NS",
+      "PERSISTENT.NS",
+      "LTTS.NS"
+    ],
+    "dropped_tickers": [
+      "LTIM.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "TCS.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1388.21,
+        "max_price": 1895.08
+      },
+      "INFY.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 442.78,
+        "max_price": 673.23
+      },
+      "HCLTECH.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 314.8,
+        "max_price": 482.24
+      },
+      "WIPRO.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 73.98,
+        "max_price": 116.74
+      },
+      "TECHM.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 377.48,
+        "max_price": 642.77
+      },
+      "MPHASIS.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 537.16,
+        "max_price": 789.7
+      },
+      "COFORGE.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 160.63,
+        "max_price": 371.46
+      },
+      "PERSISTENT.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 221.04,
+        "max_price": 345.92
+      },
+      "LTTS.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 936.32,
+        "max_price": 1602.75
+      },
+      "^NSEI": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 7610.25,
+        "max_price": 12362.3
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 12362.2998046875,
+      "peak_date": "2020-01-14",
+      "crash_trough": 7610.25,
+      "trough_date": "2020-03-23",
+      "max_drawdown_pct": -38.44,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS"
+  },
+  "NIFTY_BANK__COVID_2020": {
+    "sector": "NIFTY_BANK",
+    "regime": "COVID_2020",
+    "file_relative": "data/NIFTY_BANK__covid_2020.csv",
+    "file_size_bytes": 29733,
+    "row_count": 122,
+    "column_count": 14,
+    "date_range": [
+      "2020-01-01",
+      "2020-06-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 12,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "INDUSINDBK.NS",
+      "BANDHANBNK.NS",
+      "FEDERALBNK.NS",
+      "IDFCFIRSTB.NS",
+      "AUBANK.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 357.66,
+        "max_price": 600.76
+      },
+      "ICICIBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 272.38,
+        "max_price": 526.83
+      },
+      "KOTAKBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 218.36,
+        "max_price": 340.96
+      },
+      "AXISBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 301.66,
+        "max_price": 753.22
+      },
+      "SBIN.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 136.73,
+        "max_price": 307.53
+      },
+      "BANKBARODA.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 31.34,
+        "max_price": 89.7
+      },
+      "PNB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 23.98,
+        "max_price": 60.14
+      },
+      "INDUSINDBK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 290.5,
+        "max_price": 1484.44
+      },
+      "BANDHANBNK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 149.38,
+        "max_price": 500.55
+      },
+      "FEDERALBNK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 35.58,
+        "max_price": 91.45
+      },
+      "IDFCFIRSTB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 18.04,
+        "max_price": 45.86
+      },
+      "AUBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 188.95,
+        "max_price": 586.32
+      },
+      "^NSEI": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 7610.25,
+        "max_price": 12362.3
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 12362.2998046875,
+      "peak_date": "2020-01-14",
+      "crash_trough": 7610.25,
+      "trough_date": "2020-03-23",
+      "max_drawdown_pct": -38.44,
+      "crash_visible": true
+    },
+    "verdict": "PASS"
+  },
+  "NIFTY_AUTO__COVID_2020": {
+    "sector": "NIFTY_AUTO",
+    "regime": "COVID_2020",
+    "file_relative": "data/NIFTY_AUTO__covid_2020.csv",
+    "file_size_bytes": 22817,
+    "row_count": 122,
+    "column_count": 11,
+    "date_range": [
+      "2020-01-01",
+      "2020-06-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "MARUTI.NS",
+      "M&M.NS",
+      "BAJAJ-AUTO.NS",
+      "HEROMOTOCO.NS",
+      "EICHERMOT.NS",
+      "ASHOKLEY.NS",
+      "TVSMOTOR.NS",
+      "BALKRISIND.NS",
+      "BHARATFORG.NS"
+    ],
+    "dropped_tickers": [
+      "TATAMOTORS.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "MARUTI.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 3772.61,
+        "max_price": 7072.31
+      },
+      "M&M.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 252.87,
+        "max_price": 549.32
+      },
+      "BAJAJ-AUTO.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1669.11,
+        "max_price": 2710.65
+      },
+      "HEROMOTOCO.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1252.19,
+        "max_price": 2063.23
+      },
+      "EICHERMOT.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1196.39,
+        "max_price": 2066.58
+      },
+      "ASHOKLEY.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15.48,
+        "max_price": 38.62
+      },
+      "TVSMOTOR.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 245.87,
+        "max_price": 470.76
+      },
+      "BALKRISIND.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 665.98,
+        "max_price": 1197.84
+      },
+      "BHARATFORG.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 210.23,
+        "max_price": 505.8
+      },
+      "^NSEI": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 7610.25,
+        "max_price": 12362.3
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 12362.2998046875,
+      "peak_date": "2020-01-14",
+      "crash_trough": 7610.25,
+      "trough_date": "2020-03-23",
+      "max_drawdown_pct": -38.44,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "TATAMOTORS.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_PHARMA__COVID_2020": {
+    "sector": "NIFTY_PHARMA",
+    "regime": "COVID_2020",
+    "file_relative": "data/NIFTY_PHARMA__covid_2020.csv",
+    "file_size_bytes": 24914,
+    "row_count": 122,
+    "column_count": 12,
+    "date_range": [
+      "2020-01-01",
+      "2020-06-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 10,
+    "retained_tickers": [
+      "SUNPHARMA.NS",
+      "DRREDDY.NS",
+      "CIPLA.NS",
+      "DIVISLAB.NS",
+      "APOLLOHOSP.NS",
+      "AUROPHARMA.NS",
+      "BIOCON.NS",
+      "LUPIN.NS",
+      "TORNTPHARM.NS",
+      "ALKEM.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SUNPHARMA.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 304.8,
+        "max_price": 470.35
+      },
+      "DRREDDY.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 502.11,
+        "max_price": 789.12
+      },
+      "CIPLA.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 357.56,
+        "max_price": 630.33
+      },
+      "DIVISLAB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1743.97,
+        "max_price": 2395.86
+      },
+      "APOLLOHOSP.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1071.8,
+        "max_price": 1769.3
+      },
+      "AUROPHARMA.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 284.79,
+        "max_price": 777.25
+      },
+      "BIOCON.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 249.56,
+        "max_price": 399.75
+      },
+      "LUPIN.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 526.42,
+        "max_price": 906.6
+      },
+      "TORNTPHARM.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 823.81,
+        "max_price": 1217.4
+      },
+      "ALKEM.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1940.67,
+        "max_price": 2609.6
+      },
+      "^NSEI": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 7610.25,
+        "max_price": 12362.3
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 12362.2998046875,
+      "peak_date": "2020-01-14",
+      "crash_trough": 7610.25,
+      "trough_date": "2020-03-23",
+      "max_drawdown_pct": -38.44,
+      "crash_visible": true
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_PSU_BANK__COVID_2020": {
+    "sector": "NIFTY_PSU_BANK",
+    "regime": "COVID_2020",
+    "file_relative": "data/NIFTY_PSU_BANK__covid_2020.csv",
+    "file_size_bytes": 30020,
+    "row_count": 122,
+    "column_count": 14,
+    "date_range": [
+      "2020-01-01",
+      "2020-06-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 12,
+    "retained_tickers": [
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "CANBK.NS",
+      "UNIONBANK.NS",
+      "INDIANB.NS",
+      "BANKINDIA.NS",
+      "MAHABANK.NS",
+      "CENTRALBK.NS",
+      "UCOBANK.NS",
+      "IOB.NS",
+      "PSB.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SBIN.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 136.73,
+        "max_price": 307.53
+      },
+      "BANKBARODA.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 31.34,
+        "max_price": 89.7
+      },
+      "PNB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 23.98,
+        "max_price": 60.14
+      },
+      "CANBK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 12.88,
+        "max_price": 38.74
+      },
+      "UNIONBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 19.17,
+        "max_price": 46.26
+      },
+      "INDIANB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 36.43,
+        "max_price": 91.57
+      },
+      "BANKINDIA.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 26.69,
+        "max_price": 60.65
+      },
+      "MAHABANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 7.18,
+        "max_price": 12.26
+      },
+      "CENTRALBK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 11.04,
+        "max_price": 19.52
+      },
+      "UCOBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 8.26,
+        "max_price": 16.22
+      },
+      "IOB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 6.7,
+        "max_price": 13.1
+      },
+      "PSB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 9.86,
+        "max_price": 21.42
+      },
+      "^NSEI": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 7610.25,
+        "max_price": 12362.3
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 12362.2998046875,
+      "peak_date": "2020-01-14",
+      "crash_trough": 7610.25,
+      "trough_date": "2020-03-23",
+      "max_drawdown_pct": -38.44,
+      "crash_visible": true
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_PRIVATE_BANK__COVID_2020": {
+    "sector": "NIFTY_PRIVATE_BANK",
+    "regime": "COVID_2020",
+    "file_relative": "data/NIFTY_PRIVATE_BANK__covid_2020.csv",
+    "file_size_bytes": 25357,
+    "row_count": 122,
+    "column_count": 12,
+    "date_range": [
+      "2020-01-01",
+      "2020-06-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 10,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "INDUSINDBK.NS",
+      "FEDERALBNK.NS",
+      "IDFCFIRSTB.NS",
+      "BANDHANBNK.NS",
+      "RBLBANK.NS",
+      "AUBANK.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 357.66,
+        "max_price": 600.76
+      },
+      "ICICIBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 272.38,
+        "max_price": 526.83
+      },
+      "KOTAKBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 218.36,
+        "max_price": 340.96
+      },
+      "AXISBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 301.66,
+        "max_price": 753.22
+      },
+      "INDUSINDBK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 290.5,
+        "max_price": 1484.44
+      },
+      "FEDERALBNK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 35.58,
+        "max_price": 91.45
+      },
+      "IDFCFIRSTB.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 18.04,
+        "max_price": 45.86
+      },
+      "BANDHANBNK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 149.38,
+        "max_price": 500.55
+      },
+      "RBLBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 103.11,
+        "max_price": 359.21
+      },
+      "AUBANK.NS": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 188.95,
+        "max_price": 586.32
+      },
+      "^NSEI": {
+        "observations": 122,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 7610.25,
+        "max_price": 12362.3
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 12362.2998046875,
+      "peak_date": "2020-01-14",
+      "crash_trough": 7610.25,
+      "trough_date": "2020-03-23",
+      "max_drawdown_pct": -38.44,
+      "crash_visible": true
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_IT__ELECTION_2024": {
+    "sector": "NIFTY_IT",
+    "regime": "ELECTION_2024",
+    "file_relative": "data/NIFTY_IT__election_2024.csv",
+    "file_size_bytes": 4173,
+    "row_count": 22,
+    "column_count": 11,
+    "date_range": [
+      "2024-05-15",
+      "2024-06-14"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "TCS.NS",
+      "INFY.NS",
+      "HCLTECH.NS",
+      "WIPRO.NS",
+      "TECHM.NS",
+      "MPHASIS.NS",
+      "COFORGE.NS",
+      "PERSISTENT.NS",
+      "LTTS.NS"
+    ],
+    "dropped_tickers": [
+      "LTIM.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "TCS.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 3384.64,
+        "max_price": 3596.7
+      },
+      "INFY.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1308.55,
+        "max_price": 1441.56
+      },
+      "HCLTECH.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1183.41,
+        "max_price": 1311.05
+      },
+      "WIPRO.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 202.49,
+        "max_price": 224.54
+      },
+      "TECHM.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1123.04,
+        "max_price": 1269.77
+      },
+      "MPHASIS.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2125.65,
+        "max_price": 2310.33
+      },
+      "COFORGE.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 905.18,
+        "max_price": 1065.26
+      },
+      "PERSISTENT.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 3301.19,
+        "max_price": 3792.05
+      },
+      "LTTS.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 4247.64,
+        "max_price": 4716.06
+      },
+      "^NSEI": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 21884.5,
+        "max_price": 23465.6
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 23263.900390625,
+      "peak_date": "2024-06-03",
+      "crash_trough": 21884.5,
+      "trough_date": "2024-06-04",
+      "max_drawdown_pct": -5.93,
+      "crash_visible": false
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "LTIM.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_BANK__ELECTION_2024": {
+    "sector": "NIFTY_BANK",
+    "regime": "ELECTION_2024",
+    "file_relative": "data/NIFTY_BANK__election_2024.csv",
+    "file_size_bytes": 5515,
+    "row_count": 22,
+    "column_count": 14,
+    "date_range": [
+      "2024-05-15",
+      "2024-06-14"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 12,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "INDUSINDBK.NS",
+      "BANDHANBNK.NS",
+      "FEDERALBNK.NS",
+      "IDFCFIRSTB.NS",
+      "AUBANK.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 698.11,
+        "max_price": 774.98
+      },
+      "ICICIBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1045.36,
+        "max_price": 1131.75
+      },
+      "KOTAKBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 326.29,
+        "max_price": 349.35
+      },
+      "AXISBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1123.3,
+        "max_price": 1220.97
+      },
+      "SBIN.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 746.49,
+        "max_price": 872.1
+      },
+      "BANKBARODA.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 226.15,
+        "max_price": 270.51
+      },
+      "PNB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 107.66,
+        "max_price": 127.87
+      },
+      "INDUSINDBK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1374.0,
+        "max_price": 1510.46
+      },
+      "BANDHANBNK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 172.81,
+        "max_price": 193.48
+      },
+      "FEDERALBNK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 152.29,
+        "max_price": 171.74
+      },
+      "IDFCFIRSTB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 72.1,
+        "max_price": 78.16
+      },
+      "AUBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 601.02,
+        "max_price": 669.06
+      },
+      "^NSEI": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 21884.5,
+        "max_price": 23465.6
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 23263.900390625,
+      "peak_date": "2024-06-03",
+      "crash_trough": 21884.5,
+      "trough_date": "2024-06-04",
+      "max_drawdown_pct": -5.93,
+      "crash_visible": false
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_AUTO__ELECTION_2024": {
+    "sector": "NIFTY_AUTO",
+    "regime": "ELECTION_2024",
+    "file_relative": "data/NIFTY_AUTO__election_2024.csv",
+    "file_size_bytes": 4014,
+    "row_count": 22,
+    "column_count": 11,
+    "date_range": [
+      "2024-05-15",
+      "2024-06-14"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "MARUTI.NS",
+      "M&M.NS",
+      "BAJAJ-AUTO.NS",
+      "HEROMOTOCO.NS",
+      "EICHERMOT.NS",
+      "ASHOKLEY.NS",
+      "TVSMOTOR.NS",
+      "BALKRISIND.NS",
+      "BHARATFORG.NS"
+    ],
+    "dropped_tickers": [
+      "TATAMOTORS.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "MARUTI.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 11814.31,
+        "max_price": 12614.22
+      },
+      "M&M.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2243.79,
+        "max_price": 2854.17
+      },
+      "BAJAJ-AUTO.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 8376.74,
+        "max_price": 9580.69
+      },
+      "HEROMOTOCO.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 4607.19,
+        "max_price": 5363.43
+      },
+      "EICHERMOT.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 4343.74,
+        "max_price": 4768.6
+      },
+      "ASHOKLEY.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 95.76,
+        "max_price": 114.03
+      },
+      "TVSMOTOR.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2083.99,
+        "max_price": 2484.82
+      },
+      "BALKRISIND.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2478.04,
+        "max_price": 3200.75
+      },
+      "BHARATFORG.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1424.7,
+        "max_price": 1691.71
+      },
+      "^NSEI": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 21884.5,
+        "max_price": 23465.6
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 23263.900390625,
+      "peak_date": "2024-06-03",
+      "crash_trough": 21884.5,
+      "trough_date": "2024-06-04",
+      "max_drawdown_pct": -5.93,
+      "crash_visible": false
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "TATAMOTORS.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_PHARMA__ELECTION_2024": {
+    "sector": "NIFTY_PHARMA",
+    "regime": "ELECTION_2024",
+    "file_relative": "data/NIFTY_PHARMA__election_2024.csv",
+    "file_size_bytes": 4551,
+    "row_count": 22,
+    "column_count": 12,
+    "date_range": [
+      "2024-05-15",
+      "2024-06-14"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 10,
+    "retained_tickers": [
+      "SUNPHARMA.NS",
+      "DRREDDY.NS",
+      "CIPLA.NS",
+      "DIVISLAB.NS",
+      "APOLLOHOSP.NS",
+      "AUROPHARMA.NS",
+      "BIOCON.NS",
+      "LUPIN.NS",
+      "TORNTPHARM.NS",
+      "ALKEM.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SUNPHARMA.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1399.36,
+        "max_price": 1508.09
+      },
+      "DRREDDY.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1125.1,
+        "max_price": 1198.79
+      },
+      "CIPLA.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1359.87,
+        "max_price": 1520.93
+      },
+      "DIVISLAB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 3835.45,
+        "max_price": 4526.12
+      },
+      "APOLLOHOSP.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 5727.84,
+        "max_price": 6166.03
+      },
+      "AUROPHARMA.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1154.07,
+        "max_price": 1261.66
+      },
+      "BIOCON.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 289.76,
+        "max_price": 343.1
+      },
+      "LUPIN.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1537.14,
+        "max_price": 1685.53
+      },
+      "TORNTPHARM.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2559.31,
+        "max_price": 2834.53
+      },
+      "ALKEM.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 4614.24,
+        "max_price": 5347.08
+      },
+      "^NSEI": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 21884.5,
+        "max_price": 23465.6
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 23263.900390625,
+      "peak_date": "2024-06-03",
+      "crash_trough": 21884.5,
+      "trough_date": "2024-06-04",
+      "max_drawdown_pct": -5.93,
+      "crash_visible": false
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_PSU_BANK__ELECTION_2024": {
+    "sector": "NIFTY_PSU_BANK",
+    "regime": "ELECTION_2024",
+    "file_relative": "data/NIFTY_PSU_BANK__election_2024.csv",
+    "file_size_bytes": 5541,
+    "row_count": 22,
+    "column_count": 14,
+    "date_range": [
+      "2024-05-15",
+      "2024-06-14"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 12,
+    "retained_tickers": [
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "CANBK.NS",
+      "UNIONBANK.NS",
+      "INDIANB.NS",
+      "BANKINDIA.NS",
+      "MAHABANK.NS",
+      "CENTRALBK.NS",
+      "UCOBANK.NS",
+      "IOB.NS",
+      "PSB.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SBIN.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 746.49,
+        "max_price": 872.1
+      },
+      "BANKBARODA.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 226.15,
+        "max_price": 270.51
+      },
+      "PNB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 107.66,
+        "max_price": 127.87
+      },
+      "CANBK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 99.95,
+        "max_price": 116.69
+      },
+      "UNIONBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 127.18,
+        "max_price": 155.6
+      },
+      "INDIANB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 489.73,
+        "max_price": 566.1
+      },
+      "BANKINDIA.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 106.3,
+        "max_price": 123.85
+      },
+      "MAHABANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 59.59,
+        "max_price": 68.25
+      },
+      "CENTRALBK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 58.31,
+        "max_price": 69.68
+      },
+      "UCOBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 51.02,
+        "max_price": 60.0
+      },
+      "IOB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 61.6,
+        "max_price": 74.5
+      },
+      "PSB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 53.59,
+        "max_price": 63.72
+      },
+      "^NSEI": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 21884.5,
+        "max_price": 23465.6
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 23263.900390625,
+      "peak_date": "2024-06-03",
+      "crash_trough": 21884.5,
+      "trough_date": "2024-06-04",
+      "max_drawdown_pct": -5.93,
+      "crash_visible": false
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_PRIVATE_BANK__ELECTION_2024": {
+    "sector": "NIFTY_PRIVATE_BANK",
+    "regime": "ELECTION_2024",
+    "file_relative": "data/NIFTY_PRIVATE_BANK__election_2024.csv",
+    "file_size_bytes": 4698,
+    "row_count": 22,
+    "column_count": 12,
+    "date_range": [
+      "2024-05-15",
+      "2024-06-14"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 10,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "INDUSINDBK.NS",
+      "FEDERALBNK.NS",
+      "IDFCFIRSTB.NS",
+      "BANDHANBNK.NS",
+      "RBLBANK.NS",
+      "AUBANK.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 698.11,
+        "max_price": 774.98
+      },
+      "ICICIBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1045.36,
+        "max_price": 1131.75
+      },
+      "KOTAKBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 326.29,
+        "max_price": 349.35
+      },
+      "AXISBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1123.3,
+        "max_price": 1220.97
+      },
+      "INDUSINDBK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1374.0,
+        "max_price": 1510.46
+      },
+      "FEDERALBNK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 152.29,
+        "max_price": 171.74
+      },
+      "IDFCFIRSTB.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 72.1,
+        "max_price": 78.16
+      },
+      "BANDHANBNK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 172.81,
+        "max_price": 193.48
+      },
+      "RBLBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 221.36,
+        "max_price": 257.94
+      },
+      "AUBANK.NS": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 601.02,
+        "max_price": 669.06
+      },
+      "^NSEI": {
+        "observations": 22,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 21884.5,
+        "max_price": 23465.6
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 23263.900390625,
+      "peak_date": "2024-06-03",
+      "crash_trough": 21884.5,
+      "trough_date": "2024-06-04",
+      "max_drawdown_pct": -5.93,
+      "crash_visible": false
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_IT__TECH_SELLOFF_2022": {
+    "sector": "NIFTY_IT",
+    "regime": "TECH_SELLOFF_2022",
+    "file_relative": "data/NIFTY_IT__tech_selloff_2022.csv",
+    "file_size_bytes": 45690,
+    "row_count": 248,
+    "column_count": 11,
+    "date_range": [
+      "2022-01-03",
+      "2022-12-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "TCS.NS",
+      "INFY.NS",
+      "HCLTECH.NS",
+      "WIPRO.NS",
+      "TECHM.NS",
+      "MPHASIS.NS",
+      "COFORGE.NS",
+      "PERSISTENT.NS",
+      "LTTS.NS"
+    ],
+    "dropped_tickers": [
+      "LTIM.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "TCS.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2610.58,
+        "max_price": 3479.63
+      },
+      "INFY.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1212.52,
+        "max_price": 1704.22
+      },
+      "HCLTECH.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 735.54,
+        "max_price": 1098.41
+      },
+      "WIPRO.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 173.03,
+        "max_price": 329.53
+      },
+      "TECHM.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 812.02,
+        "max_price": 1505.99
+      },
+      "MPHASIS.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1729.1,
+        "max_price": 3056.73
+      },
+      "COFORGE.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 615.14,
+        "max_price": 1154.19
+      },
+      "PERSISTENT.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1521.46,
+        "max_price": 2378.18
+      },
+      "LTTS.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2782.83,
+        "max_price": 5558.89
+      },
+      "^NSEI": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15293.5,
+        "max_price": 18812.5
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 18308.099609375,
+      "peak_date": "2022-01-17",
+      "crash_trough": 15293.5,
+      "trough_date": "2022-06-17",
+      "max_drawdown_pct": -16.47,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "LTIM.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_BANK__TECH_SELLOFF_2022": {
+    "sector": "NIFTY_BANK",
+    "regime": "TECH_SELLOFF_2022",
+    "file_relative": "data/NIFTY_BANK__tech_selloff_2022.csv",
+    "file_size_bytes": 59846,
+    "row_count": 248,
+    "column_count": 14,
+    "date_range": [
+      "2022-01-03",
+      "2022-12-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 12,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "INDUSINDBK.NS",
+      "BANDHANBNK.NS",
+      "FEDERALBNK.NS",
+      "IDFCFIRSTB.NS",
+      "AUBANK.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 606.49,
+        "max_price": 786.81
+      },
+      "ICICIBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 628.85,
+        "max_price": 922.1
+      },
+      "KOTAKBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 326.72,
+        "max_price": 391.3
+      },
+      "AXISBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 622.47,
+        "max_price": 946.51
+      },
+      "SBIN.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 402.76,
+        "max_price": 581.1
+      },
+      "BANKBARODA.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 71.96,
+        "max_price": 170.73
+      },
+      "PNB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 25.65,
+        "max_price": 55.2
+      },
+      "INDUSINDBK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 753.46,
+        "max_price": 1234.65
+      },
+      "BANDHANBNK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 204.27,
+        "max_price": 330.81
+      },
+      "FEDERALBNK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 80.14,
+        "max_price": 135.91
+      },
+      "IDFCFIRSTB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 28.97,
+        "max_price": 62.31
+      },
+      "AUBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 529.29,
+        "max_price": 713.26
+      },
+      "^NSEI": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15293.5,
+        "max_price": 18812.5
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 18308.099609375,
+      "peak_date": "2022-01-17",
+      "crash_trough": 15293.5,
+      "trough_date": "2022-06-17",
+      "max_drawdown_pct": -16.47,
+      "crash_visible": true
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_AUTO__TECH_SELLOFF_2022": {
+    "sector": "NIFTY_AUTO",
+    "regime": "TECH_SELLOFF_2022",
+    "file_relative": "data/NIFTY_AUTO__tech_selloff_2022.csv",
+    "file_size_bytes": 45107,
+    "row_count": 248,
+    "column_count": 11,
+    "date_range": [
+      "2022-01-03",
+      "2022-12-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "MARUTI.NS",
+      "M&M.NS",
+      "BAJAJ-AUTO.NS",
+      "HEROMOTOCO.NS",
+      "EICHERMOT.NS",
+      "ASHOKLEY.NS",
+      "TVSMOTOR.NS",
+      "BALKRISIND.NS",
+      "BHARATFORG.NS"
+    ],
+    "dropped_tickers": [
+      "TATAMOTORS.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "MARUTI.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 6464.16,
+        "max_price": 9158.36
+      },
+      "M&M.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 659.27,
+        "max_price": 1305.95
+      },
+      "BAJAJ-AUTO.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2885.85,
+        "max_price": 3787.08
+      },
+      "HEROMOTOCO.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1888.27,
+        "max_price": 2533.78
+      },
+      "EICHERMOT.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2141.88,
+        "max_price": 3679.93
+      },
+      "ASHOKLEY.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 44.78,
+        "max_price": 75.76
+      },
+      "TVSMOTOR.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 518.22,
+        "max_price": 1152.29
+      },
+      "BALKRISIND.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1706.02,
+        "max_price": 2420.57
+      },
+      "BHARATFORG.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 583.75,
+        "max_price": 887.39
+      },
+      "^NSEI": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15293.5,
+        "max_price": 18812.5
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 18308.099609375,
+      "peak_date": "2022-01-17",
+      "crash_trough": 15293.5,
+      "trough_date": "2022-06-17",
+      "max_drawdown_pct": -16.47,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "TATAMOTORS.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_PHARMA__TECH_SELLOFF_2022": {
+    "sector": "NIFTY_PHARMA",
+    "regime": "TECH_SELLOFF_2022",
+    "file_relative": "data/NIFTY_PHARMA__tech_selloff_2022.csv",
+    "file_size_bytes": 49785,
+    "row_count": 248,
+    "column_count": 12,
+    "date_range": [
+      "2022-01-03",
+      "2022-12-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 10,
+    "retained_tickers": [
+      "SUNPHARMA.NS",
+      "DRREDDY.NS",
+      "CIPLA.NS",
+      "DIVISLAB.NS",
+      "APOLLOHOSP.NS",
+      "AUROPHARMA.NS",
+      "BIOCON.NS",
+      "LUPIN.NS",
+      "TORNTPHARM.NS",
+      "ALKEM.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SUNPHARMA.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 761.13,
+        "max_price": 1012.47
+      },
+      "DRREDDY.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 719.5,
+        "max_price": 938.96
+      },
+      "CIPLA.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 832.33,
+        "max_price": 1131.36
+      },
+      "DIVISLAB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 3192.27,
+        "max_price": 4511.78
+      },
+      "APOLLOHOSP.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 3476.89,
+        "max_price": 4997.11
+      },
+      "AUROPHARMA.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 430.88,
+        "max_price": 718.94
+      },
+      "BIOCON.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 258.28,
+        "max_price": 402.66
+      },
+      "LUPIN.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 573.78,
+        "max_price": 932.67
+      },
+      "TORNTPHARM.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 1190.49,
+        "max_price": 1624.07
+      },
+      "ALKEM.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2781.57,
+        "max_price": 3550.03
+      },
+      "^NSEI": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15293.5,
+        "max_price": 18812.5
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 18308.099609375,
+      "peak_date": "2022-01-17",
+      "crash_trough": 15293.5,
+      "trough_date": "2022-06-17",
+      "max_drawdown_pct": -16.47,
+      "crash_visible": true
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_PSU_BANK__TECH_SELLOFF_2022": {
+    "sector": "NIFTY_PSU_BANK",
+    "regime": "TECH_SELLOFF_2022",
+    "file_relative": "data/NIFTY_PSU_BANK__tech_selloff_2022.csv",
+    "file_size_bytes": 60868,
+    "row_count": 248,
+    "column_count": 14,
+    "date_range": [
+      "2022-01-03",
+      "2022-12-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 12,
+    "retained_tickers": [
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "CANBK.NS",
+      "UNIONBANK.NS",
+      "INDIANB.NS",
+      "BANKINDIA.NS",
+      "MAHABANK.NS",
+      "CENTRALBK.NS",
+      "UCOBANK.NS",
+      "IOB.NS",
+      "PSB.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SBIN.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 402.76,
+        "max_price": 581.1
+      },
+      "BANKBARODA.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 71.96,
+        "max_price": 170.73
+      },
+      "PNB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 25.65,
+        "max_price": 55.2
+      },
+      "CANBK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 30.55,
+        "max_price": 58.34
+      },
+      "UNIONBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 28.31,
+        "max_price": 83.5
+      },
+      "INDIANB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 115.05,
+        "max_price": 271.37
+      },
+      "BANKINDIA.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 34.9,
+        "max_price": 90.54
+      },
+      "MAHABANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 13.24,
+        "max_price": 30.31
+      },
+      "CENTRALBK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15.86,
+        "max_price": 38.31
+      },
+      "UCOBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 10.24,
+        "max_price": 35.15
+      },
+      "IOB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15.35,
+        "max_price": 34.75
+      },
+      "PSB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 12.5,
+        "max_price": 41.32
+      },
+      "^NSEI": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15293.5,
+        "max_price": 18812.5
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 18308.099609375,
+      "peak_date": "2022-01-17",
+      "crash_trough": 15293.5,
+      "trough_date": "2022-06-17",
+      "max_drawdown_pct": -16.47,
+      "crash_visible": true
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_PRIVATE_BANK__TECH_SELLOFF_2022": {
+    "sector": "NIFTY_PRIVATE_BANK",
+    "regime": "TECH_SELLOFF_2022",
+    "file_relative": "data/NIFTY_PRIVATE_BANK__tech_selloff_2022.csv",
+    "file_size_bytes": 50924,
+    "row_count": 248,
+    "column_count": 12,
+    "date_range": [
+      "2022-01-03",
+      "2022-12-30"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 10,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "INDUSINDBK.NS",
+      "FEDERALBNK.NS",
+      "IDFCFIRSTB.NS",
+      "BANDHANBNK.NS",
+      "RBLBANK.NS",
+      "AUBANK.NS"
+    ],
+    "dropped_tickers": [],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 606.49,
+        "max_price": 786.81
+      },
+      "ICICIBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 628.85,
+        "max_price": 922.1
+      },
+      "KOTAKBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 326.72,
+        "max_price": 391.3
+      },
+      "AXISBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 622.47,
+        "max_price": 946.51
+      },
+      "INDUSINDBK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 753.46,
+        "max_price": 1234.65
+      },
+      "FEDERALBNK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 80.14,
+        "max_price": 135.91
+      },
+      "IDFCFIRSTB.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 28.97,
+        "max_price": 62.31
+      },
+      "BANDHANBNK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 204.27,
+        "max_price": 330.81
+      },
+      "RBLBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 75.7,
+        "max_price": 175.91
+      },
+      "AUBANK.NS": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 529.29,
+        "max_price": 713.26
+      },
+      "^NSEI": {
+        "observations": 248,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 15293.5,
+        "max_price": 18812.5
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 18308.099609375,
+      "peak_date": "2022-01-17",
+      "crash_trough": 15293.5,
+      "trough_date": "2022-06-17",
+      "max_drawdown_pct": -16.47,
+      "crash_visible": true
+    },
+    "verdict": "PASS",
+    "failed_ticker_reasons": {}
+  },
+  "NIFTY_IT__2008_GFC": {
+    "sector": "NIFTY_IT",
+    "regime": "2008_GFC",
+    "file_relative": "data/NIFTY_IT__2008_gfc.csv",
+    "file_size_bytes": 47191,
+    "row_count": 303,
+    "column_count": 9,
+    "date_range": [
+      "2008-01-01",
+      "2009-03-31"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 7,
+    "retained_tickers": [
+      "TCS.NS",
+      "INFY.NS",
+      "HCLTECH.NS",
+      "WIPRO.NS",
+      "TECHM.NS",
+      "MPHASIS.NS",
+      "COFORGE.NS"
+    ],
+    "dropped_tickers": [
+      "LTIM.NS",
+      "PERSISTENT.NS",
+      "LTTS.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "TCS.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 75.09,
+        "max_price": 173.11
+      },
+      "INFY.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 90.6,
+        "max_price": 162.62
+      },
+      "HCLTECH.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 14.58,
+        "max_price": 48.97
+      },
+      "WIPRO.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 18.11,
+        "max_price": 47.31
+      },
+      "TECHM.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 35.07,
+        "max_price": 187.09
+      },
+      "MPHASIS.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 82.8,
+        "max_price": 183.32
+      },
+      "COFORGE.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 5.88,
+        "max_price": 30.92
+      },
+      "^NSEI": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2524.2,
+        "max_price": 6287.85
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 6287.85009765625,
+      "peak_date": "2008-01-08",
+      "crash_trough": 2524.199951171875,
+      "trough_date": "2008-10-27",
+      "max_drawdown_pct": -59.86,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "LTIM.NS": "No data returned (symbol not active/listed for this period)",
+      "PERSISTENT.NS": "No data returned (symbol not active/listed for this period)",
+      "LTTS.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_BANK__2008_GFC": {
+    "sector": "NIFTY_BANK",
+    "regime": "2008_GFC",
+    "file_relative": "data/NIFTY_BANK__2008_gfc.csv",
+    "file_size_bytes": 58106,
+    "row_count": 303,
+    "column_count": 11,
+    "date_range": [
+      "2008-01-01",
+      "2009-03-31"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "INDUSINDBK.NS",
+      "FEDERALBNK.NS"
+    ],
+    "dropped_tickers": [
+      "BANDHANBNK.NS",
+      "IDFCFIRSTB.NS",
+      "AUBANK.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 34.3,
+        "max_price": 76.4
+      },
+      "ICICIBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 38.95,
+        "max_price": 208.78
+      },
+      "KOTAKBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 10.66,
+        "max_price": 68.67
+      },
+      "AXISBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 50.43,
+        "max_price": 225.71
+      },
+      "SBIN.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 71.24,
+        "max_price": 182.41
+      },
+      "BANKBARODA.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 26.39,
+        "max_price": 68.12
+      },
+      "PNB.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 43.94,
+        "max_price": 104.3
+      },
+      "INDUSINDBK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 24.49,
+        "max_price": 116.41
+      },
+      "FEDERALBNK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 9.39,
+        "max_price": 27.49
+      },
+      "^NSEI": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2524.2,
+        "max_price": 6287.85
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 6287.85009765625,
+      "peak_date": "2008-01-08",
+      "crash_trough": 2524.199951171875,
+      "trough_date": "2008-10-27",
+      "max_drawdown_pct": -59.86,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "BANDHANBNK.NS": "No data returned (symbol not active/listed for this period)",
+      "IDFCFIRSTB.NS": "No data returned (symbol not active/listed for this period)",
+      "AUBANK.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_AUTO__2008_GFC": {
+    "sector": "NIFTY_AUTO",
+    "regime": "2008_GFC",
+    "file_relative": "data/NIFTY_AUTO__2008_gfc.csv",
+    "file_size_bytes": 57962,
+    "row_count": 303,
+    "column_count": 11,
+    "date_range": [
+      "2008-01-01",
+      "2009-03-31"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "MARUTI.NS",
+      "M&M.NS",
+      "BAJAJ-AUTO.NS",
+      "HEROMOTOCO.NS",
+      "EICHERMOT.NS",
+      "ASHOKLEY.NS",
+      "TVSMOTOR.NS",
+      "BALKRISIND.NS",
+      "BHARATFORG.NS"
+    ],
+    "dropped_tickers": [
+      "TATAMOTORS.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "MARUTI.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 400.89,
+        "max_price": 862.45
+      },
+      "M&M.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 49.8,
+        "max_price": 172.85
+      },
+      "BAJAJ-AUTO.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 97.21,
+        "max_price": 402.47
+      },
+      "HEROMOTOCO.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 325.27,
+        "max_price": 612.03
+      },
+      "EICHERMOT.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 12.71,
+        "max_price": 35.98
+      },
+      "ASHOKLEY.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2.24,
+        "max_price": 9.22
+      },
+      "TVSMOTOR.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 6.13,
+        "max_price": 30.9
+      },
+      "BALKRISIND.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 10.25,
+        "max_price": 73.08
+      },
+      "BHARATFORG.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 31.57,
+        "max_price": 162.41
+      },
+      "^NSEI": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2524.2,
+        "max_price": 6287.85
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 6287.85009765625,
+      "peak_date": "2008-01-08",
+      "crash_trough": 2524.199951171875,
+      "trough_date": "2008-10-27",
+      "max_drawdown_pct": -59.86,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "TATAMOTORS.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_PHARMA__2008_GFC": {
+    "sector": "NIFTY_PHARMA",
+    "regime": "2008_GFC",
+    "file_relative": "data/NIFTY_PHARMA__2008_gfc.csv",
+    "file_size_bytes": 58368,
+    "row_count": 303,
+    "column_count": 11,
+    "date_range": [
+      "2008-01-01",
+      "2009-03-31"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 9,
+    "retained_tickers": [
+      "SUNPHARMA.NS",
+      "DRREDDY.NS",
+      "CIPLA.NS",
+      "DIVISLAB.NS",
+      "APOLLOHOSP.NS",
+      "AUROPHARMA.NS",
+      "BIOCON.NS",
+      "LUPIN.NS",
+      "TORNTPHARM.NS"
+    ],
+    "dropped_tickers": [
+      "ALKEM.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SUNPHARMA.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 80.69,
+        "max_price": 135.24
+      },
+      "DRREDDY.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 66.08,
+        "max_price": 130.98
+      },
+      "CIPLA.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 142.58,
+        "max_price": 214.36
+      },
+      "DIVISLAB.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 171.99,
+        "max_price": 402.74
+      },
+      "APOLLOHOSP.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 162.83,
+        "max_price": 266.86
+      },
+      "AUROPHARMA.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 9.34,
+        "max_price": 47.66
+      },
+      "BIOCON.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 12.93,
+        "max_price": 44.36
+      },
+      "LUPIN.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 82.99,
+        "max_price": 137.73
+      },
+      "TORNTPHARM.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 22.61,
+        "max_price": 39.31
+      },
+      "^NSEI": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2524.2,
+        "max_price": 6287.85
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 6287.85009765625,
+      "peak_date": "2008-01-08",
+      "crash_trough": 2524.199951171875,
+      "trough_date": "2008-10-27",
+      "max_drawdown_pct": -59.86,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "ALKEM.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_PSU_BANK__2008_GFC": {
+    "sector": "NIFTY_PSU_BANK",
+    "regime": "2008_GFC",
+    "file_relative": "data/NIFTY_PSU_BANK__2008_gfc.csv",
+    "file_size_bytes": 69130,
+    "row_count": 303,
+    "column_count": 13,
+    "date_range": [
+      "2008-01-01",
+      "2009-03-31"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 12,
+    "retained_ticker_count": 11,
+    "retained_tickers": [
+      "SBIN.NS",
+      "BANKBARODA.NS",
+      "PNB.NS",
+      "CANBK.NS",
+      "UNIONBANK.NS",
+      "INDIANB.NS",
+      "BANKINDIA.NS",
+      "MAHABANK.NS",
+      "CENTRALBK.NS",
+      "UCOBANK.NS",
+      "IOB.NS"
+    ],
+    "dropped_tickers": [
+      "PSB.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "SBIN.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 71.24,
+        "max_price": 182.41
+      },
+      "BANKBARODA.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 26.39,
+        "max_price": 68.12
+      },
+      "PNB.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 43.94,
+        "max_price": 104.3
+      },
+      "CANBK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 19.5,
+        "max_price": 51.87
+      },
+      "UNIONBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 66.73,
+        "max_price": 148.26
+      },
+      "INDIANB.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 40.84,
+        "max_price": 142.78
+      },
+      "BANKINDIA.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 129.46,
+        "max_price": 315.38
+      },
+      "MAHABANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 12.71,
+        "max_price": 60.71
+      },
+      "CENTRALBK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 21.51,
+        "max_price": 102.06
+      },
+      "UCOBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 17.55,
+        "max_price": 63.88
+      },
+      "IOB.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 30.3,
+        "max_price": 168.27
+      },
+      "^NSEI": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2524.2,
+        "max_price": 6287.85
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 6287.85009765625,
+      "peak_date": "2008-01-08",
+      "crash_trough": 2524.199951171875,
+      "trough_date": "2008-10-27",
+      "max_drawdown_pct": -59.86,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "PSB.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  },
+  "NIFTY_PRIVATE_BANK__2008_GFC": {
+    "sector": "NIFTY_PRIVATE_BANK",
+    "regime": "2008_GFC",
+    "file_relative": "data/NIFTY_PRIVATE_BANK__2008_gfc.csv",
+    "file_size_bytes": 41570,
+    "row_count": 303,
+    "column_count": 8,
+    "date_range": [
+      "2008-01-01",
+      "2009-03-31"
+    ],
+    "is_date_first": true,
+    "is_bench_last": true,
+    "is_date_ascending": true,
+    "is_date_unique": true,
+    "configured_ticker_count": 10,
+    "retained_ticker_count": 6,
+    "retained_tickers": [
+      "HDFCBANK.NS",
+      "ICICIBANK.NS",
+      "KOTAKBANK.NS",
+      "AXISBANK.NS",
+      "INDUSINDBK.NS",
+      "FEDERALBNK.NS"
+    ],
+    "dropped_tickers": [
+      "IDFCFIRSTB.NS",
+      "BANDHANBNK.NS",
+      "RBLBANK.NS",
+      "AUBANK.NS"
+    ],
+    "total_nulls": 0,
+    "total_zeroes": 0,
+    "ticker_stats": {
+      "HDFCBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 34.3,
+        "max_price": 76.4
+      },
+      "ICICIBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 38.95,
+        "max_price": 208.78
+      },
+      "KOTAKBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 10.66,
+        "max_price": 68.67
+      },
+      "AXISBANK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 50.43,
+        "max_price": 225.71
+      },
+      "INDUSINDBK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 24.49,
+        "max_price": 116.41
+      },
+      "FEDERALBNK.NS": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 9.39,
+        "max_price": 27.49
+      },
+      "^NSEI": {
+        "observations": 303,
+        "missing_values": 0,
+        "zero_values": 0,
+        "min_price": 2524.2,
+        "max_price": 6287.85
+      }
+    },
+    "benchmark_drawdown": {
+      "pre_crash_peak": 6287.85009765625,
+      "peak_date": "2008-01-08",
+      "crash_trough": 2524.199951171875,
+      "trough_date": "2008-10-27",
+      "max_drawdown_pct": -59.86,
+      "crash_visible": true
+    },
+    "verdict": "PASS WITH LIMITATIONS",
+    "failed_ticker_reasons": {
+      "IDFCFIRSTB.NS": "No data returned (symbol not active/listed for this period)",
+      "BANDHANBNK.NS": "No data returned (symbol not active/listed for this period)",
+      "RBLBANK.NS": "No data returned (symbol not active/listed for this period)",
+      "AUBANK.NS": "No data returned (symbol not active/listed for this period)"
+    }
+  }
+}
