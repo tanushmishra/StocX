@@ -65,3 +65,6 @@ htmlcov/
 
 # Logs
 *.log
+
+# Nested clone
+StocX/

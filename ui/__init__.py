@@ -11,6 +11,9 @@ from ui.components import (
     render_agent_trace,
     render_fno_table,
     render_pair_details,
+    render_news_panel,
+    render_verification_summary,
+    load_cached_news_for_ticker,
 )
 from ui.charts import (
     create_cumulative_returns_figure,
@@ -31,6 +34,9 @@ __all__ = [
     "render_agent_trace",
     "render_fno_table",
     "render_pair_details",
+    "render_news_panel",
+    "render_verification_summary",
+    "load_cached_news_for_ticker",
     "create_cumulative_returns_figure",
     "create_rolling_beta_figure",
     "create_zscore_figure",
