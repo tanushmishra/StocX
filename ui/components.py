@@ -325,18 +325,18 @@ def _render_single_news_card(item: Dict[str, Any]) -> None:
 
     snippet_html = ""
     if snippet:
-        snippet_html = f'<div style="color:#94a3b8; font-size:12px; line-height:1.4; margin:6px 0 8px 0;">{html.escape(snippet)}</div>'
+        snippet_html = f'<div style="color:#57534e; font-size:12px; line-height:1.4; margin:6px 0 8px 0;">{html.escape(snippet)}</div>'
 
     card_html = f"""
-    <div style="background:rgba(30,41,59,0.7); border:1px solid #334155; border-radius:6px; padding:12px 14px; margin-bottom:10px;">
+    <div style="background:#ffffff; border:1px solid #dcd2be; border-radius:6px; padding:12px 14px; margin-bottom:10px; box-shadow:0 1px 4px rgba(100,80,60,0.05);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <span style="background:#1e293b; color:#38bdf8; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600; border:1px solid #0284c7;">{safe_publisher}</span>
+            <span style="background:#ede7d8; color:#92400e; font-size:11px; padding:2px 8px; border-radius:4px; font-weight:600; border:1px solid #d4c5a9;">{safe_publisher}</span>
             <span style="color:#64748b; font-size:11px;">{safe_timestamp}</span>
         </div>
-        <div style="color:#f1f5f9; font-size:13px; font-weight:600; line-height:1.4; margin-bottom:4px;">{safe_title}</div>
+        <div style="color:#292524; font-size:13px; font-weight:600; line-height:1.4; margin-bottom:4px;">{safe_title}</div>
         {snippet_html}
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:6px; border-top:1px solid #1e293b;">
-            <span style="color:#475569; font-size:10px; text-transform:uppercase; letter-spacing:0.5px;">Provider: {safe_provider}</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:6px; border-top:1px solid #ede7d8;">
+            <span style="color:#78716c; font-size:10px; text-transform:uppercase; letter-spacing:0.5px;">Provider: {safe_provider}</span>
             {url_html}
         </div>
     </div>
@@ -459,10 +459,10 @@ def render_agent_trace(
             safe_checks = html.escape(checks_str)
 
             rej_html = f"""
-            <div style="background:rgba(239,68,68,0.1); border-left:4px solid #ef4444; padding:8px 12px; margin-bottom:8px; border-radius:0 4px 4px 0;">
-                <div style="font-weight:600; color:#f87171; font-size:12px;">Attempt {attempt}: {safe_pair}</div>
-                <div style="color:#e2e8f0; font-size:12px; margin-top:2px;">{safe_reason}</div>
-                <div style="color:#94a3b8; font-size:11px; margin-top:4px;">Failed Checks: <code>{safe_checks}</code></div>
+            <div style="background:rgba(185,28,28,0.06); border-left:4px solid #b91c1c; border-top:1px solid #f0d5d5; border-right:1px solid #f0d5d5; border-bottom:1px solid #f0d5d5; padding:8px 12px; margin-bottom:8px; border-radius:0 4px 4px 0;">
+                <div style="font-weight:600; color:#b91c1c; font-size:12px;">Attempt {attempt}: {safe_pair}</div>
+                <div style="color:#292524; font-size:12px; margin-top:2px;">{safe_reason}</div>
+                <div style="color:#78716c; font-size:11px; margin-top:4px;">Failed Checks: <code>{safe_checks}</code></div>
             </div>
             """
             st.markdown(rej_html, unsafe_allow_html=True)
@@ -611,14 +611,14 @@ def render_verification_summary(view_model: Any) -> None:
         badge_color = "#94a3b8"
 
     header_html = f"""
-    <div style="display:flex; justify-content:space-between; align-items:center; background:#1e293b; border:1px solid #334155; padding:12px 16px; border-radius:6px; margin-bottom:12px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; background:#ffffff; border:1px solid #dcd2be; padding:12px 16px; border-radius:6px; margin-bottom:12px; box-shadow:0 1px 4px rgba(100,80,60,0.05);">
         <div>
-            <span style="font-size:12px; color:#94a3b8; text-transform:uppercase; letter-spacing:0.5px;">Verification Verdict</span>
+            <span style="font-size:12px; color:#78716c; text-transform:uppercase; letter-spacing:0.5px;">Verification Verdict</span>
             <div style="font-size:16px; font-weight:700; color:{badge_color}; margin-top:2px;">{badge_text}</div>
         </div>
         <div style="text-align:right;">
-            <span style="font-size:12px; color:#94a3b8;">Screening Loop</span>
-            <div style="font-size:13px; font-weight:600; color:#e2e8f0; margin-top:2px;">Attempt {attempt} of {max_att}</div>
+            <span style="font-size:12px; color:#78716c;">Screening Loop</span>
+            <div style="font-size:13px; font-weight:600; color:#292524; margin-top:2px;">Attempt {attempt} of {max_att}</div>
         </div>
     </div>
     """
@@ -645,7 +645,7 @@ def render_verification_summary(view_model: Any) -> None:
     if diag:
         safe_diag = html.escape(str(diag))
         st.markdown(f"""
-        <div style="background:rgba(30,41,59,0.5); border-left:3px solid #38bdf8; padding:8px 12px; margin-top:8px; border-radius:0 4px 4px 0; font-size:12px; color:#cbd5e1;">
+        <div style="background:#faf7f0; border-left:3px solid #b45309; border-top:1px solid #ede7d8; border-right:1px solid #ede7d8; border-bottom:1px solid #ede7d8; padding:8px 12px; margin-top:8px; border-radius:0 4px 4px 0; font-size:12px; color:#44403c;">
             <strong>Verifier Diagnostic:</strong> {safe_diag}
         </div>
         """, unsafe_allow_html=True)

@@ -1,8 +1,9 @@
 """
 Custom CSS styles for the Market-Neutral Hedge Builder dashboard.
 
-Provides a dark professional theme with glass-morphism metric cards,
-consistent color coding (green = hedged/positive, red = unhedged/negative),
+Provides a warm beige / editorial fintech theme with soft cream cards,
+warm sand borders, high-contrast typography, consistent color coding
+(dark green = hedged/positive, crimson = unhedged/negative),
 and responsive grid layout.
 """
 
@@ -11,26 +12,27 @@ MAIN_CSS = """
 /* ── Import Google Fonts ─────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── Root Variables ──────────────────────────────────────────────── */
+/* ── Root Variables (Beige Fintech Theme) ────────────────────────── */
 :root {
-    --bg-primary:    #0a0e1a;
-    --bg-secondary:  #111827;
-    --bg-card:       rgba(17, 24, 39, 0.65);
-    --bg-card-hover: rgba(30, 41, 59, 0.75);
-    --border-glass:  rgba(148, 163, 184, 0.12);
-    --text-primary:  #f1f5f9;
-    --text-secondary:#94a3b8;
-    --text-muted:    #64748b;
-    --green:         #22c55e;
-    --green-dim:     rgba(34, 197, 94, 0.15);
-    --red:           #ef4444;
-    --red-dim:       rgba(239, 68, 68, 0.12);
-    --blue:          #3b82f6;
-    --blue-dim:      rgba(59, 130, 246, 0.15);
-    --amber:         #f59e0b;
-    --amber-dim:     rgba(245, 158, 11, 0.12);
-    --purple:        #a78bfa;
-    --cyan:          #22d3ee;
+    --bg-primary:    #f7f4eb;
+    --bg-secondary:  #efe9dc;
+    --bg-card:       #ffffff;
+    --bg-card-hover: #faf7f0;
+    --border-glass:  rgba(168, 148, 120, 0.32);
+    --border-warm:   #dcd2be;
+    --text-primary:  #2b2625;
+    --text-secondary:#5c544e;
+    --text-muted:    #7e746c;
+    --green:         #15803d;
+    --green-dim:     rgba(21, 128, 61, 0.12);
+    --red:           #b91c1c;
+    --red-dim:       rgba(185, 28, 28, 0.10);
+    --blue:          #1d4ed8;
+    --blue-dim:      rgba(29, 78, 216, 0.12);
+    --amber:         #b45309;
+    --amber-dim:     rgba(180, 83, 9, 0.12);
+    --purple:        #7e22ce;
+    --cyan:          #0e7490;
     --radius:        12px;
 }
 
@@ -48,8 +50,8 @@ html, body, [data-testid="stAppViewContainer"],
 
 /* ── Sidebar ─────────────────────────────────────────────────────── */
 [data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%) !important;
-    border-right: 1px solid var(--border-glass) !important;
+    background: linear-gradient(180deg, #ede7d8 0%, #e2dac7 100%) !important;
+    border-right: 1px solid var(--border-warm) !important;
 }
 [data-testid="stSidebar"] .stMarkdown p,
 [data-testid="stSidebar"] .stMarkdown h1,
@@ -63,15 +65,16 @@ html, body, [data-testid="stAppViewContainer"],
 .hero-header {
     text-align: center;
     padding: 2rem 1rem 1.5rem;
-    background: linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(167,139,250,0.08) 100%);
+    background: linear-gradient(135deg, rgba(235, 225, 205, 0.7) 0%, rgba(220, 205, 180, 0.7) 100%);
     border-radius: var(--radius);
-    border: 1px solid var(--border-glass);
+    border: 1px solid var(--border-warm);
     margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(100, 80, 60, 0.05);
 }
 .hero-header h1 {
     font-size: 2.4rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #60a5fa, #a78bfa, #22d3ee);
+    background: linear-gradient(135deg, #78350f, #92400e, #451a03);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 0.3rem;
@@ -80,25 +83,25 @@ html, body, [data-testid="stAppViewContainer"],
     color: var(--text-secondary);
     font-size: 0.95rem;
     letter-spacing: 0.5px;
+    font-weight: 500;
 }
 
-/* ── Glass Metric Card ───────────────────────────────────────────── */
+/* ── Glass / Card Metric ─────────────────────────────────────────── */
 .metric-card {
     background: var(--bg-card);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border-glass);
+    border: 1px solid var(--border-warm);
     border-radius: var(--radius);
     padding: 1.25rem 1.35rem;
     transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 6px rgba(100, 80, 60, 0.05);
 }
 .metric-card:hover {
     background: var(--bg-card-hover);
-    border-color: rgba(148, 163, 184, 0.25);
+    border-color: rgba(140, 110, 80, 0.45);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+    box-shadow: 0 6px 16px rgba(100, 80, 60, 0.10);
 }
 .metric-card .mc-label {
     font-size: 0.78rem;
@@ -118,7 +121,7 @@ html, body, [data-testid="stAppViewContainer"],
     font-size: 1.05rem;
     color: var(--red);
     text-decoration: line-through;
-    opacity: 0.7;
+    opacity: 0.85;
 }
 .metric-card .mc-after {
     font-size: 1.75rem;
@@ -161,7 +164,7 @@ html, body, [data-testid="stAppViewContainer"],
     color: var(--text-primary);
     margin: 2rem 0 0.6rem;
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid var(--border-glass);
+    border-bottom: 1px solid var(--border-warm);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -170,17 +173,20 @@ html, body, [data-testid="stAppViewContainer"],
 /* ── Agent Trace Panel ───────────────────────────────────────────── */
 .trace-step {
     padding: 0.65rem 1rem;
-    border-left: 3px solid var(--border-glass);
+    border-left: 3px solid var(--border-warm);
     margin-bottom: 0.5rem;
     border-radius: 0 8px 8px 0;
-    background: rgba(15, 23, 42, 0.5);
+    background: #ffffff;
+    border-top: 1px solid var(--border-warm);
+    border-right: 1px solid var(--border-warm);
+    border-bottom: 1px solid var(--border-warm);
     font-size: 0.88rem;
     transition: border-color 0.2s;
 }
-.trace-step:hover { border-left-color: var(--blue); }
+.trace-step:hover { border-left-color: var(--amber); }
 .trace-step .ts-agent {
     font-weight: 600;
-    color: var(--cyan);
+    color: var(--amber);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.82rem;
 }
@@ -195,14 +201,15 @@ html, body, [data-testid="stAppViewContainer"],
 
 /* ── CRO Report Card ────────────────────────────────────────────── */
 .cro-report {
-    background: linear-gradient(135deg, rgba(30,41,59,0.6) 0%, rgba(15,23,42,0.8) 100%);
-    border: 1px solid var(--border-glass);
+    background: #ffffff;
+    border: 1px solid var(--border-warm);
     border-radius: var(--radius);
     padding: 1.5rem 2rem;
     line-height: 1.75;
+    box-shadow: 0 2px 6px rgba(100, 80, 60, 0.05);
 }
 .cro-report h3 {
-    color: var(--cyan);
+    color: var(--amber);
     margin-bottom: 0.5rem;
 }
 .cro-report strong { color: var(--text-primary); }
@@ -212,13 +219,14 @@ html, body, [data-testid="stAppViewContainer"],
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border: 1px solid var(--border-glass);
+    border: 1px solid var(--border-warm);
     border-radius: var(--radius);
     overflow: hidden;
     font-size: 0.88rem;
+    background: #ffffff;
 }
 .fno-table thead th {
-    background: rgba(30, 41, 59, 0.8);
+    background: #ede7d8;
     color: var(--text-secondary);
     text-transform: uppercase;
     font-size: 0.72rem;
@@ -226,54 +234,36 @@ html, body, [data-testid="stAppViewContainer"],
     font-weight: 600;
     padding: 0.75rem 1rem;
     text-align: left;
+    border-bottom: 1px solid var(--border-warm);
 }
 .fno-table tbody td {
     padding: 0.7rem 1rem;
-    border-top: 1px solid var(--border-glass);
+    border-top: 1px solid var(--border-warm);
     color: var(--text-primary);
 }
 .fno-table tbody tr:hover {
-    background: rgba(59,130,246,0.06);
-}
-
-/* ── Black Swan Buttons ──────────────────────────────────────────── */
-.crash-btn {
-    display: block;
-    width: 100%;
-    padding: 0.55rem 0.8rem;
-    margin-bottom: 0.4rem;
-    background: rgba(239,68,68,0.08);
-    border: 1px solid rgba(239,68,68,0.2);
-    border-radius: 8px;
-    color: var(--text-primary);
-    cursor: pointer;
-    font-size: 0.82rem;
-    text-align: left;
-    transition: all 0.2s;
-}
-.crash-btn:hover {
-    background: rgba(239,68,68,0.18);
-    border-color: var(--red);
+    background: rgba(180, 130, 80, 0.05);
 }
 
 /* ── Plotly chart containers ─────────────────────────────────────── */
 [data-testid="stPlotlyChart"] {
     border-radius: var(--radius);
-    border: 1px solid var(--border-glass);
+    border: 1px solid var(--border-warm);
     overflow: hidden;
+    background: #ffffff;
 }
 
 /* ── Expander styling ────────────────────────────────────────────── */
 [data-testid="stExpander"] {
-    border: 1px solid var(--border-glass) !important;
+    border: 1px solid var(--border-warm) !important;
     border-radius: var(--radius) !important;
-    background: var(--bg-card) !important;
+    background: #ffffff !important;
 }
 
 /* ── Scrollbar ───────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #b8a995; border-radius: 3px; }
 
 /* ── Button polish ───────────────────────────────────────────────── */
 .stButton > button {
@@ -283,13 +273,13 @@ html, body, [data-testid="stAppViewContainer"],
 }
 .stButton > button:hover {
     transform: translateY(-1px) !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+    box-shadow: 0 4px 10px rgba(100,80,60,0.15) !important;
 }
 
 /* ── Primary CTA ─────────────────────────────────────────────────── */
 div[data-testid="stButton"] > button[kind="primary"] {
-    background: linear-gradient(135deg, #3b82f6, #8b5cf6) !important;
-    color: white !important;
+    background: linear-gradient(135deg, #92400e, #78350f) !important;
+    color: #fdfbf7 !important;
     border: none !important;
     padding: 0.6rem 2rem !important;
     font-size: 1.05rem !important;
@@ -298,8 +288,9 @@ div[data-testid="stButton"] > button[kind="primary"] {
 /* ── Data table ──────────────────────────────────────────────────── */
 [data-testid="stDataFrame"] {
     border-radius: var(--radius) !important;
-    border: 1px solid var(--border-glass) !important;
+    border: 1px solid var(--border-warm) !important;
     overflow: hidden !important;
+    background: #ffffff !important;
 }
 
 /* ── Hide Streamlit branding ─────────────────────────────────────── */

@@ -22,19 +22,19 @@ import pandas as pd
 import plotly.graph_objects as go
 
 # ── Palette ──────────────────────────────────────────────────────────────────
-_GREEN  = "#22c55e"
-_RED    = "#ef4444"
-_GREY   = "#94a3b8"
-_BLUE   = "#3b82f6"
-_CYAN   = "#22d3ee"
-_PURPLE = "#a78bfa"
-_AMBER  = "#f59e0b"
+_GREEN  = "#15803d"
+_RED    = "#b91c1c"
+_GREY   = "#78716c"
+_BLUE   = "#1d4ed8"
+_CYAN   = "#0e7490"
+_PURPLE = "#7e22ce"
+_AMBER  = "#b45309"
 
 _LAYOUT_COMMON: Dict[str, Any] = dict(
-    template="plotly_dark",
+    template="plotly_white",
     paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(10,14,26,0.6)",
-    font=dict(family="Inter, sans-serif", color="#f1f5f9"),
+    plot_bgcolor="rgba(247, 244, 235, 0.6)",
+    font=dict(family="Inter, sans-serif", color="#2b2625"),
     margin=dict(l=50, r=20, t=45, b=40),
     legend=dict(
         orientation="h",
@@ -315,7 +315,7 @@ def create_correlation_heatmap_figure(
         y=labels,
         colorscale=[
             [0.0, "#ef4444"],
-            [0.5, "#1e293b"],
+            [0.5, "#f7f4eb"],
             [1.0, "#22c55e"],
         ],
         zmin=-1,

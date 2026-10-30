@@ -114,7 +114,7 @@ def _render_sidebar() -> Dict[str, Any]:
 
         st.markdown("---")
         st.markdown(
-            "<div style='text-align:center; color:#64748b; font-size:0.75rem; line-height:1.5;'>"
+            "<div style='text-align:center; color:#78716c; font-size:0.75rem; line-height:1.5;'>"
             "<strong>Market-Neutral Hedge Builder</strong><br>"
             "Autonomous Multi-Agent System<br>"
             "Zero-Hallucination Quantitative Engine"
@@ -214,10 +214,10 @@ def main() -> None:
         # Clean landing state when no run has executed yet
         st.markdown(
             """
-            <div style='text-align:center; padding:4rem 1rem; color:#64748b;'>
+            <div style='text-align:center; padding:4rem 1rem; color:#78716c;'>
                 <p style='font-size:3rem; margin-bottom:0.5rem;'>🛡️</p>
-                <p style='font-size:1.15rem; font-weight:600; color:#94a3b8;'>Enter an investment thesis and hit <strong>Build Hedge</strong> to begin.</p>
-                <p style='font-size:0.85rem; margin-top:0.5rem; color:#64748b;'>
+                <p style='font-size:1.15rem; font-weight:600; color:#44403c;'>Enter an investment thesis and hit <strong>Build Hedge</strong> to begin.</p>
+                <p style='font-size:0.85rem; margin-top:0.5rem; color:#78716c;'>
                     Example: <em>"I am bullish on Indian IT companies but want protection against a broad market crash."</em>
                 </p>
             </div>
