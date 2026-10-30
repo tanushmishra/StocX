@@ -67,7 +67,24 @@ def load_cached_news_for_ticker(
     clean_ticker = (ticker or "").strip().upper()
     alt_ticker = clean_ticker[:-3] if clean_ticker.endswith(".NS") else f"{clean_ticker}.NS"
 
-    raw_items = data.get(clean_ticker) or data.get(alt_ticker) or []
+    # Support nested "tickers" dictionary if present (news_collector format)
+    source_dict = data.get("tickers") if isinstance(data.get("tickers"), dict) else data
+
+    entry = (
+        source_dict.get(clean_ticker)
+        or source_dict.get(alt_ticker)
+        or data.get(clean_ticker)
+        or data.get(alt_ticker)
+        or []
+    )
+
+    if isinstance(entry, dict):
+        raw_items = entry.get("articles") or []
+    elif isinstance(entry, list):
+        raw_items = entry
+    else:
+        raw_items = []
+
     if not isinstance(raw_items, list):
         return []
 
