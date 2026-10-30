@@ -116,13 +116,40 @@ If any field is ambiguous, prefer the conservative default.
 # Fallback defaults
 # ────────────────────────────────────────────────────────────────────────────
 
-_FALLBACK_INTENT = MacroIntent(
-    target_sector="NIFTY IT",
-    benchmark="^NSEI",
-    lookback_days=252,
-    stress_regime="COVID_2020",
-    reasoning="Fallback defaults applied because the LLM call failed.",
-)
+def _resolve_fallback_intent(thesis: str) -> MacroIntent:
+    """Heuristic fallback to extract sector and stress regime when LLM is unavailable."""
+    t = (thesis or "").lower()
+    sector = "NIFTY IT"
+    if any(w in t for w in ["bank", "finan", "credit", "lending", "hdfc", "icici", "kotak", "sbi", "axis"]):
+        sector = "NIFTY BANK"
+    elif any(w in t for w in ["auto", "car", "motor", "vehicle", "maruti", "tata motor", "eicher", "tvs"]):
+        sector = "NIFTY AUTO"
+    elif any(w in t for w in ["pharma", "drug", "health", "biotech", "sunpharma", "cipla", "drreddy"]):
+        sector = "NIFTY PHARMA"
+    elif any(w in t for w in ["fmcg", "consumer", "itc", "hul", "nestle"]):
+        sector = "NIFTY FMCG"
+    elif any(w in t for w in ["metal", "steel", "tata steel", "jsw"]):
+        sector = "NIFTY METAL"
+
+    lookback = 504 if any(w in t for w in ["2y", "two year", "long-term", "long term", "504"]) else 252
+
+    stress = "COVID_2020"
+    if any(w in t for w in ["2008", "gfc", "lehman", "financial crisis"]):
+        stress = "2008_GFC"
+    elif any(w in t for w in ["tech", "selloff", "2022"]):
+        stress = "TECH_SELLOFF_2022"
+    elif any(w in t for w in ["election", "2024", "poll"]):
+        stress = "ELECTION_2024"
+
+    return MacroIntent(
+        target_sector=sector,
+        benchmark="^NSEI",
+        lookback_days=lookback,
+        stress_regime=stress,
+        reasoning=f"Keyword heuristic fallback resolved sector to '{sector}', benchmark '^NSEI', and stress '{stress}'.",
+    )
+
+_FALLBACK_INTENT = _resolve_fallback_intent("")
 
 # ────────────────────────────────────────────────────────────────────────────
 # Node function
@@ -175,23 +202,33 @@ def macro_parser_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
 
     except Exception as exc:
         # Graceful degradation: log the error and use fallback defaults
-        logger.error("MacroParser ▸ LLM call failed (%s). Using fallback defaults.", exc)
-        result = _FALLBACK_INTENT
+        logger.error("MacroParser ▸ LLM call failed (%s). Using heuristic fallback defaults.", exc)
+        result = _resolve_fallback_intent(thesis)
+
+    # ── Preserve explicit configuration from state / sidebar if provided ──
+    user_lookback = getattr(state, "lookback_days", None) or state.get("lookback_days")
+    final_lookback = int(user_lookback) if user_lookback else result.lookback_days
+
+    user_benchmark = getattr(state, "benchmark", None) or state.get("benchmark")
+    final_benchmark = user_benchmark if user_benchmark else result.benchmark
+
+    user_stress = getattr(state, "stress_regime", None) or state.get("stress_regime")
+    final_stress = user_stress if user_stress else result.stress_regime
 
     # ── Build the partial state update ─────────────────────────────────
     summary_msg = (
         f"**Macro Intent Parsed**\n\n"
         f"- **Sector:** {result.target_sector}\n"
-        f"- **Benchmark:** {result.benchmark}\n"
-        f"- **Lookback:** {result.lookback_days} days\n"
-        f"- **Stress regime:** {result.stress_regime}\n\n"
+        f"- **Benchmark:** {final_benchmark}\n"
+        f"- **Lookback:** {final_lookback} days\n"
+        f"- **Stress regime:** {final_stress}\n\n"
         f"**Reasoning:** {result.reasoning}"
     )
 
     return {
         "target_sector": result.target_sector,
-        "benchmark": result.benchmark,
-        "lookback_days": result.lookback_days,
-        "stress_regime": result.stress_regime,
+        "benchmark": final_benchmark,
+        "lookback_days": final_lookback,
+        "stress_regime": final_stress,
         "messages": [{"role": "assistant", "content": summary_msg}],
     }

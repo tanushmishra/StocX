@@ -625,22 +625,39 @@ def render_verification_summary(view_model: Any) -> None:
     st.markdown(header_html, unsafe_allow_html=True)
 
     # Render individual gate results if available
+    raw_gates = ver_res.get("gates") or {}
+
+    def _get_gate_status(keys: list[str]) -> str:
+        if isinstance(raw_gates, dict):
+            for k in keys:
+                if k in raw_gates:
+                    return "passed" if bool(raw_gates[k]) else "failed"
+        if is_app is None and not failed:
+            return "pending"
+        for f in failed:
+            f_str = str(f).lower()
+            f_check = str(f.get("check", "")).lower() if isinstance(f, dict) else ""
+            for k in keys:
+                kl = k.lower()
+                if kl == f_check or kl in f_str:
+                    return "failed"
+        return "passed" if is_app is not None else "pending"
+
     gate_cols = st.columns(4)
     gates = [
-        ("Correlation Gate", "passed" if "correlation" not in failed and is_app is not None else "failed" if "correlation" in failed else "pending"),
-        ("Cointegration Gate", "passed" if "cointegration" not in failed and is_app is not None else "failed" if "cointegration" in failed else "pending"),
-        ("Drawdown Gate", "passed" if "drawdown" not in failed and is_app is not None else "failed" if "drawdown" in failed else "pending"),
-        ("Beta Neutrality", "passed" if "beta" not in failed and is_app is not None else "failed" if "beta" in failed else "pending"),
+        ("Correlation Gate", _get_gate_status(["correlation", "corr"])),
+        ("Cointegration Gate", _get_gate_status(["cointegration", "coint"])),
+        ("Drawdown Gate", _get_gate_status(["max_drawdown_reduction", "drawdown", "mdd"])),
+        ("Beta Neutrality", _get_gate_status(["realized_beta", "beta"])),
     ]
 
     for col, (gate_name, status) in zip(gate_cols, gates):
         with col:
-            icon = ""
             status_text = "PASS" if status == "passed" else ("FAIL" if status == "failed" else "PENDING")
             st.metric(label=gate_name, value=status_text)
 
     if failed:
-        st.markdown(f"**Failed Verification Criteria:** `{', '.join(html.escape(str(c)) for c in failed)}`")
+        st.markdown(f"**Failed Verification Criteria:** `{', '.join(str(c) for c in failed)}`")
 
     if diag:
         safe_diag = html.escape(str(diag))

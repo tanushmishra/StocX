@@ -193,9 +193,42 @@ def screener_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
 
     # ── 3. Separate into long (high score) and short (low score) ───────
     sorted_candidates = sorted(all_candidates, key=lambda c: c.get("score", 0), reverse=True)
-    midpoint = max(len(sorted_candidates) // 2, 1)
-    long_candidates = sorted_candidates[:midpoint]
-    short_candidates = sorted_candidates[midpoint:]
+
+    # If thesis explicitly names any constituents, prioritize them in screening
+    thesis_lower = (thesis or "").lower()
+    explicit_long = []
+    explicit_short = []
+    general_mentioned = []
+
+    for c in sorted_candidates:
+        name = c.get("ticker", "").replace(".NS", "").lower()
+        if name and name in thesis_lower:
+            idx = thesis_lower.find(name)
+            preceding = thesis_lower[max(0, idx - 25):idx]
+            following = thesis_lower[idx + len(name):min(len(thesis_lower), idx + len(name) + 25)]
+            if any(w in preceding for w in ["short", "bearish", "sell", "hedge with", "against"]):
+                explicit_short.append(c)
+            elif any(w in preceding for w in ["long", "bullish", "buy", "pair trade"]):
+                explicit_long.append(c)
+            elif any(w in following.split()[:2] for w in ["short", "bearish", "sell"]):
+                explicit_short.append(c)
+            elif any(w in following.split()[:2] for w in ["long", "bullish", "buy"]):
+                explicit_long.append(c)
+            else:
+                general_mentioned.append(c)
+
+    # If user mentioned multiple tickers without directional keywords, sort by score
+    if not explicit_long and not explicit_short and len(general_mentioned) >= 2:
+        general_mentioned.sort(key=lambda c: c.get("score", 0), reverse=True)
+        explicit_long = [general_mentioned[0]]
+        explicit_short = [general_mentioned[-1]]
+    elif not explicit_long and general_mentioned:
+        explicit_long = general_mentioned
+
+    other_candidates = [c for c in sorted_candidates if c not in explicit_long and c not in explicit_short]
+    midpoint = max(len(other_candidates) // 2, 1) if other_candidates else 0
+    long_candidates = explicit_long + other_candidates[:midpoint]
+    short_candidates = explicit_short + sorted(other_candidates[midpoint:], key=lambda c: c.get("score", 0))
 
     # ── 4. Build excluded pairs set for the LLM ───────────────────────
     excluded_pairs = {
@@ -303,22 +336,27 @@ def _fallback_selection(
 ) -> tuple[str, str, str]:
     """Pick the best non-excluded long and worst non-excluded short.
 
-    This is a purely deterministic fallback used when the LLM is unavailable
-    or accidentally re-proposes a rejected pair.
+    Orders search diagonally across long and short candidate pairs so retries
+    vary both the long and short legs rather than exhausting all attempts on one stock.
     """
-    for lc in long_candidates:
-        for sc in short_candidates:
-            lt = lc.get("ticker", "")
-            st = sc.get("ticker", "")
-            if lt and st and (lt, st) not in excluded:
-                return (
-                    lt,
-                    st,
-                    "Deterministic fallback: highest-scored long vs lowest-scored short "
-                    "that has not been previously rejected.",
-                )
+    pairs = []
+    max_len = max(len(long_candidates), len(short_candidates))
+    for diag in range(max_len * 2):
+        for i in range(diag + 1):
+            j = diag - i
+            if i < len(long_candidates) and j < len(short_candidates):
+                pairs.append((long_candidates[i], short_candidates[j]))
 
-    # Absolute last resort – return whatever we have
+    for lc, sc in pairs:
+        lt = lc.get("ticker", "")
+        st = sc.get("ticker", "")
+        if lt and st and (lt, st) not in excluded:
+            return (
+                lt,
+                st,
+                f"Deterministic selection: Long {lt} vs Short {st}.",
+            )
+
     lt = long_candidates[0]["ticker"] if long_candidates else ""
     st = short_candidates[0]["ticker"] if short_candidates else ""
-    return lt, st, "Absolute fallback – no non-rejected pairs available."
+    return lt, st, "Last resort fallback."
