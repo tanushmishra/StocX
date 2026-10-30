@@ -120,7 +120,9 @@ def _resolve_fallback_intent(thesis: str) -> MacroIntent:
     """Heuristic fallback to extract sector and stress regime when LLM is unavailable."""
     t = (thesis or "").lower()
     sector = "NIFTY IT"
-    if any(w in t for w in ["bank", "finan", "credit", "lending", "hdfc", "icici", "kotak", "sbi", "axis"]):
+    if any(w in t for w in ["psu", "canara", "canbk", "union bank", "indian bank", "central bank", "bank of india", "uco", "iob", "psb"]):
+        sector = "NIFTY PSU BANK"
+    elif any(w in t for w in ["bank", "finan", "credit", "lending", "hdfc", "icici", "kotak", "sbi", "axis"]):
         sector = "NIFTY BANK"
     elif any(w in t for w in ["auto", "car", "motor", "vehicle", "maruti", "tata motor", "eicher", "tvs"]):
         sector = "NIFTY AUTO"
