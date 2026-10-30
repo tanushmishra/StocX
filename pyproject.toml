@@ -1,0 +1,102 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "market-neutral-hedge-builder"
+version = "1.0.0"
+description = "Autonomous Multi-Agent Market-Neutral Hedge Builder with Zero-Hallucination Quant Engine"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+authors = [
+    {name = "Hedge Builder Team"},
+]
+keywords = [
+    "quantitative-finance",
+    "market-neutral",
+    "hedge",
+    "langgraph",
+    "multi-agent",
+    "beta-neutral",
+    "pairs-trading",
+    "cointegration",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+dependencies = [
+    # === Data & Finance ===
+    "yfinance>=0.2.36",
+    "pandas>=2.1.0",
+    "numpy>=1.26.0",
+    
+    # === Quant / Econometrics ===
+    "scipy>=1.11.0",
+    "statsmodels>=0.14.0",
+    
+    # === LLM & Agents ===
+    "langchain>=0.3.0",
+    "langchain-google-genai>=2.0.0",
+    "langgraph>=0.2.0",
+    "pydantic>=2.5.0",
+    
+    # === Visualization ===
+    "streamlit>=1.38.0",
+    "plotly>=5.18.0",
+    
+    # === NLP & Sentiment ===
+    "transformers>=4.36.0",
+    "torch>=2.1.0",
+    
+    # === Utilities ===
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+    "pre-commit>=3.6.0",
+]
+news = [
+    "tavily-python>=0.3.0",
+    "gnews>=0.3.0",
+]
+
+[project.scripts]
+hedge-builder = "app:main"
+
+[tool.setuptools.packages.find]
+include = ["engine*", "agents*", "ui*"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
