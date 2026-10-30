@@ -1,25 +1,21 @@
-"""
-🛡️ Market-Neutral Hedge Builder — Streamlit Dashboard
+"""🛡️ Market-Neutral Hedge Builder — Streamlit Dashboard
 ======================================================
 
-Main entry point for the interactive dashboard.  Runs the autonomous
-multi-agent hedge-building pipeline and renders a professional tear-sheet
-with metric cards, Plotly charts, an agent-trace panel, and a CRO report.
+Main entry point for the interactive dashboard. Executes the autonomous
+multi-agent hedge-building pipeline and renders an institutional-grade
+tear-sheet driven exclusively by genuine outputs from the quantitative engine.
 
 Run with::
 
     streamlit run app.py
-
-The app falls back to rich demo data when the ``engine`` / ``agents``
-packages are not yet available, so the UI can always be previewed.
 """
 
 from __future__ import annotations
 
-import datetime as dt
-from typing import Any, Dict, List, Optional, Tuple
+import logging
+import traceback
+from typing import Any, Dict, Optional
 
-import numpy as np
 import pandas as pd
 import streamlit as st
 
@@ -31,209 +27,40 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# ── UI package ────────────────────────────────────────────────────────────
+# ── UI package imports ────────────────────────────────────────────────────
 from ui.styles import inject_css
 from ui.components import (
-    render_metric_card,
-    render_cumulative_chart,
-    render_beta_chart,
-    render_zscore_chart,
-    render_correlation_heatmap,
+    load_cached_news_for_ticker,
     render_agent_trace,
+    render_beta_chart,
+    render_correlation_heatmap,
+    render_cumulative_chart,
+    render_drawdown_chart,
     render_fno_table,
+    render_metric_card,
+    render_news_panel,
     render_pair_details,
+    render_verification_summary,
+    render_zscore_chart,
 )
+from ui.adapter import DashboardViewModel, map_state_to_dashboard
 
+# Inject global fintech dark CSS theme
 inject_css()
 
-# ── Try to import real engine; flag availability ──────────────────────────
+logger = logging.getLogger(__name__)
+
+# ── Import LangGraph pipeline entry point ─────────────────────────────────
 _ENGINE_AVAILABLE = False
 try:
-    from agents.graph import run_hedge_builder  # type: ignore[import-untyped]
+    from agents.graph import run_hedge_builder
     _ENGINE_AVAILABLE = True
-except Exception:
-    pass
+except Exception as _import_exc:
+    logger.warning("agents.graph.run_hedge_builder could not be imported: %s", _import_exc)
 
 
 # ══════════════════════════════════════════════════════════════════════════
-# DEMO / MOCK DATA GENERATOR
-# ══════════════════════════════════════════════════════════════════════════
-
-def _generate_demo_data(
-    thesis: str = "Bullish on Indian IT",
-    capital: float = 100_000,
-    lookback: str = "2Y",
-    crash_scenario: Optional[str] = None,
-) -> Dict[str, Any]:
-    """Generate realistic-looking demo data for the dashboard.
-
-    The data is deterministic per thesis string so repeated runs look
-    consistent during a demo.
-    """
-    np.random.seed(hash(thesis) % 2**31)
-    n_days = {"1Y": 252, "2Y": 504, "3Y": 756}.get(lookback, 504)
-    end = dt.date.today()
-    dates = pd.bdate_range(end=end, periods=n_days)
-
-    # --- crash regime shading ------------------------------------------------
-    crash_periods: List[Tuple[str, str, str]] = []
-    crash_map = {
-        "💥 2008 GFC":           ("2008-09-15", "2009-03-09", "GFC"),
-        "🦠 COVID 2020":         ("2020-02-20", "2020-04-07", "COVID"),
-        "📉 Tech Selloff 2022":  ("2022-01-03", "2022-06-16", "Tech Crash"),
-        "🗳️ Election Day 2024":  ("2024-10-28", "2024-11-08", "Election"),
-    }
-    if crash_scenario and crash_scenario in crash_map:
-        crash_periods.append(crash_map[crash_scenario])
-
-    # --- synthetic return streams -------------------------------------------
-    # NIFTY
-    nifty_ret = np.random.normal(0.0004, 0.012, n_days)
-    # inject drawdown in a crash window (middle 15 % of series)
-    crash_start = int(n_days * 0.40)
-    crash_end   = int(n_days * 0.50)
-    nifty_ret[crash_start:crash_end] -= 0.018
-    nifty_cum = np.cumprod(1 + nifty_ret)
-
-    # Unhedged long — higher beta, correlated
-    long_ret = 1.15 * nifty_ret + np.random.normal(0.0002, 0.008, n_days)
-    unhedged_cum = np.cumprod(1 + long_ret)
-
-    # Hedged — near-zero beta, much tighter
-    hedge_noise = np.random.normal(0.0003, 0.004, n_days)
-    hedged_ret = 0.02 * nifty_ret + hedge_noise
-    hedged_cum = np.cumprod(1 + hedged_ret)
-
-    # --- rolling beta -------------------------------------------------------
-    window = 60
-    rb = pd.Series(
-        np.convolve(
-            nifty_ret * long_ret / np.maximum(nifty_ret**2, 1e-12),
-            np.ones(window) / window,
-            mode="same",
-        ),
-        index=dates,
-    )
-    rb_hedged = rb * 0.03 + np.random.normal(0, 0.02, n_days)
-    rolling_beta = pd.Series(rb_hedged, index=dates)
-
-    # --- Z-score -------------------------------------------------------------
-    spread = np.cumsum(np.random.normal(0, 0.02, n_days))
-    mu = pd.Series(spread).rolling(60).mean().bfill()
-    sigma = pd.Series(spread).rolling(60).std().bfill().replace(0, 1)
-    zscore = pd.Series(((spread - mu) / sigma).values, index=dates)
-
-    # --- correlation matrix --------------------------------------------------
-    tickers = ["INFY", "TCS", "WIPRO", "HCLTECH", "TECHM", "LTIM"]
-    base = np.random.uniform(0.55, 0.85, (len(tickers), len(tickers)))
-    corr = (base + base.T) / 2
-    np.fill_diagonal(corr, 1.0)
-    corr_matrix = pd.DataFrame(corr, index=tickers, columns=tickers)
-
-    # --- drawdown series -----------------------------------------------------
-    def _dd(cum: np.ndarray) -> np.ndarray:
-        peak = np.maximum.accumulate(cum)
-        return (cum - peak) / peak
-
-    unhedged_dd = _dd(unhedged_cum)
-    hedged_dd   = _dd(hedged_cum)
-
-    # --- summary metrics -----------------------------------------------------
-    metrics = {
-        "beta_unhedged":    1.12,
-        "beta_hedged":      round(float(np.mean(rb_hedged)), 2),
-        "max_dd_unhedged":  round(float(np.min(unhedged_dd)) * 100, 1),
-        "max_dd_hedged":    round(float(np.min(hedged_dd)) * 100, 1),
-        "sharpe_unhedged":  0.65,
-        "sharpe_hedged":    round(float(np.mean(hedged_ret) / max(np.std(hedged_ret), 1e-9) * np.sqrt(252)), 2),
-        "sortino_unhedged": 0.72,
-        "sortino_hedged":   round(float(
-            np.mean(hedged_ret) / max(np.std(hedged_ret[hedged_ret < 0]), 1e-9) * np.sqrt(252)
-        ), 2),
-    }
-
-    # --- agent trace ---------------------------------------------------------
-    rejection_log = [
-        {"agent": "📝 MacroParser",  "message": f"Parsed thesis → Sector: IT, Bias: Bullish, Risk: US recession",
-         "timestamp": "T+0.0s", "status": "info"},
-        {"agent": "🔎 Screener",     "message": "Screened 12 IT-sector pairs on NSE. Top candidates: INFY/TCS, INFY/WIPRO, TCS/TECHM",
-         "timestamp": "T+1.2s", "status": "info"},
-        {"agent": "📊 QuantEngine",  "message": "❌ Rejected TCS/TECHM: cointegration p = 0.18 > 0.05",
-         "timestamp": "T+3.4s", "status": "rejected"},
-        {"agent": "📊 QuantEngine",  "message": "❌ Rejected INFY/WIPRO: half-life 94 days > 60-day threshold",
-         "timestamp": "T+4.1s", "status": "rejected"},
-        {"agent": "📊 QuantEngine",  "message": "✓ INFY/TCS: coint p = 0.003, half-life = 18 days, hurst = 0.31",
-         "timestamp": "T+5.0s", "status": "info"},
-        {"agent": "✅ RiskVerifier", "message": "Portfolio β = 0.01 ✓ | Max-DD improvement 85% ✓ | Sharpe > 1.5 ✓",
-         "timestamp": "T+6.2s", "status": "approved"},
-        {"agent": "📋 CROReporter", "message": "Executive summary generated. F&O execution plan ready.",
-         "timestamp": "T+7.0s", "status": "approved"},
-    ]
-
-    # --- F&O table -----------------------------------------------------------
-    fno_data = [
-        {"symbol": "INFY",  "direction": "LONG",  "lot_size": 400, "lots": 2,
-         "price": 1485.50, "notional": 1_188_400},
-        {"symbol": "TCS",   "direction": "SHORT", "lot_size": 175, "lots": 1,
-         "price": 3620.75, "notional": 633_631},
-    ]
-
-    # --- CRO executive summary -----------------------------------------------
-    cro_summary = f"""
-### 📋 Chief Risk Officer — Executive Summary
-
-**Thesis:** *"{thesis}"*
-
-| Metric | Unhedged | Hedged | Δ |
-|--------|----------|--------|---|
-| Portfolio β | 1.12 | {metrics['beta_hedged']:.2f} | ✅ {abs(1.12 - metrics['beta_hedged']):.2f} reduction |
-| Max Drawdown | {metrics['max_dd_unhedged']:.1f}% | {metrics['max_dd_hedged']:.1f}% | ✅ {abs(metrics['max_dd_unhedged']) - abs(metrics['max_dd_hedged']):.1f}pp saved |
-| Sharpe Ratio | {metrics['sharpe_unhedged']:.2f} | {metrics['sharpe_hedged']:.2f} | ✅ {metrics['sharpe_hedged'] - metrics['sharpe_unhedged']:.2f} uplift |
-| Sortino Ratio | {metrics['sortino_unhedged']:.2f} | {metrics['sortino_hedged']:.2f} | ✅ {metrics['sortino_hedged'] - metrics['sortino_unhedged']:.2f} uplift |
-
-**Selected Pair:** INFY (Long) / TCS (Short)
-- Engle-Granger cointegration p-value: **0.003** (< 0.05 ✓)
-- Spread half-life: **18 trading days** (< 60 ✓)
-- Hurst exponent: **0.31** (mean-reverting ✓)
-
-**Capital Deployed:** ₹{capital:,.0f} | **Hedge Ratio:** 0.53 | **Rebalancing:** {'EWMA Dynamic' if True else 'Static'}
-
-> *The hedged portfolio eliminates >98 % of systematic market risk while*
-> *preserving alpha from the IT-sector relative-value thesis.*
-"""
-
-    # --- pair fundamentals ---------------------------------------------------
-    long_stock = {
-        "symbol": "INFY", "weight": 65.0, "pe": 28.4, "roe": 31.2,
-        "rev_growth": 12.5, "de_ratio": 0.08, "market_cap": "₹6.2L Cr",
-    }
-    short_stock = {
-        "symbol": "TCS", "weight": 35.0, "pe": 32.1, "roe": 45.6,
-        "rev_growth": 8.2, "de_ratio": 0.04, "market_cap": "₹13.8L Cr",
-    }
-
-    return {
-        "dates":          dates,
-        "nifty_cum":      nifty_cum,
-        "unhedged_cum":   unhedged_cum,
-        "hedged_cum":     hedged_cum,
-        "unhedged_dd":    unhedged_dd,
-        "hedged_dd":      hedged_dd,
-        "rolling_beta":   rolling_beta,
-        "zscore":         zscore,
-        "corr_matrix":    corr_matrix,
-        "metrics":        metrics,
-        "rejection_log":  rejection_log,
-        "fno_data":       fno_data,
-        "cro_summary":    cro_summary,
-        "long_stock":     long_stock,
-        "short_stock":    short_stock,
-        "crash_periods":  crash_periods,
-    }
-
-
-# ══════════════════════════════════════════════════════════════════════════
-# SIDEBAR
+# SIDEBAR CONTROLS
 # ══════════════════════════════════════════════════════════════════════════
 
 def _render_sidebar() -> Dict[str, Any]:
@@ -249,274 +76,329 @@ def _render_sidebar() -> Dict[str, Any]:
             value=100_000,
             step=10_000,
             format="%d",
+            help="Total strategy capital allocation in INR.",
         )
 
         lookback = st.selectbox(
             "📅 Lookback Period",
             options=["1Y", "2Y", "3Y"],
-            index=1,
+            index=0,
+            help="Historical trailing window for statistical estimation.",
         )
+        lookback_days_map = {"1Y": 252, "2Y": 504, "3Y": 756}
+        lookback_days = lookback_days_map.get(lookback, 252)
 
-        risk_free = st.number_input(
-            "📈 Risk-Free Rate (%)",
-            min_value=0.0,
-            max_value=20.0,
-            value=6.8,
-            step=0.1,
-            format="%.1f",
-        )
-
-        rebalance_mode = st.toggle(
-            "🔄 Dynamic EWMA Rebalancing",
-            value=False,
-            help="Enable exponentially-weighted moving-average hedge-ratio rebalancing",
+        benchmark = st.text_input(
+            "🏛️ Market Benchmark",
+            value="^NSEI",
+            help="NSE benchmark index ticker (default: ^NSEI for NIFTY 50).",
         )
 
         st.markdown("---")
-        st.markdown("### 🕳️ Black Swan Time-Machine")
-        st.caption("Stress-test your hedge against historical crashes")
+        st.markdown("### 🕳️ Black Swan Stress Testing")
+        st.caption("Stress-test the statistical hedge against historical crisis regimes:")
 
-        crash_scenario: Optional[str] = None
-        crash_options = [
-            "💥 2008 GFC",
-            "🦠 COVID 2020",
-            "📉 Tech Selloff 2022",
-            "🗳️ Election Day 2024",
-        ]
-        for label in crash_options:
-            if st.button(label, key=f"crash_{label}", use_container_width=True):
-                crash_scenario = label
-                st.session_state["crash_scenario"] = label
+        stress_scenario_map = {
+            "🦠 COVID 2020": "COVID_2020",
+            "💥 2008 GFC": "2008_GFC",
+            "📉 Tech Selloff 2022": "TECH_SELLOFF_2022",
+            "🗳️ Election Day 2024": "ELECTION_2024",
+        }
 
-        # persist selection across reruns
-        if crash_scenario is None:
-            crash_scenario = st.session_state.get("crash_scenario")
-
-        if crash_scenario:
-            st.info(f"🕰️ Simulating: **{crash_scenario}**")
+        stress_regime = st.selectbox(
+            "Select Crisis Scenario",
+            options=list(stress_scenario_map.keys()),
+            index=0,
+        )
+        selected_regime_key = stress_scenario_map.get(stress_regime, "COVID_2020")
 
         st.markdown("---")
         st.markdown(
-            "<div style='text-align:center; color:#64748b; font-size:0.72rem;'>"
-            "Built with 🧠 LangGraph + Gemini<br>Zero-Hallucination Quant Engine"
+            "<div style='text-align:center; color:#64748b; font-size:0.75rem; line-height:1.5;'>"
+            "<strong>Market-Neutral Hedge Builder</strong><br>"
+            "Autonomous Multi-Agent System<br>"
+            "Zero-Hallucination Quantitative Engine"
             "</div>",
             unsafe_allow_html=True,
         )
 
     return {
-        "capital":        capital,
-        "lookback":       lookback,
-        "risk_free":      risk_free / 100,
-        "rebalance_mode": rebalance_mode,
-        "crash_scenario": crash_scenario,
+        "capital": float(capital),
+        "lookback_days": lookback_days,
+        "benchmark": benchmark.strip() or "^NSEI",
+        "stress_regime": selected_regime_key,
     }
 
 
 # ══════════════════════════════════════════════════════════════════════════
-# MAIN LAYOUT
+# MAIN APPLICATION CONTROLLER
 # ══════════════════════════════════════════════════════════════════════════
 
 def main() -> None:
-    """Application entry point."""
-
+    """Application entry point and execution coordinator."""
     params = _render_sidebar()
 
     # ── Hero Header ──────────────────────────────────────────────────────
     st.markdown("""
     <div class="hero-header">
         <h1>🛡️ Market-Neutral Hedge Builder</h1>
-        <p>Autonomous Multi-Agent System &nbsp;|&nbsp; Zero-Hallucination Quant Engine</p>
+        <p>Autonomous Multi-Agent Quantitative Architecture &nbsp;|&nbsp; Zero-Hallucination Risk Engineering</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # ── Thesis Input ─────────────────────────────────────────────────────
+    # ── Thesis Input Form ────────────────────────────────────────────────
     col_input, col_btn = st.columns([4, 1], gap="medium")
     with col_input:
-        thesis = st.text_input(
+        thesis_input = st.text_input(
             "Enter your market thesis",
             placeholder="Bullish on Indian IT, terrified of a US recession crash",
             label_visibility="collapsed",
+            key="thesis_text_input",
         )
     with col_btn:
         run_clicked = st.button("🚀 Build Hedge", type="primary", use_container_width=True)
 
-    # ── Run on click or if results already cached ────────────────────────
-    if run_clicked and thesis.strip():
-        st.session_state["last_thesis"] = thesis
-        st.session_state["run_triggered"] = True
+    # ── Trigger Pipeline Run On User Submission ──────────────────────────
+    if run_clicked:
+        thesis_clean = (thesis_input or "").strip()
+        if not thesis_clean:
+            st.warning("⚠️ Please enter a market thesis before building a hedge.")
+        elif not _ENGINE_AVAILABLE:
+            st.error("❌ Quantitative pipeline (`agents.graph.run_hedge_builder`) is unavailable in the environment.")
+            st.session_state["view_model"] = None
+            st.session_state["pipeline_error"] = "Engine module unavailable"
+        else:
+            # Clear older results and errors
+            st.session_state["pipeline_error"] = None
+            st.session_state["pipeline_traceback"] = None
+            st.session_state["view_model"] = None
 
-    if not st.session_state.get("run_triggered"):
-        # Landing state
-        st.markdown(
-            "<div style='text-align:center; padding:4rem 1rem; color:#64748b;'>"
-            "<p style='font-size:3rem; margin-bottom:0.5rem;'>🛡️</p>"
-            "<p style='font-size:1.1rem;'>Enter a market thesis and hit "
-            "<strong>Build Hedge</strong> to begin autonomous analysis.</p>"
-            "<p style='font-size:0.85rem; margin-top:0.5rem;'>"
-            "Example: <em>\"Long Reliance, hedge against crude oil spike\"</em></p>"
-            "</div>",
-            unsafe_allow_html=True,
-        )
+            with st.spinner("🤖 Autonomous Multi-Agent Pipeline executing... Math Engine running deterministic models..."):
+                try:
+                    logger.info("Executing run_hedge_builder for thesis: '%s'", thesis_clean)
+                    raw_state = run_hedge_builder(
+                        thesis=thesis_clean,
+                        benchmark=params["benchmark"],
+                        lookback_days=params["lookback_days"],
+                        stress_regime=params["stress_regime"],
+                    )
+
+                    if not isinstance(raw_state, dict):
+                        raise TypeError(f"Expected dict return from run_hedge_builder, got {type(raw_state).__name__}")
+
+                    # Transform pipeline state to structured dashboard ViewModel
+                    view_model = map_state_to_dashboard(raw_state, capital=params["capital"])
+                    st.session_state["view_model"] = view_model
+                    st.session_state["last_thesis"] = thesis_clean
+                    logger.info("Pipeline completed successfully and ViewModel mapped.")
+
+                except Exception as exc:
+                    logger.exception("Pipeline execution failed: %s", exc)
+                    st.session_state["pipeline_error"] = str(exc)
+                    st.session_state["pipeline_traceback"] = traceback.format_exc()
+                    st.session_state["view_model"] = None
+
+    # ── Display Pipeline Error If Any ────────────────────────────────────
+    if st.session_state.get("pipeline_error"):
+        st.error(f"❌ **Hedge Builder Pipeline Error**: {st.session_state['pipeline_error']}")
+        if st.session_state.get("pipeline_traceback"):
+            with st.expander("🔍 Pipeline Error Traceback"):
+                st.code(st.session_state["pipeline_traceback"])
         return
 
-    thesis = st.session_state.get("last_thesis", thesis)
-
-    # ── Execute pipeline or demo ─────────────────────────────────────────
-    with st.spinner("🤖 Agents are analysing your thesis… Quant engine crunching numbers…"):
-        if _ENGINE_AVAILABLE:
-            try:
-                result = run_hedge_builder(thesis)
-                data = _map_engine_result(result, params)
-            except Exception as exc:
-                st.warning(f"Engine error – falling back to demo data.  _{exc}_")
-                data = _generate_demo_data(
-                    thesis, params["capital"], params["lookback"],
-                    params.get("crash_scenario"),
-                )
-        else:
-            data = _generate_demo_data(
-                thesis, params["capital"], params["lookback"],
-                params.get("crash_scenario"),
-            )
-
-    _render_results(data, params)
-
-
-def _map_engine_result(result: Dict[str, Any], params: Dict[str, Any]) -> Dict[str, Any]:
-    """Map the real engine output dict to the shape expected by the UI.
-
-    This is a thin adapter; the demo generator already produces the
-    canonical shape, so this function only needs to rename / reshape
-    keys coming from ``run_hedge_builder``.
-    """
-    # Fallback: if the result is already in our canonical shape, pass through.
-    if "metrics" in result and "dates" in result:
-        return result
-
-    # Otherwise, attempt best-effort mapping; fall back to demo on failure.
-    try:
-        bt = result.get("backtest", {})
-        metrics = {
-            "beta_unhedged":    result.get("beta_unhedged", 1.12),
-            "beta_hedged":      result.get("beta_hedged", 0.01),
-            "max_dd_unhedged":  bt.get("max_dd_unhedged", -28.4),
-            "max_dd_hedged":    bt.get("max_dd_hedged", -4.1),
-            "sharpe_unhedged":  bt.get("sharpe_unhedged", 0.65),
-            "sharpe_hedged":    bt.get("sharpe_hedged", 1.84),
-            "sortino_unhedged": bt.get("sortino_unhedged", 0.72),
-            "sortino_hedged":   bt.get("sortino_hedged", 2.15),
-        }
-        data = _generate_demo_data(
-            params.get("last_thesis", ""),
-            params["capital"],
-            params["lookback"],
-            params.get("crash_scenario"),
-        )
-        data["metrics"] = metrics
-        return data
-    except Exception:
-        return _generate_demo_data(
-            "", params["capital"], params["lookback"], params.get("crash_scenario"),
+    # ── Display Results Or Landing Screen ────────────────────────────────
+    current_vm = st.session_state.get("view_model")
+    if current_vm is not None:
+        _render_dashboard(current_vm)
+    else:
+        # Clean landing state when no run has executed yet
+        st.markdown(
+            """
+            <div style='text-align:center; padding:4rem 1rem; color:#64748b;'>
+                <p style='font-size:3rem; margin-bottom:0.5rem;'>🛡️</p>
+                <p style='font-size:1.15rem; font-weight:600; color:#94a3b8;'>Enter an investment thesis and hit <strong>Build Hedge</strong> to begin.</p>
+                <p style='font-size:0.85rem; margin-top:0.5rem; color:#64748b;'>
+                    Example: <em>"I am bullish on Indian IT companies but want protection against a broad market crash."</em>
+                </p>
+            </div>
+            """,
+            unsafe_allow_html=True,
         )
 
 
-# ═══════════════════════════════════════════════════════════════════════════
-# RESULTS RENDERER
-# ═══════════════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════════════
+# DASHBOARD TEAR-SHEET RENDERER
+# ══════════════════════════════════════════════════════════════════════════
 
-def _render_results(data: Dict[str, Any], params: Dict[str, Any]) -> None:
-    """Render the full results tear-sheet."""
-    m = data["metrics"]
+def _render_dashboard(vm: DashboardViewModel) -> None:
+    """Render the full quantitative hedge tear-sheet from the ViewModel."""
 
-    # ── Row 1 — Metric Cards ─────────────────────────────────────────────
-    st.markdown('<div class="section-title">📊 Before vs After Hedging</div>',
-                unsafe_allow_html=True)
+    # ── Section 1: Verification Summary & Verdict ────────────────────────
+    render_verification_summary(vm)
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ── Section 2: Before vs After Hedging Metric Cards ──────────────────
+    st.markdown('<div class="section-title">📊 Quantitative Risk & Performance Metrics</div>', unsafe_allow_html=True)
     c1, c2, c3, c4 = st.columns(4, gap="medium")
     with c1:
         render_metric_card(
-            "Portfolio Beta", m["beta_unhedged"], m["beta_hedged"],
-            format_str="{:.2f}", invert=True, accent_class="mc-beta",
+            label="Portfolio Beta",
+            unhedged_val=vm.metrics.unhedged_beta,
+            hedged_val=vm.metrics.hedged_beta,
+            format_str="{:.2f}",
+            invert=True,
+            accent_class="mc-beta",
+            help_text="Systematic risk sensitivity relative to the market benchmark.",
         )
     with c2:
         render_metric_card(
-            "Max Drawdown", m["max_dd_unhedged"], m["max_dd_hedged"],
-            format_str="{:.1f}%", invert=True, accent_class="mc-dd",
+            label="Max Drawdown",
+            unhedged_val=vm.metrics.unhedged_max_drawdown,
+            hedged_val=vm.metrics.hedged_max_drawdown,
+            format_str="{:.1f}%",
+            format_pct=True,
+            invert=True,
+            accent_class="mc-dd",
+            help_text="Worst peak-to-trough decline over the estimation window.",
         )
     with c3:
         render_metric_card(
-            "Sharpe Ratio", m["sharpe_unhedged"], m["sharpe_hedged"],
-            format_str="{:.2f}", invert=False, accent_class="mc-sharpe",
+            label="Sharpe Ratio",
+            unhedged_val=vm.metrics.unhedged_sharpe,
+            hedged_val=vm.metrics.hedged_sharpe,
+            format_str="{:.2f}",
+            invert=False,
+            accent_class="mc-sharpe",
+            help_text="Excess return per unit of total risk (annualized).",
         )
     with c4:
         render_metric_card(
-            "Sortino Ratio", m["sortino_unhedged"], m["sortino_hedged"],
-            format_str="{:.2f}", invert=False, accent_class="mc-sortino",
+            label="Sortino Ratio",
+            unhedged_val=vm.metrics.unhedged_sortino,
+            hedged_val=vm.metrics.hedged_sortino,
+            format_str="{:.2f}",
+            invert=False,
+            accent_class="mc-sortino",
+            help_text="Excess return per unit of downside deviation (annualized).",
+        )
+
+    # Supplementary metrics row (Volatility & 95% VaR)
+    c5, c6 = st.columns(2, gap="medium")
+    with c5:
+        render_metric_card(
+            label="Annualized Volatility",
+            unhedged_val=vm.metrics.unhedged_volatility,
+            hedged_val=vm.metrics.hedged_volatility,
+            format_pct=True,
+            invert=True,
+            help_text="Standard deviation of daily returns annualized.",
+        )
+    with c6:
+        render_metric_card(
+            label="Value at Risk (95% VaR)",
+            unhedged_val=vm.metrics.unhedged_var_95,
+            hedged_val=vm.metrics.hedged_var_95,
+            format_pct=True,
+            invert=True,
+            help_text="Parametric daily 95% Value at Risk.",
         )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # ── Row 2 — Cumulative Returns + Rolling Beta ────────────────────────
-    st.markdown('<div class="section-title">📈 Performance Analytics</div>',
-                unsafe_allow_html=True)
+    # ── Section 3: Performance & Risk Analytics Charts ───────────────────
+    st.markdown('<div class="section-title">📈 Performance & Risk Analytics</div>', unsafe_allow_html=True)
 
-    left, right = st.columns(2, gap="medium")
-    with left:
-        render_cumulative_chart(
-            {
-                "dates":        data["dates"],
-                "nifty_cum":    data["nifty_cum"],
-                "unhedged_cum": data["unhedged_cum"],
-                "hedged_cum":   data["hedged_cum"],
-            },
-            crash_periods=data.get("crash_periods"),
-        )
-    with right:
-        render_beta_chart(data["rolling_beta"])
+    row1_left, row1_right = st.columns(2, gap="medium")
+    with row1_left:
+        # Prepare cumulative returns data dict safely
+        cum_data: Optional[Dict[str, Any]] = None
+        raw_cum = vm.portfolio.cumulative_returns
+        if isinstance(raw_cum, dict):
+            if "dates" in raw_cum and ("hedged_cum" in raw_cum or "unhedged_cum" in raw_cum):
+                cum_data = raw_cum
+            elif "hedged" in raw_cum or "unhedged" in raw_cum:
+                h_ser = raw_cum.get("hedged")
+                u_ser = raw_cum.get("unhedged")
+                dates = getattr(h_ser, "index", getattr(u_ser, "index", None))
+                cum_data = {
+                    "dates": dates,
+                    "hedged_cum": getattr(h_ser, "values", h_ser) if h_ser is not None else None,
+                    "unhedged_cum": getattr(u_ser, "values", u_ser) if u_ser is not None else None,
+                    "nifty_cum": raw_cum.get("nifty") or raw_cum.get("nifty_cum") or raw_cum.get("benchmark"),
+                }
+        elif isinstance(raw_cum, pd.DataFrame) and not raw_cum.empty:
+            cum_data = {
+                "dates": raw_cum.index,
+                "hedged_cum": raw_cum.get("Hedged Portfolio", raw_cum.get("hedged", None)),
+                "unhedged_cum": raw_cum.get("Unhedged Long", raw_cum.get("unhedged", None)),
+                "nifty_cum": raw_cum.get("NIFTY 50", raw_cum.get("benchmark", None)),
+            }
 
-    # ── Row 3 — Pair Analytics ───────────────────────────────────────────
-    st.markdown('<div class="section-title">🔬 Pair Analytics</div>',
-                unsafe_allow_html=True)
+        render_cumulative_chart(cum_data)
 
-    left2, right2 = st.columns(2, gap="medium")
-    with left2:
-        render_zscore_chart(data["zscore"])
-    with right2:
-        render_correlation_heatmap(data["corr_matrix"])
+    with row1_right:
+        render_beta_chart(vm.quant.rolling_beta)
 
-    # ── Row 4 — Agent Trace ──────────────────────────────────────────────
-    st.markdown('<div class="section-title">🤖 Agent Pipeline</div>',
-                unsafe_allow_html=True)
+    # ── Section 4: Statistical Cointegration & Correlation ───────────────
+    st.markdown('<div class="section-title">🔬 Statistical Cointegration & Correlation</div>', unsafe_allow_html=True)
+    row2_left, row2_right = st.columns(2, gap="medium")
+    with row2_left:
+        render_zscore_chart(vm.quant.spread_zscore)
+    with row2_right:
+        render_correlation_heatmap(vm.quant.correlation_matrix)
 
-    render_agent_trace(data["rejection_log"], approved=True)
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    # ── Row 5 — CRO Report + F&O Table ───────────────────────────────────
-    st.markdown('<div class="section-title">📋 CRO Report & Execution Plan</div>',
-                unsafe_allow_html=True)
+    # ── Section 5: Pair Fundamentals Comparison ──────────────────────────
+    st.markdown('<div class="section-title">🏢 Pair Fundamental Comparison</div>', unsafe_allow_html=True)
+    render_pair_details(vm)
 
-    cro_col, fno_col = st.columns([3, 2], gap="medium")
-    with cro_col:
-        st.markdown(
-            f'<div class="cro-report">{data["cro_summary"]}</div>',
-            unsafe_allow_html=True,
-        )
-    with fno_col:
-        st.markdown("#### 📦 F&O Lot-Size Execution")
-        render_fno_table(data["fno_data"])
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    # ── Row 6 — Pair Fundamentals ────────────────────────────────────────
-    st.markdown('<div class="section-title">🏢 Pair Fundamentals</div>',
-                unsafe_allow_html=True)
+    # ── Section 6: News Intelligence Panel ───────────────────────────────
+    st.markdown('<div class="section-title">📰 News Intelligence & Catalyst Audit</div>', unsafe_allow_html=True)
+    long_ticker = vm.run_info.selected_long or "Long Leg"
+    short_ticker = vm.run_info.selected_short or "Short Hedge"
+    long_news = load_cached_news_for_ticker(long_ticker)
+    short_news = load_cached_news_for_ticker(short_ticker)
+    render_news_panel(
+        long_news=long_news,
+        short_news=short_news,
+        long_ticker=long_ticker,
+        short_ticker=short_ticker,
+    )
 
-    render_pair_details(data["long_stock"], data["short_stock"])
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ── Section 7: Multi-Agent Execution Trace ───────────────────────────
+    st.markdown('<div class="section-title">🤖 Multi-Agent Execution Audit Trail</div>', unsafe_allow_html=True)
+    render_agent_trace(vm)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ── Section 8: CRO Executive Summary & F&O Execution Table ───────────
+    st.markdown('<div class="section-title">📋 Institutional CRO Report & Execution Plan</div>', unsafe_allow_html=True)
+    col_cro, col_fno = st.columns([3, 2], gap="medium")
+    with col_cro:
+        st.markdown("#### 📝 Chief Risk Officer Memo")
+        if vm.reporting.cro_report:
+            st.markdown(
+                f'<div class="cro-report">{vm.reporting.cro_report}</div>',
+                unsafe_allow_html=True,
+            )
+        else:
+            st.info("CRO executive summary memo is unavailable for this run.")
+
+    with col_fno:
+        st.markdown("#### 📦 F&O Lot-Size Execution Plan")
+        render_fno_table(vm.portfolio.fno_execution)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
 
-# ── Entry ─────────────────────────────────────────────────────────────────
+# ── Direct Entry Execution ────────────────────────────────────────────────
 if __name__ == "__main__":
     main()
 else:
-    # When Streamlit runs the script, __name__ == '__main__' may not hold
-    # in all versions; call main() unconditionally so the app always renders.
     main()
