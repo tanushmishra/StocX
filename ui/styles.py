@@ -36,9 +36,10 @@ MAIN_CSS = """
     --radius:        12px;
 }
 
-/* ── Global ──────────────────────────────────────────────────────── */
-html, body, [data-testid="stAppViewContainer"],
-[data-testid="stApp"] {
+/* ── Global App Containers (Forced Beige) ────────────────────────── */
+html, body, .stApp, [data-testid="stApp"], [data-testid="stAppViewContainer"],
+[data-testid="stMain"], [data-testid="stMainBlockContainer"],
+section.main, .main, .block-container {
     background-color: var(--bg-primary) !important;
     color: var(--text-primary) !important;
     font-family: 'Inter', sans-serif !important;
@@ -48,16 +49,42 @@ html, body, [data-testid="stAppViewContainer"],
     background-color: transparent !important;
 }
 
+/* ── Form Inputs & Selects ───────────────────────────────────────── */
+div[data-baseweb="input"],
+div[data-baseweb="base-input"],
+div[data-baseweb="select"] > div {
+    background-color: #ffffff !important;
+    border-color: var(--border-warm) !important;
+    color: var(--text-primary) !important;
+}
+div[data-baseweb="input"] input,
+div[data-baseweb="base-input"] input {
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+}
+[data-baseweb="popover"], [data-baseweb="menu"] {
+    background-color: #ffffff !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-warm) !important;
+}
+[data-baseweb="menu"] li {
+    color: var(--text-primary) !important;
+}
+
 /* ── Sidebar ─────────────────────────────────────────────────────── */
-[data-testid="stSidebar"] {
+[data-testid="stSidebar"],
+section[data-testid="stSidebar"],
+[data-testid="stSidebar"] > div {
     background: linear-gradient(180deg, #ede7d8 0%, #e2dac7 100%) !important;
+    background-color: #ede7d8 !important;
     border-right: 1px solid var(--border-warm) !important;
 }
 [data-testid="stSidebar"] .stMarkdown p,
 [data-testid="stSidebar"] .stMarkdown h1,
 [data-testid="stSidebar"] .stMarkdown h2,
 [data-testid="stSidebar"] .stMarkdown h3,
-[data-testid="stSidebar"] label {
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] span {
     color: var(--text-primary) !important;
 }
 
@@ -286,7 +313,7 @@ div[data-testid="stButton"] > button[kind="primary"] {
 }
 
 /* ── Data table ──────────────────────────────────────────────────── */
-[data-testid="stDataFrame"] {
+[data-testid="stDataFrame"], [data-testid="stTable"] {
     border-radius: var(--radius) !important;
     border: 1px solid var(--border-warm) !important;
     overflow: hidden !important;
