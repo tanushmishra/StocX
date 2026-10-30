@@ -105,7 +105,7 @@ def calc_metrics(
     annual_vol = float(clean_returns.std(ddof=1) * np.sqrt(_TRADING_DAYS_PER_YEAR))
 
     # --- Daily risk-free rate ---
-    rf_daily = (1 + rf_rate) ** (1 / _TRADING_DAYS_PER_YEAR) - 1
+    rf_daily = rf_rate / _TRADING_DAYS_PER_YEAR
 
     # --- Sharpe ratio ---
     excess = clean_returns - rf_daily
@@ -115,12 +115,12 @@ def calc_metrics(
         sharpe = 0.0
 
     # --- Sortino ratio ---
-    downside = excess[excess < 0]
-    downside_std = float(downside.std(ddof=1)) if len(downside) > 1 else 0.0
-    if downside_std != 0.0:
+    downside_diff = np.minimum(0.0, excess)
+    downside_dev = float(np.sqrt(np.mean(downside_diff ** 2)))
+    if downside_dev != 0.0:
         sortino = float(
             excess.mean()
-            / downside_std
+            / downside_dev
             * np.sqrt(_TRADING_DAYS_PER_YEAR)
         )
     else:
