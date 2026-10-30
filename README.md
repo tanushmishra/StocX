@@ -7,7 +7,7 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red.svg)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A hackathon-winning multi-agent system that constructs **beta-neutral long/short equity pairs** on the Indian stock market (NSE). The system uses **LLMs for qualitative reasoning** (macro analysis, stock screening, risk reporting) and **deterministic Python tools for all quantitative math** (covariance, cointegration, backtesting)—ensuring **zero numerical hallucination**.
+An autonomous multi-agent quantitative finance system that constructs **beta-neutral long/short equity pairs** on the Indian stock market (NSE). The system uses **LLMs for qualitative reasoning** (macro analysis, stock screening, risk reporting) and **deterministic Python tools for all quantitative math** (covariance, cointegration, backtesting)—ensuring **zero numerical hallucination**.
 
 <p align="center">
   <img src="docs/assets/architecture_diagram.png" alt="Architecture Diagram" width="800">
@@ -30,7 +30,7 @@ The system autonomously:
 5. **Self-corrects** by rejecting bad pairs and looping back to try the next best candidate
 6. **Reports** a professional CRO tear sheet with before/after metrics and F&O execution plan
 
-**The result:** A mathematically proven hedge that survived the March 2020 crash with a 4% drawdown instead of 29%.
+**The result:** An algorithmic market-neutral hedge designed to mitigate systematic market drawdowns during historical crash regimes.
 
 ---
 

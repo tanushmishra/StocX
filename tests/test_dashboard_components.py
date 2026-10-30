@@ -25,6 +25,7 @@ from ui.adapter import (
     VerificationData,
 )
 from ui.components import (
+    format_rejection_pair,
     load_cached_news_for_ticker,
     render_agent_trace,
     render_fno_table,
@@ -396,3 +397,104 @@ def test_16_components_safely_handle_partial_view_model(mock_streamlit):
     render_verification_summary(view_model=minimal_vm)
     render_metric_card(label="Beta", unhedged_val=None, hedged_val=None)
     render_fno_table(fno_data=None)
+
+
+# ==============================================================================
+# PHASE D.4: REJECTION HISTORY PAIR NORMALIZATION REGRESSION TESTS
+# ==============================================================================
+
+def test_17_format_rejection_pair_tuple():
+    """Test format_rejection_pair handles tuple pairs."""
+    assert format_rejection_pair(("COFORGE.NS", "WIPRO.NS")) == "COFORGE.NS / WIPRO.NS"
+    assert format_rejection_pair(("TCS.NS",)) == "TCS.NS"
+
+
+def test_18_format_rejection_pair_list():
+    """Test format_rejection_pair handles list pairs."""
+    assert format_rejection_pair(["INFY.NS", "TECHM.NS"]) == "INFY.NS / TECHM.NS"
+    assert format_rejection_pair(["HCLTECH.NS"]) == "HCLTECH.NS"
+
+
+def test_19_format_rejection_pair_string():
+    """Test format_rejection_pair handles string pairs."""
+    assert format_rejection_pair("COFORGE.NS / WIPRO.NS") == "COFORGE.NS / WIPRO.NS"
+    assert format_rejection_pair("INFY.NS - TCS.NS") == "INFY.NS - TCS.NS"
+    assert format_rejection_pair("   ") == "Unknown Pair"
+
+
+def test_20_format_rejection_pair_dict_formats():
+    """Test format_rejection_pair handles all dictionary variants."""
+    # Engine primary format: 'long' and 'short'
+    assert format_rejection_pair({"long": "COFORGE.NS", "short": "WIPRO.NS"}) == "COFORGE.NS / WIPRO.NS"
+    # Alternative format: 'long_ticker' and 'short_ticker'
+    assert format_rejection_pair({"long_ticker": "TCS.NS", "short_ticker": "INFY.NS"}) == "TCS.NS / INFY.NS"
+    # Nested tuple pair
+    assert format_rejection_pair({"pair": ("COFORGE.NS", "WIPRO.NS")}) == "COFORGE.NS / WIPRO.NS"
+    # Nested list pair
+    assert format_rejection_pair({"pair": ["TCS.NS", "WIPRO.NS"]}) == "TCS.NS / WIPRO.NS"
+    # Nested dict pair
+    assert format_rejection_pair({"pair": {"long": "HCLTECH.NS", "short": "TECHM.NS"}}) == "HCLTECH.NS / TECHM.NS"
+    # Nested candidate format
+    assert format_rejection_pair({"candidate": ("COFORGE.NS", "WIPRO.NS")}) == "COFORGE.NS / WIPRO.NS"
+    # Single leg present
+    assert format_rejection_pair({"long": "COFORGE.NS", "short": None}) == "COFORGE.NS"
+    assert format_rejection_pair({"long": "", "short": "WIPRO.NS"}) == "WIPRO.NS"
+
+
+def test_21_format_rejection_pair_missing_and_none():
+    """Test format_rejection_pair returns 'Unknown Pair' for missing/None inputs."""
+    assert format_rejection_pair(None) == "Unknown Pair"
+    assert format_rejection_pair({}) == "Unknown Pair"
+    assert format_rejection_pair([]) == "Unknown Pair"
+    assert format_rejection_pair(()) == "Unknown Pair"
+    assert format_rejection_pair({"pair": None}) == "Unknown Pair"
+
+
+def test_22_format_rejection_pair_malformed_inputs():
+    """Test format_rejection_pair safely handles malformed inputs without exceptions."""
+    assert format_rejection_pair({"pair": 12345}) == "Unknown Pair"
+    assert format_rejection_pair([None, None]) == "Unknown Pair"
+    assert format_rejection_pair({"long": None, "short": None}) == "Unknown Pair"
+    assert format_rejection_pair({"long": "", "short": ""}) == "Unknown Pair"
+    assert format_rejection_pair(object()) == "Unknown Pair"
+
+
+def test_23_render_agent_trace_all_pair_formats(mock_streamlit):
+    """Test render_agent_trace renders ticker symbols for all pair formats and never 'Unknown Pair'."""
+    rejection_log = [
+        # 1. Primary engine dict: long / short
+        {"attempt": 1, "long": "COFORGE.NS", "short": "WIPRO.NS", "reason": "2 check(s) failed: correlation, cointegration."},
+        # 2. Tuple pair
+        {"attempt": 2, "pair": ("TCS.NS", "INFY.NS"), "reason": "1 check(s) failed: cointegration."},
+        # 3. List pair
+        {"attempt": 3, "pair": ["HCLTECH.NS", "TECHM.NS"], "reason": "3 check(s) failed: beta, drawdown."},
+        # 4. String pair
+        {"attempt": 4, "pair": "LTIM.NS / PERSISTENT.NS", "reason": "drawdown failed"},
+        # 5. Direct tuple in list
+        ("COFORGE.NS", "INFY.NS"),
+        # 6. Missing pair
+        {"attempt": 6, "reason": "Exhausted universe"},
+    ]
+
+    vm = make_test_view_model(approved=False, rejection_log=rejection_log)
+    render_agent_trace(view_model_or_rejection_log=vm)
+
+    markdown_calls = [str(call) for call in mock_streamlit.markdown.call_args_list]
+    rendered_text = "".join(markdown_calls)
+
+    # Valid ticker pairs MUST appear
+    assert "Attempt 1: COFORGE.NS / WIPRO.NS" in rendered_text
+    assert "Attempt 2: TCS.NS / INFY.NS" in rendered_text
+    assert "Attempt 3: HCLTECH.NS / TECHM.NS" in rendered_text
+    assert "Attempt 4: LTIM.NS / PERSISTENT.NS" in rendered_text
+    assert "COFORGE.NS / INFY.NS" in rendered_text
+
+    # Verify extracted failed checks from reason string
+    assert "<code>correlation, cointegration</code>" in rendered_text
+    assert "<code>cointegration</code>" in rendered_text
+
+    # Missing pair should safely show Unknown Pair without crashing
+    assert "Attempt 6: Unknown Pair" in rendered_text
+
+    # Make sure Attempt 1 does NOT show 'Unknown Pair'
+    assert "Attempt 1: Unknown Pair" not in rendered_text

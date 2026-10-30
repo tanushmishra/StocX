@@ -381,8 +381,109 @@ def render_news_panel(
 
 
 # ==============================================================================
-# AGENT EXECUTION TRACE
+# AGENT TRACE & REJECTION NORMALIZATION
 # ==============================================================================
+
+def format_rejection_pair(rej: Any) -> str:
+    """Normalize and format pair ticker symbols from any supported rejection record.
+
+    Supported input formats:
+    - Dict with 'long' and 'short' (or 'long_ticker' / 'short_ticker')
+    - Dict with 'pair' as tuple, list, dict, or string
+    - Dict with 'candidate' as tuple, list, dict, or string
+    - Direct Tuple or List: (long, short) or [long, short]
+    - Direct String: "TICKER1 / TICKER2" or "TICKER1"
+    - Missing, None, or malformed data: safely returns "Unknown Pair"
+
+    Never invents ticker names and does not mutate the input structure.
+    """
+    if rej is None:
+        return "Unknown Pair"
+
+    # Direct tuple or list
+    if isinstance(rej, (tuple, list)):
+        valid = [str(x).strip() for x in rej if x is not None and str(x).strip()]
+        if len(valid) >= 2:
+            return f"{valid[0]} / {valid[1]}"
+        elif len(valid) == 1:
+            return valid[0]
+        return "Unknown Pair"
+
+    # Direct string
+    if isinstance(rej, str):
+        cleaned = rej.strip()
+        return cleaned if cleaned else "Unknown Pair"
+
+    # Dictionary input
+    if isinstance(rej, dict):
+        # 1. Primary engine format: 'long' and 'short'
+        long_val = rej.get("long") or rej.get("long_ticker") or rej.get("long_leg")
+        short_val = rej.get("short") or rej.get("short_ticker") or rej.get("short_leg")
+
+        l_str = str(long_val).strip() if long_val is not None and str(long_val).strip() else None
+        s_str = str(short_val).strip() if short_val is not None and str(short_val).strip() else None
+
+        if l_str and s_str:
+            return f"{l_str} / {s_str}"
+        elif l_str:
+            return l_str
+        elif s_str:
+            return s_str
+
+        # 2. Nested 'pair' key
+        if "pair" in rej and rej["pair"] is not None:
+            sub = rej["pair"]
+            if isinstance(sub, (tuple, list)):
+                valid = [str(x).strip() for x in sub if x is not None and str(x).strip()]
+                if len(valid) >= 2:
+                    return f"{valid[0]} / {valid[1]}"
+                elif len(valid) == 1:
+                    return valid[0]
+            elif isinstance(sub, dict):
+                sub_l = sub.get("long") or sub.get("long_ticker")
+                sub_s = sub.get("short") or sub.get("short_ticker")
+                sl_str = str(sub_l).strip() if sub_l is not None and str(sub_l).strip() else None
+                ss_str = str(sub_s).strip() if sub_s is not None and str(sub_s).strip() else None
+                if sl_str and ss_str:
+                    return f"{sl_str} / {ss_str}"
+                elif sl_str:
+                    return sl_str
+                elif ss_str:
+                    return ss_str
+            elif isinstance(sub, str) and sub.strip():
+                return sub.strip()
+
+        # 3. Nested 'candidate' key
+        if "candidate" in rej and rej["candidate"] is not None:
+            cand = rej["candidate"]
+            if isinstance(cand, (tuple, list)):
+                valid = [str(x).strip() for x in cand if x is not None and str(x).strip()]
+                if len(valid) >= 2:
+                    return f"{valid[0]} / {valid[1]}"
+                elif len(valid) == 1:
+                    return valid[0]
+            elif isinstance(cand, dict):
+                cl = cand.get("long") or cand.get("long_ticker")
+                cs = cand.get("short") or cand.get("short_ticker")
+                cl_s = str(cl).strip() if cl is not None and str(cl).strip() else None
+                cs_s = str(cs).strip() if cs is not None and str(cs).strip() else None
+                if cl_s and cs_s:
+                    return f"{cl_s} / {cs_s}"
+                elif cl_s:
+                    return cl_s
+                elif cs_s:
+                    return cs_s
+            elif isinstance(cand, str) and cand.strip():
+                return cand.strip()
+
+        # 4. Fallback identifiers
+        for key in ("symbol", "ticker", "agent"):
+            val = rej.get(key)
+            if val is not None and str(val).strip():
+                return str(val).strip()
+
+    return "Unknown Pair"
+
 
 def render_agent_trace(
     view_model_or_rejection_log: Any = None,
@@ -445,17 +546,32 @@ def render_agent_trace(
     if rej_log:
         st.markdown("##### Rejection & Risk Filter History")
         for i, rej in enumerate(rej_log, 1):
-            if not isinstance(rej, dict):
-                continue
-            pair = rej.get("pair") or rej.get("candidate") or rej.get("agent") or "Unknown Pair"
-            reason = rej.get("reason") or rej.get("message") or "Risk criteria not met"
-            failed_checks = rej.get("failed_checks") or []
-            attempt = rej.get("attempt") or i
+            if isinstance(rej, dict):
+                pair = format_rejection_pair(rej)
+                reason = rej.get("reason") or rej.get("message") or "Risk criteria not met"
+                failed_checks = rej.get("failed_checks") or []
+                attempt = rej.get("attempt") or i
+            elif isinstance(rej, (tuple, list, str)):
+                pair = format_rejection_pair(rej)
+                reason = "Risk criteria not met"
+                failed_checks = []
+                attempt = i
+            else:
+                pair = "Unknown Pair"
+                reason = "Risk criteria not met"
+                failed_checks = []
+                attempt = i
 
             safe_pair = html.escape(str(pair))
             safe_reason = html.escape(str(reason))
 
-            checks_str = ", ".join(str(c) for c in failed_checks) if failed_checks else "None"
+            if failed_checks:
+                checks_str = ", ".join(str(c) for c in failed_checks)
+            elif "failed:" in str(reason):
+                extracted = str(reason).split("failed:", 1)[1].strip().rstrip(".")
+                checks_str = extracted if extracted else "None"
+            else:
+                checks_str = "None"
             safe_checks = html.escape(checks_str)
 
             rej_html = f"""
@@ -466,7 +582,6 @@ def render_agent_trace(
             </div>
             """
             st.markdown(rej_html, unsafe_allow_html=True)
-
 
 # ==============================================================================
 # PAIR DETAILS & FUNDAMENTALS
