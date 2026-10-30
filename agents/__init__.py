@@ -16,6 +16,13 @@ LLM agents **read** numbers computed by the deterministic ``engine`` package but
 functions so that results are reproducible and auditable.
 """
 
-from agents.graph import build_graph, run_hedge_builder  # noqa: F401
+from agents.graph import build_graph, run_hedge_builder
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
-__all__ = ["build_graph", "run_hedge_builder"]
+__all__ = [
+    "build_graph",
+    "run_hedge_builder",
+    "HedgeBuilderState",
+    "StateProxy",
+    "wrap_state",
+]

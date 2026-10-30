@@ -1,0 +1,52 @@
+ticker,company_name,market_cap,trailing_pe,forward_pe,return_on_equity,revenue_growth,debt_to_equity,profit_margins,sector,industry
+ALKEM.NS,Alkem Laboratories Limited,611395633152,28.33906,22.851255,,0.109,14.267,0.14306,Healthcare,Drug Manufacturers - Specialty & Generic
+APOLLOHOSP.NS,Apollo Hospitals Enterprise Limited,1214692720640,58.157787,38.860947,,0.206,85.146,0.07906,Healthcare,Medical Care Facilities
+ASHOKLEY.NS,Ashok Leyland Limited,850651643904,24.46284,18.047794,,0.116,344.737,0.06021,Industrials,Farm & Heavy Construction Machinery
+AUBANK.NS,AU Small Finance Bank Limited,647495286784,20.724396,14.413019,0.15716,0.36,,0.26229,Financial Services,Banks - Regional
+AUROPHARMA.NS,Aurobindo Pharma Limited,967440465920,26.512142,17.939352,,0.163,21.31,0.10627,Healthcare,Drug Manufacturers - Specialty & Generic
+AXISBANK.NS,Axis Bank Limited,3789833895936,12.699572,10.399416,0.13885,0.211,,0.37017,Financial Services,Banks - Regional
+BAJAJ-AUTO.NS,Bajaj Auto Limited,2844219670528,22.077646,20.530962,0.3556,0.574,69.647,0.15996,Consumer Cyclical,Auto Manufacturers
+BALKRISIND.NS,Balkrishna Industries Limited,400669212672,28.505022,20.603579,,0.252,37.524,0.12203,Consumer Cyclical,Auto Parts
+BANDHANBNK.NS,Bandhan Bank Limited,248649105408,13.350346,7.8319354,0.07258,0.487,,0.17087,Financial Services,Banks - Regional
+BANKBARODA.NS,Bank of Baroda Limited,1233887035392,6.791916,5.531626,0.113170005,0.18,,0.27392,Financial Services,Banks - Regional
+BANKINDIA.NS,Bank of India,604867395584,4.8347893,5.0870104,0.1407,0.174,,0.35739,Financial Services,Banks - Regional
+BHARATFORG.NS,Bharat Forge Limited,840513552384,116.45226,35.87532,,0.187,76.475,0.040260002,Industrials,Metal Fabrication
+BIOCON.NS,Biocon Limited,576161841152,104.08283,32.123833,,0.1,42.145,0.0286,Healthcare,Biotechnology
+CANBK.NS,Canara Bank,1066164355072,5.2309747,4.9137154,0.1512,-0.13,,0.46546,Financial Services,Banks - Regional
+CENTRALBK.NS,Central Bank of India,260046749696,5.400376,,0.1201,0.11,,0.2847,Financial Services,Banks - Regional
+CIPLA.NS,Cipla Limited,1113972801536,38.473774,22.175913,0.08327,-0.011,1.969,0.10351,Healthcare,Drug Manufacturers - Specialty & Generic
+COFORGE.NS,Coforge Limited,906013966336,40.12164,27.247246,0.13347,0.548,26.74,0.09661999,Technology,Information Technology Services
+DIVISLAB.NS,Divi's Laboratories Limited,2596282564608,88.73968,64.58683,,0.278,0.042,0.26046,Healthcare,Drug Manufacturers - Specialty & Generic
+DRREDDY.NS,Dr. Reddy's Laboratories Limited,1126314409984,40.250072,22.901962,0.07342,-0.015,18.565,0.08485,Healthcare,Drug Manufacturers - Specialty & Generic
+EICHERMOT.NS,Eicher Motors Limited,1982046666752,34.356415,26.428968,,0.315,2.048,0.23211999,Consumer Cyclical,Auto Manufacturers
+FEDERALBNK.NS,The Federal Bank Limited,839192281088,16.586916,13.7398815,0.13272001,0.364,,0.31422,Financial Services,Banks - Regional
+HCLTECH.NS,HCL Technologies Limited,3865331892224,21.128866,17.82866,0.24648,0.022,7.905,0.13247,Technology,Information Technology Services
+HDFCBANK.NS,HDFC Bank Limited,10688253657088,15.143169,11.067093,0.11005,0.808,,0.26532,Financial Services,Banks - Regional
+HEROMOTOCO.NS,Hero MotoCorp Limited,1034236133376,17.24345,15.92955,0.26927,0.225,6.007,0.112040006,Consumer Cyclical,Auto Manufacturers
+ICICIBANK.NS,ICICI Bank Limited,10038539190272,17.16812,14.274679,0.1649,0.158,,0.27844998,Financial Services,Banks - Regional
+IDFCFIRSTB.NS,IDFC First Bank Limited,620885377024,20.869564,10.451777,0.06255,0.325,,0.11071999,Financial Services,Banks - Regional
+INDIANB.NS,Indian Bank,1165797359616,8.819933,7.560367,0.16139999,0.144,,0.36379,Financial Services,Banks - Regional
+INDUSINDBK.NS,IndusInd Bank Limited,652923240448,21.794538,10.238466,0.04513,0.631,,0.15682,Financial Services,Banks - Regional
+INFY.NS,Infosys Limited,4799696207872,15.778962,14.831819,0.29951,0.014,8.567,0.16217,Technology,Information Technology Services
+IOB.NS,Indian Overseas Bank,553434415104,8.379008,31.933334,0.17863001,0.104,,0.39925998,Financial Services,Banks - Regional
+KOTAKBANK.NS,Kotak Mahindra Bank Limited,4591942369280,21.390177,18.814117,0.11835,0.207,,0.28743,Financial Services,Banks - Regional
+LTTS.NS,L&T Technology Services Limited,454070468608,33.57283,25.900232,0.20207001,0.02,7.863,0.13242,Technology,Information Technology Services
+LUPIN.NS,Lupin Limited,919610130432,16.657003,19.832644,,0.32,29.388,0.18450001,Healthcare,Drug Manufacturers - Specialty & Generic
+M&M.NS,Mahindra & Mahindra Limited,3410525159424,17.290436,18.080782,,0.275,125.278,0.08609,Consumer Cyclical,Auto Manufacturers
+MAHABANK.NS,Bank of Maharashtra,625784913920,7.823077,6.0266666,0.23286,0.327,,0.52651,Financial Services,Banks - Regional
+MARUTI.NS,Maruti Suzuki India Limited,3583246073856,26.638464,20.61073,0.12888,0.26,0.076,0.06461,Consumer Cyclical,Auto Manufacturers
+MPHASIS.NS,Mphasis Limited,482062860288,25.266108,19.903273,0.17743999,0.175,24.675,0.115559995,Technology,Information Technology Services
+PERSISTENT.NS,Persistent Systems Limited,997684740096,52.90413,34.158836,0.22918,0.303,6.696,0.107329994,Technology,Information Technology Services
+PNB.NS,Punjab National Bank,1411907977216,6.1889167,6.6336627,0.15059,0.074,,0.38777,Financial Services,Banks - Regional
+PSB.NS,Punjab & Sind Bank,132403617792,8.843602,,0.10659,0.241,,0.29225,Financial Services,Banks - Regional
+RBLBANK.NS,RBL Bank Limited,545036402688,25.34296,17.357153,0.04045,0.231,,0.14082,Financial Services,Banks - Regional
+RELIANCE.NS,Reliance Industries Limited,15763977011200,21.095617,16.393959,,0.297,46.278,0.066149995,Energy,Oil & Gas Refining & Marketing
+SBIN.NS,State Bank of India,8878612807680,10.309217,9.117033,0.15177,0.103,,0.22376,Financial Services,Banks - Regional
+SUNPHARMA.NS,Sun Pharmaceutical Industries Limited,4265297575936,35.271824,27.360464,,0.105,5.517,0.20188999,Healthcare,Drug Manufacturers - Specialty & Generic
+TCS.NS,Tata Consultancy Services Limited,9054625726464,17.542408,15.531532,0.45573002,0.112,9.83,0.1822,Technology,Information Technology Services
+TECHM.NS,Tech Mahindra Limited,1755351220224,28.781742,20.054556,0.19186,0.156,7.249,0.090059996,Technology,Information Technology Services
+TORNTPHARM.NS,Torrent Pharmaceuticals Limited,1754789052416,77.929054,50.755005,0.15653,0.508,76.781,0.12209,Healthcare,Drug Manufacturers - Specialty & Generic
+TVSMOTOR.NS,TVS Motor Company Limited,1993669214208,52.081936,29.2841,0.3723,0.394,320.877,0.05819,Consumer Cyclical,Auto Manufacturers
+UCOBANK.NS,UCO Bank,276622671872,9.268907,15.757143,0.08898,0.049,,0.22572,Financial Services,Banks - Regional
+UNIONBANK.NS,Union Bank of India,1419850678272,6.4538517,6.4656544,0.16291,0.156,,0.41458,Financial Services,Banks - Regional
+WIPRO.NS,Wipro Limited,1962029875200,15.578162,14.260382,0.15939,0.091,27.753,0.13578,Technology,Information Technology Services

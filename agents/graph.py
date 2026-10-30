@@ -29,9 +29,16 @@ from agents.macro_parser import macro_parser_node
 from agents.quant_node import quant_engine_node
 from agents.risk_verifier import risk_verifier_node
 from agents.screener import screener_node
-from agents.state import HedgeBuilderState
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
 logger = logging.getLogger(__name__)
+
+
+def _get(state: Any, key: str, default: Any = None) -> Any:
+    """Safely get an attribute or dictionary key from state."""
+    if isinstance(state, dict):
+        return state.get(key, default)
+    return getattr(state, key, default)
 
 
 # ────────────────────────────────────────────────────────────────────────────
@@ -40,7 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 def should_continue_or_retry(
-    state: HedgeBuilderState,
+    state: HedgeBuilderState | dict[str, Any],
 ) -> Literal["cro_reporter", "screener"]:
     """Conditional router function for the Risk Verifier node.
 
@@ -55,9 +62,10 @@ def should_continue_or_retry(
         "cro_reporter" if approved or if retry attempts are exhausted.
         "screener" if rejected and retry attempts remain.
     """
-    is_approved = state.approved
-    attempts = state.attempt_count
-    max_attempts = state.max_attempts
+    state = wrap_state(state)
+    is_approved = bool(state.approved)
+    attempts = int(state.attempt_count)
+    max_attempts = int(state.max_attempts)
 
     if is_approved:
         logger.info(

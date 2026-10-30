@@ -25,11 +25,18 @@ import logging
 from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_google_genai import ChatGoogleGenerativeAI
 
-from agents.state import HedgeBuilderState
+from agents.gemini_client import extract_message_text, get_gemini_client, invoke_with_retry
+from agents.state import HedgeBuilderState, StateProxy, wrap_state
 
 logger = logging.getLogger(__name__)
+
+
+def _get(state: Any, key: str, default: Any = None) -> Any:
+    """Safely get an attribute or dictionary key from state."""
+    if isinstance(state, dict):
+        return state.get(key, default)
+    return getattr(state, key, default)
 
 # ────────────────────────────────────────────────────────────────────────────
 # System prompt
@@ -87,16 +94,19 @@ def risk_verifier_node(state: HedgeBuilderState) -> dict:
         Partial state dict updating ``verifier_result``, ``approved``,
         ``attempt_count``, and (on rejection) appending to ``rejection_log``.
     """
-    long_ticker = state.selected_long
-    short_ticker = state.selected_short
-    attempt = state.attempt_count
+    state = wrap_state(state)
+    long_ticker = state.selected_long or ""
+    short_ticker = state.selected_short or ""
+    attempt = int(state.attempt_count or 0)
+    max_attempts = int(state.max_attempts or 5)
+    rejection_log = state.rejection_log or []
 
     logger.info(
         "RiskVerifier ▸ Verifying pair LONG=%s SHORT=%s (attempt %d/%d)",
         long_ticker,
         short_ticker,
         attempt + 1,
-        state.max_attempts,
+        max_attempts,
     )
 
     # ── 1. Run deterministic verification ──────────────────────────────
@@ -106,10 +116,11 @@ def risk_verifier_node(state: HedgeBuilderState) -> dict:
         verifier_result: dict[str, Any] = verify_pair(
             long_ticker=long_ticker,
             short_ticker=short_ticker,
-            pair_metrics=state.pair_metrics,
-            hedged_stats=state.hedged_stats,
-            stress_results=state.stress_results,
-            weights=state.weights,
+            pair_metrics=_get(state, "pair_metrics", {}),
+            hedged_stats=_get(state, "hedged_stats", {}),
+            unhedged_stats=_get(state, "unhedged_stats", {}),
+            stress_results=_get(state, "stress_results", {}),
+            weights=_get(state, "weights", {}),
         )
     except Exception as exc:
         logger.error("RiskVerifier ▸ Engine verification failed: %s", exc)
@@ -159,7 +170,7 @@ def risk_verifier_node(state: HedgeBuilderState) -> dict:
         }
 
         summary_msg = (
-            f"**Risk Verifier – REJECTED (Attempt {new_attempt_count}/{state.max_attempts})**\n\n"
+            f"**Risk Verifier – REJECTED (Attempt {new_attempt_count}/{max_attempts})**\n\n"
             f"**Engine reason:** {reason}\n\n"
             f"**Diagnostic:**\n{llm_commentary}"
         )
@@ -168,7 +179,7 @@ def risk_verifier_node(state: HedgeBuilderState) -> dict:
             "verifier_result": verifier_result,
             "approved": False,
             "attempt_count": new_attempt_count,
-            "rejection_log": state.rejection_log + [rejection_entry],
+            "rejection_log": rejection_log + [rejection_entry],
             "messages": [{"role": "assistant", "content": summary_msg}],
         }
 
@@ -188,14 +199,18 @@ def _build_report(state: HedgeBuilderState, verifier_result: dict) -> str:
     Returns:
         A formatted markdown string with all key numbers.
     """
-    pm = state.pair_metrics
-    hs = state.hedged_stats
-    us = state.unhedged_stats
-    sr = state.stress_results
-    wt = state.weights
+    state = wrap_state(state)
+    pm = state.pair_metrics or {}
+    hs = state.hedged_stats or {}
+    us = state.unhedged_stats or {}
+    sr = state.stress_results or {}
+    wt = state.weights or {}
+    selected_long = state.selected_long or ""
+    selected_short = state.selected_short or ""
+    stress_regime = state.stress_regime or ""
 
     lines = [
-        f"## Verification Report: {state.selected_long} (L) / {state.selected_short} (S)",
+        f"## Verification Report: {selected_long} (L) / {selected_short} (S)",
         "",
         "### Betas",
         f"- Static β (long): {pm.get('static_beta_long', 'N/A')}",
@@ -224,7 +239,7 @@ def _build_report(state: HedgeBuilderState, verifier_result: dict) -> str:
         f"- Max drawdown: {us.get('max_drawdown', 'N/A')}",
         "",
         "### Stress Test",
-        f"- Regime: {state.stress_regime}",
+        f"- Regime: {stress_regime}",
         f"- Max drawdown: {sr.get('max_drawdown_pct', 'N/A')}%",
         f"- Recovery days: {sr.get('recovery_days', 'N/A')}",
         "",
@@ -250,17 +265,18 @@ def _get_llm_commentary(is_approved: bool, report_text: str) -> str:
     system_prompt = _SYSTEM_PROMPT_APPROVAL if is_approved else _SYSTEM_PROMPT_REJECTION
 
     try:
-        llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-pro",
+        llm = get_gemini_client(
+            model_type="reasoning",
             temperature=0.3,
         )
-        response = llm.invoke(
+        response = invoke_with_retry(
+            llm,
             [
                 SystemMessage(content=system_prompt),
                 HumanMessage(content=report_text),
-            ]
+            ],
         )
-        return response.content
+        return extract_message_text(response)
     except Exception as exc:
         logger.error("RiskVerifier ▸ LLM commentary failed: %s", exc)
         if is_approved:

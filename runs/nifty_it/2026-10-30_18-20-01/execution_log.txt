@@ -1,0 +1,226 @@
+18:20:01 [INFO] NiftyITRun: ======================================================================
+18:20:01 [INFO] NiftyITRun: STOCX — NIFTY IT AGENT PIPELINE EXECUTION
+18:20:01 [INFO] NiftyITRun: Timestamp: 2026-10-30_18-20-01
+18:20:01 [INFO] NiftyITRun: Destination: C:\Users\Anay Tiwari\StocX\runs\nifty_it\2026-10-30_18-20-01
+18:20:01 [INFO] NiftyITRun: ======================================================================
+18:20:01 [INFO] NiftyITRun: Running pre-flight system checks...
+18:20:01 [INFO] NiftyITRun: ✓ ALLOW_SYNTHETIC = False
+18:20:01 [INFO] NiftyITRun: ✓ LLM_MAX_RETRIES = 3
+18:20:01 [INFO] NiftyITRun: ✓ Fundamentals CSV verified: C:\Users\Anay Tiwari\StocX\data\fundamentals.csv
+18:20:01 [INFO] NiftyITRun: ✓ NSE lot sizes CSV verified: C:\Users\Anay Tiwari\StocX\data\nse_lot_sizes.csv
+18:20:01 [INFO] NiftyITRun: ✓ NIFTY IT constituents (10 symbols): ['TCS.NS', 'INFY.NS', 'HCLTECH.NS', 'WIPRO.NS', 'TECHM.NS', 'LTIM.NS', 'MPHASIS.NS', 'COFORGE.NS', 'PERSISTENT.NS', 'LTTS.NS']
+18:20:01 [INFO] NiftyITRun: ✓ Loaded 46 official NSE lot sizes
+18:20:01 [INFO] NiftyITRun: 
+--- INVESTMENT THESIS ---
+18:20:01 [INFO] NiftyITRun: Bullish on high-quality Indian IT service leaders with resilient balance sheets, low debt, and superior ROE, while hedging against broader tech valuation compression and margin squeeze using weaker momentum constituents in the NIFTY IT sector under COVID-19 crisis stress conditions.
+18:20:01 [INFO] NiftyITRun: Benchmark: ^NSEI | Lookback: 252 days | Stress Regime: COVID_2020 | Max Attempts: 5
+
+18:20:01 [INFO] NiftyITRun: Launching LangGraph cyclical execution graph...
+18:20:01 [INFO] agents.graph: Initializing Hedge Builder run for thesis: 'Bullish on high-quality Indian IT service leaders with resilient balance sheets, low debt, and superior ROE, while hedging against broader tech valuation compression and margin squeeze using weaker momentum constituents in the NIFTY IT sector under COVID-19 crisis stress conditions.'
+18:20:01 [INFO] agents.macro_parser: MacroParser ▸ Parsing thesis: Bullish on high-quality Indian IT service leaders with resilient balance sheets, low debt, and superior ROE, while hedgi
+18:20:01 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:02 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 404 Not Found"
+18:20:02 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:02 [ERROR] agents.macro_parser: MacroParser ▸ LLM call failed (Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}). Using fallback defaults.
+18:20:02 [INFO] agents.screener: Screener ▸ Attempt 1 | Sector: NIFTY IT | Rejected pairs so far: 0
+18:20:02 [INFO] agents.screener: Screener ▸ Fetched 10 tickers for NIFTY IT
+18:20:02 [WARNING] engine.data_fetcher: Ticker LTIM.NS not found in fundamentals CSV: data\fundamentals.csv
+18:20:02 [WARNING] agents.screener: Screener ▸ Skipping candidate LTIM.NS: "Ticker 'LTIM.NS' not found in fundamentals CSV: data\\fundamentals.csv"
+18:20:06 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:07 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 404 Not Found"
+18:20:07 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:07 [ERROR] agents.screener: Screener ▸ LLM selection failed (Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}). Using deterministic fallback.
+18:20:07 [INFO] agents.quant_node: QuantEngine ▸ Running pipeline: LONG=COFORGE.NS SHORT=INFY.NS BENCH=^NSEI LOOKBACK=252 STRESS=COVID_2020
+18:20:07 [INFO] engine.data_fetcher: Cache miss. Fetching live prices for ['COFORGE.NS', 'INFY.NS', '^NSEI'] [2026-02-20 → 2026-10-30] via yfinance
+18:20:08 [INFO] engine.data_fetcher: Cached prices → data_cache\COFORGE.NS_INFY.NS_^NSEI_2026-02-20_2026-10-30.csv
+18:20:08 [INFO] agents.quant_node: QuantEngine ▸ Price data fetched (169 rows, data_source=yfinance).
+18:20:08 [INFO] agents.quant_node: QuantEngine ▸ Betas: long_static=0.982 short_static=0.735
+18:20:08 [INFO] agents.quant_node: QuantEngine ▸ Correlation matrix computed: pair_corr=0.6128
+18:20:08 [INFO] engine.cointegration: Engle-Granger: t=-1.629  p=0.7083  cointegrated=False
+18:20:08 [INFO] engine.cointegration: OU half-life = 175.88  (θ = -0.0039)
+18:20:08 [INFO] agents.quant_node: QuantEngine ▸ Cointegration p=0.7083, z-score=0.15, HL=175.9 days
+18:20:08 [INFO] engine.portfolio: Beta-neutral weights: w_long=0.4279  w_short=0.5721  (β_L=0.982, β_S=0.735)
+18:20:08 [INFO] engine.portfolio: LONG COFORGE.NS: 0 lots × 475 shares @ ₹1962.00 = ₹0.00
+18:20:08 [INFO] engine.portfolio: SHORT INFY.NS: 0 lots × 400 shares @ ₹1146.50 = ₹0.00
+18:20:08 [INFO] agents.quant_node: QuantEngine ▸ Weights: long_wt=0.4279 short_wt=-0.5721
+18:20:08 [INFO] engine.backtester: Backtest done: hedged Sharpe=1.89  unhedged Sharpe=1.42
+18:20:08 [INFO] agents.quant_node: QuantEngine ▸ Backtest Sharpe: hedged=1.89 unhedged=1.42
+18:20:08 [INFO] engine.backtester: Stress test [COVID_2020]: 2020-01-01 → 2020-06-30
+18:20:08 [INFO] engine.data_fetcher: Matched valid cached dataset in data\NIFTY_IT__covid_2020.csv (122 rows)
+18:20:08 [INFO] engine.data_fetcher: Using cached market data for ['COFORGE.NS', 'INFY.NS', '^NSEI'] [2020-01-01 → 2020-06-30]
+18:20:08 [INFO] engine.backtester: Backtest done: hedged Sharpe=-0.34  unhedged Sharpe=0.09
+18:20:08 [INFO] agents.quant_node: QuantEngine ▸ Stress (COVID_2020) max-drawdown=-13.62%
+18:20:08 [INFO] agents.risk_verifier: RiskVerifier ▸ Verifying pair LONG=COFORGE.NS SHORT=INFY.NS (attempt 1/5)
+18:20:08 [INFO] engine.verifier: 2 check(s) failed: correlation, cointegration.
+18:20:08 [INFO] agents.risk_verifier: RiskVerifier ▸ Engine verdict: REJECTED | Reason: 2 check(s) failed: correlation, cointegration.
+18:20:08 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:08 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 404 Not Found"
+18:20:08 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:08 [ERROR] agents.risk_verifier: RiskVerifier ▸ LLM commentary failed: Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:08 [WARNING] agents.graph: GraphRouter ▸ Pair REJECTED on attempt 1/5. Self-correcting: looping back to Screener.
+18:20:08 [INFO] agents.screener: Screener ▸ Attempt 2 | Sector: NIFTY IT | Rejected pairs so far: 1
+18:20:08 [INFO] agents.screener: Screener ▸ Fetched 10 tickers for NIFTY IT
+18:20:08 [WARNING] engine.data_fetcher: Ticker LTIM.NS not found in fundamentals CSV: data\fundamentals.csv
+18:20:08 [WARNING] agents.screener: Screener ▸ Skipping candidate LTIM.NS: "Ticker 'LTIM.NS' not found in fundamentals CSV: data\\fundamentals.csv"
+18:20:15 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:15 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 404 Not Found"
+18:20:15 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:15 [ERROR] agents.screener: Screener ▸ LLM selection failed (Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}). Using deterministic fallback.
+18:20:15 [INFO] agents.quant_node: QuantEngine ▸ Running pipeline: LONG=COFORGE.NS SHORT=MPHASIS.NS BENCH=^NSEI LOOKBACK=252 STRESS=COVID_2020
+18:20:15 [INFO] engine.data_fetcher: Cache miss. Fetching live prices for ['COFORGE.NS', 'MPHASIS.NS', '^NSEI'] [2026-02-20 → 2026-10-30] via yfinance
+18:20:16 [INFO] engine.data_fetcher: Cached prices → data_cache\COFORGE.NS_MPHASIS.NS_^NSEI_2026-02-20_2026-10-30.csv
+18:20:16 [INFO] agents.quant_node: QuantEngine ▸ Price data fetched (169 rows, data_source=yfinance).
+18:20:16 [INFO] agents.quant_node: QuantEngine ▸ Betas: long_static=0.982 short_static=0.835
+18:20:16 [INFO] agents.quant_node: QuantEngine ▸ Correlation matrix computed: pair_corr=0.6765
+18:20:16 [INFO] engine.cointegration: Engle-Granger: t=-2.398  p=0.3259  cointegrated=False
+18:20:16 [INFO] engine.cointegration: OU half-life = 88.49  (θ = -0.0078)
+18:20:16 [INFO] agents.quant_node: QuantEngine ▸ Cointegration p=0.3259, z-score=-0.30, HL=88.5 days
+18:20:16 [INFO] engine.portfolio: Beta-neutral weights: w_long=0.4596  w_short=0.5404  (β_L=0.982, β_S=0.835)
+18:20:16 [INFO] engine.portfolio: LONG COFORGE.NS: 0 lots × 475 shares @ ₹1962.00 = ₹0.00
+18:20:16 [INFO] engine.portfolio: SHORT MPHASIS.NS: 0 lots × 275 shares @ ₹2561.30 = ₹0.00
+18:20:16 [INFO] agents.quant_node: QuantEngine ▸ Weights: long_wt=0.4596 short_wt=-0.5404
+18:20:16 [INFO] engine.backtester: Backtest done: hedged Sharpe=0.85  unhedged Sharpe=1.42
+18:20:16 [INFO] agents.quant_node: QuantEngine ▸ Backtest Sharpe: hedged=0.85 unhedged=1.42
+18:20:16 [INFO] engine.backtester: Stress test [COVID_2020]: 2020-01-01 → 2020-06-30
+18:20:16 [INFO] engine.data_fetcher: Matched valid cached dataset in data\NIFTY_IT__covid_2020.csv (122 rows)
+18:20:16 [INFO] engine.data_fetcher: Using cached market data for ['COFORGE.NS', 'MPHASIS.NS', '^NSEI'] [2020-01-01 → 2020-06-30]
+18:20:16 [INFO] engine.backtester: Backtest done: hedged Sharpe=-0.08  unhedged Sharpe=0.09
+18:20:16 [INFO] agents.quant_node: QuantEngine ▸ Stress (COVID_2020) max-drawdown=-15.61%
+18:20:16 [INFO] agents.risk_verifier: RiskVerifier ▸ Verifying pair LONG=COFORGE.NS SHORT=MPHASIS.NS (attempt 2/5)
+18:20:16 [INFO] engine.verifier: 1 check(s) failed: cointegration.
+18:20:16 [INFO] agents.risk_verifier: RiskVerifier ▸ Engine verdict: REJECTED | Reason: 1 check(s) failed: cointegration.
+18:20:16 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:17 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 404 Not Found"
+18:20:17 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:17 [ERROR] agents.risk_verifier: RiskVerifier ▸ LLM commentary failed: Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:17 [WARNING] agents.graph: GraphRouter ▸ Pair REJECTED on attempt 2/5. Self-correcting: looping back to Screener.
+18:20:17 [INFO] agents.screener: Screener ▸ Attempt 3 | Sector: NIFTY IT | Rejected pairs so far: 2
+18:20:17 [INFO] agents.screener: Screener ▸ Fetched 10 tickers for NIFTY IT
+18:20:17 [WARNING] engine.data_fetcher: Ticker LTIM.NS not found in fundamentals CSV: data\fundamentals.csv
+18:20:17 [WARNING] agents.screener: Screener ▸ Skipping candidate LTIM.NS: "Ticker 'LTIM.NS' not found in fundamentals CSV: data\\fundamentals.csv"
+18:20:23 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:23 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 404 Not Found"
+18:20:23 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:23 [ERROR] agents.screener: Screener ▸ LLM selection failed (Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}). Using deterministic fallback.
+18:20:23 [INFO] agents.quant_node: QuantEngine ▸ Running pipeline: LONG=COFORGE.NS SHORT=HCLTECH.NS BENCH=^NSEI LOOKBACK=252 STRESS=COVID_2020
+18:20:23 [INFO] engine.data_fetcher: Cache miss. Fetching live prices for ['COFORGE.NS', 'HCLTECH.NS', '^NSEI'] [2026-02-20 → 2026-10-30] via yfinance
+18:20:24 [INFO] engine.data_fetcher: Cached prices → data_cache\COFORGE.NS_HCLTECH.NS_^NSEI_2026-02-20_2026-10-30.csv
+18:20:24 [INFO] agents.quant_node: QuantEngine ▸ Price data fetched (169 rows, data_source=yfinance).
+18:20:24 [INFO] agents.quant_node: QuantEngine ▸ Betas: long_static=0.982 short_static=0.769
+18:20:24 [INFO] agents.quant_node: QuantEngine ▸ Correlation matrix computed: pair_corr=0.5744
+18:20:24 [INFO] engine.cointegration: Engle-Granger: t=-0.564  p=0.9594  cointegrated=False
+18:20:24 [INFO] engine.cointegration: OU half-life = 79.97  (θ = -0.0087)
+18:20:24 [INFO] agents.quant_node: QuantEngine ▸ Cointegration p=0.9594, z-score=-0.58, HL=80.0 days
+18:20:24 [INFO] engine.portfolio: Beta-neutral weights: w_long=0.4392  w_short=0.5608  (β_L=0.982, β_S=0.769)
+18:20:24 [INFO] engine.portfolio: LONG COFORGE.NS: 0 lots × 475 shares @ ₹1962.00 = ₹0.00
+18:20:24 [INFO] engine.portfolio: SHORT HCLTECH.NS: 0 lots × 400 shares @ ₹1403.90 = ₹0.00
+18:20:24 [INFO] agents.quant_node: QuantEngine ▸ Weights: long_wt=0.4392 short_wt=-0.5608
+18:20:24 [INFO] engine.backtester: Backtest done: hedged Sharpe=1.04  unhedged Sharpe=1.42
+18:20:24 [INFO] agents.quant_node: QuantEngine ▸ Backtest Sharpe: hedged=1.04 unhedged=1.42
+18:20:24 [INFO] engine.backtester: Stress test [COVID_2020]: 2020-01-01 → 2020-06-30
+18:20:24 [INFO] engine.data_fetcher: Matched valid cached dataset in data\NIFTY_IT__covid_2020.csv (122 rows)
+18:20:24 [INFO] engine.data_fetcher: Using cached market data for ['COFORGE.NS', 'HCLTECH.NS', '^NSEI'] [2020-01-01 → 2020-06-30]
+18:20:24 [INFO] engine.backtester: Backtest done: hedged Sharpe=-0.17  unhedged Sharpe=0.09
+18:20:24 [INFO] agents.quant_node: QuantEngine ▸ Stress (COVID_2020) max-drawdown=-15.30%
+18:20:24 [INFO] agents.risk_verifier: RiskVerifier ▸ Verifying pair LONG=COFORGE.NS SHORT=HCLTECH.NS (attempt 3/5)
+18:20:24 [INFO] engine.verifier: 3 check(s) failed: correlation, cointegration, max_drawdown_reduction.
+18:20:24 [INFO] agents.risk_verifier: RiskVerifier ▸ Engine verdict: REJECTED | Reason: 3 check(s) failed: correlation, cointegration, max_drawdown_reduction.
+18:20:24 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:24 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 404 Not Found"
+18:20:24 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:24 [ERROR] agents.risk_verifier: RiskVerifier ▸ LLM commentary failed: Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:24 [WARNING] agents.graph: GraphRouter ▸ Pair REJECTED on attempt 3/5. Self-correcting: looping back to Screener.
+18:20:24 [INFO] agents.screener: Screener ▸ Attempt 4 | Sector: NIFTY IT | Rejected pairs so far: 3
+18:20:24 [INFO] agents.screener: Screener ▸ Fetched 10 tickers for NIFTY IT
+18:20:24 [WARNING] engine.data_fetcher: Ticker LTIM.NS not found in fundamentals CSV: data\fundamentals.csv
+18:20:24 [WARNING] agents.screener: Screener ▸ Skipping candidate LTIM.NS: "Ticker 'LTIM.NS' not found in fundamentals CSV: data\\fundamentals.csv"
+18:20:30 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:31 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 404 Not Found"
+18:20:31 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:31 [ERROR] agents.screener: Screener ▸ LLM selection failed (Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}). Using deterministic fallback.
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Running pipeline: LONG=COFORGE.NS SHORT=LTTS.NS BENCH=^NSEI LOOKBACK=252 STRESS=COVID_2020
+18:20:31 [INFO] engine.data_fetcher: Cache miss. Fetching live prices for ['COFORGE.NS', 'LTTS.NS', '^NSEI'] [2026-02-20 → 2026-10-30] via yfinance
+18:20:31 [INFO] engine.data_fetcher: Cached prices → data_cache\COFORGE.NS_LTTS.NS_^NSEI_2026-02-20_2026-10-30.csv
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Price data fetched (169 rows, data_source=yfinance).
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Betas: long_static=0.982 short_static=0.896
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Correlation matrix computed: pair_corr=0.3928
+18:20:31 [INFO] engine.cointegration: Engle-Granger: t=-1.294  p=0.8315  cointegrated=False
+18:20:31 [INFO] engine.cointegration: OU half-life = 49.94  (θ = -0.0139)
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Cointegration p=0.8315, z-score=-2.34, HL=49.9 days
+18:20:31 [INFO] engine.portfolio: Beta-neutral weights: w_long=0.4771  w_short=0.5229  (β_L=0.982, β_S=0.896)
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Weights: long_wt=0.4771 short_wt=-0.5229
+18:20:31 [INFO] engine.backtester: Backtest done: hedged Sharpe=0.13  unhedged Sharpe=1.42
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Backtest Sharpe: hedged=0.13 unhedged=1.42
+18:20:31 [INFO] engine.backtester: Stress test [COVID_2020]: 2020-01-01 → 2020-06-30
+18:20:31 [INFO] engine.data_fetcher: Matched valid cached dataset in data\NIFTY_IT__covid_2020.csv (122 rows)
+18:20:31 [INFO] engine.data_fetcher: Using cached market data for ['COFORGE.NS', 'LTTS.NS', '^NSEI'] [2020-01-01 → 2020-06-30]
+18:20:31 [INFO] engine.backtester: Backtest done: hedged Sharpe=0.31  unhedged Sharpe=0.09
+18:20:31 [INFO] agents.quant_node: QuantEngine ▸ Stress (COVID_2020) max-drawdown=-15.07%
+18:20:31 [INFO] agents.risk_verifier: RiskVerifier ▸ Verifying pair LONG=COFORGE.NS SHORT=LTTS.NS (attempt 4/5)
+18:20:31 [INFO] engine.verifier: 3 check(s) failed: correlation, cointegration, max_drawdown_reduction.
+18:20:31 [INFO] agents.risk_verifier: RiskVerifier ▸ Engine verdict: REJECTED | Reason: 3 check(s) failed: correlation, cointegration, max_drawdown_reduction.
+18:20:31 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:32 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 404 Not Found"
+18:20:32 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:32 [ERROR] agents.risk_verifier: RiskVerifier ▸ LLM commentary failed: Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:32 [WARNING] agents.graph: GraphRouter ▸ Pair REJECTED on attempt 4/5. Self-correcting: looping back to Screener.
+18:20:32 [INFO] agents.screener: Screener ▸ Attempt 5 | Sector: NIFTY IT | Rejected pairs so far: 4
+18:20:32 [INFO] agents.screener: Screener ▸ Fetched 10 tickers for NIFTY IT
+18:20:32 [WARNING] engine.data_fetcher: Ticker LTIM.NS not found in fundamentals CSV: data\fundamentals.csv
+18:20:32 [WARNING] agents.screener: Screener ▸ Skipping candidate LTIM.NS: "Ticker 'LTIM.NS' not found in fundamentals CSV: data\\fundamentals.csv"
+18:20:36 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:36 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent "HTTP/1.1 404 Not Found"
+18:20:36 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:36 [ERROR] agents.screener: Screener ▸ LLM selection failed (Error calling model 'gemini-2.5-flash' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}). Using deterministic fallback.
+18:20:36 [INFO] agents.quant_node: QuantEngine ▸ Running pipeline: LONG=COFORGE.NS SHORT=WIPRO.NS BENCH=^NSEI LOOKBACK=252 STRESS=COVID_2020
+18:20:36 [INFO] engine.data_fetcher: Cache miss. Fetching live prices for ['COFORGE.NS', 'WIPRO.NS', '^NSEI'] [2026-02-20 → 2026-10-30] via yfinance
+18:20:37 [INFO] engine.data_fetcher: Cached prices → data_cache\COFORGE.NS_WIPRO.NS_^NSEI_2026-02-20_2026-10-30.csv
+18:20:37 [INFO] agents.quant_node: QuantEngine ▸ Price data fetched (169 rows, data_source=yfinance).
+18:20:37 [INFO] agents.quant_node: QuantEngine ▸ Betas: long_static=0.982 short_static=0.727
+18:20:37 [INFO] agents.quant_node: QuantEngine ▸ Correlation matrix computed: pair_corr=0.4564
+18:20:37 [INFO] engine.cointegration: Engle-Granger: t=-1.333  p=0.8194  cointegrated=False
+18:20:37 [INFO] engine.cointegration: OU half-life = 140.58  (θ = -0.0049)
+18:20:37 [INFO] agents.quant_node: QuantEngine ▸ Cointegration p=0.8194, z-score=-0.57, HL=140.6 days
+18:20:37 [INFO] engine.portfolio: Beta-neutral weights: w_long=0.4255  w_short=0.5745  (β_L=0.982, β_S=0.727)
+18:20:37 [INFO] engine.portfolio: LONG COFORGE.NS: 0 lots × 475 shares @ ₹1962.00 = ₹0.00
+18:20:37 [INFO] engine.portfolio: SHORT WIPRO.NS: 0 lots × 3000 shares @ ₹190.10 = ₹0.00
+18:20:37 [INFO] agents.quant_node: QuantEngine ▸ Weights: long_wt=0.4255 short_wt=-0.5745
+18:20:37 [INFO] engine.backtester: Backtest done: hedged Sharpe=1.55  unhedged Sharpe=1.42
+18:20:37 [INFO] agents.quant_node: QuantEngine ▸ Backtest Sharpe: hedged=1.55 unhedged=1.42
+18:20:37 [INFO] engine.backtester: Stress test [COVID_2020]: 2020-01-01 → 2020-06-30
+18:20:37 [INFO] engine.data_fetcher: Matched valid cached dataset in data\NIFTY_IT__covid_2020.csv (122 rows)
+18:20:37 [INFO] engine.data_fetcher: Using cached market data for ['COFORGE.NS', 'WIPRO.NS', '^NSEI'] [2020-01-01 → 2020-06-30]
+18:20:37 [INFO] engine.backtester: Backtest done: hedged Sharpe=0.29  unhedged Sharpe=0.09
+18:20:37 [INFO] agents.quant_node: QuantEngine ▸ Stress (COVID_2020) max-drawdown=-14.48%
+18:20:37 [INFO] agents.risk_verifier: RiskVerifier ▸ Verifying pair LONG=COFORGE.NS SHORT=WIPRO.NS (attempt 5/5)
+18:20:37 [INFO] engine.verifier: 2 check(s) failed: correlation, cointegration.
+18:20:37 [INFO] agents.risk_verifier: RiskVerifier ▸ Engine verdict: REJECTED | Reason: 2 check(s) failed: correlation, cointegration.
+18:20:37 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:37 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 404 Not Found"
+18:20:37 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:37 [ERROR] agents.risk_verifier: RiskVerifier ▸ LLM commentary failed: Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:37 [ERROR] agents.graph: GraphRouter ▸ Max attempts (5) exhausted without approval. Routing to CRO Reporter for exit memo.
+18:20:37 [INFO] agents.cro_reporter: CROReporter ▸ Generating FAILURE memo (attempts used: 5/5, data_source: yfinance)
+18:20:37 [INFO] google_genai.models: AFC is enabled with max remote calls: 10.
+18:20:38 [INFO] httpx: HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 404 Not Found"
+18:20:38 [ERROR] agents.gemini_client: LLM invocation failed permanently or exhausted retries (attempt 1/3): Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:38 [ERROR] agents.cro_reporter: CROReporter ▸ LLM call failed: Error calling model 'gemini-2.5-pro' (NOT_FOUND): 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.5-pro is no longer available to new users. Please update your code to use models/gemini-3.1-pro-preview for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).', 'status': 'NOT_FOUND'}}
+18:20:38 [INFO] agents.graph: Hedge Builder completed. Approved: False, Attempts: 5
+18:20:38 [INFO] NiftyITRun: Pipeline execution COMPLETED in 36.73 seconds.
+18:20:38 [INFO] NiftyITRun: 
+======================================================================
+18:20:38 [INFO] NiftyITRun: EXECUTION SUMMARY
+18:20:38 [INFO] NiftyITRun: ======================================================================
+18:20:38 [INFO] NiftyITRun: Status:              REJECTED ❌
+18:20:38 [INFO] NiftyITRun: Data Source Used:    yfinance
+18:20:38 [INFO] NiftyITRun: Selected Long:       COFORGE.NS
+18:20:38 [INFO] NiftyITRun: Selected Short:      WIPRO.NS
+18:20:38 [INFO] NiftyITRun: Attempts Used:       5 / 5
+18:20:38 [INFO] NiftyITRun: Total Rejections:    5
+18:20:38 [INFO] NiftyITRun: ======================================================================
+
+18:20:38 [INFO] NiftyITRun: Saving artifacts to C:\Users\Anay Tiwari\StocX\runs\nifty_it\2026-10-30_18-20-01...
+18:20:38 [INFO] NiftyITRun: Saved: state.json (86969 bytes)
+18:20:38 [INFO] NiftyITRun: Saved: rejection_trace.json
+18:20:38 [INFO] NiftyITRun: Saved: candidate_metrics.json
+18:20:38 [INFO] NiftyITRun: Saved: cro_report.md
