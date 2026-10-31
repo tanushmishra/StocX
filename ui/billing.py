@@ -64,66 +64,62 @@ def render_billing_panel(user: dict[str, Any]) -> None:
     # ── Free Tier Card ────────────────────────────────────────────────────
     with col1:
         is_current_free = (plan == "free")
-        badge_html = """
-            <span style="background: #FEF3C7; color: #92400E; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid #F59E0B;">
-                CURRENT PLAN
-            </span>
-        """ if is_current_free else ""
+        badge_html = (
+            '<span style="background: #FEF3C7; color: #92400E; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid #F59E0B;">'
+            'CURRENT PLAN'
+            '</span>'
+        ) if is_current_free else ""
 
-        st.markdown(
-            f"""
-            <div style="background: rgba(255, 255, 255, 0.85); border: 1px solid #E5DFD5; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04); height: 100%;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="color: #2A2624; font-size: 1.3rem; font-weight: 700; margin: 0;">Community Plan</h3>
-                    {badge_html}
-                </div>
-                <div style="font-size: 1.75rem; font-weight: 800; color: #2A2624; margin: 0.75rem 0;">₹0 <span style="font-size: 0.85rem; font-weight: 500; color: #78716C;">/ month</span></div>
-                <hr style="border: none; border-top: 1px solid #E5DFD5; margin: 1rem 0;">
-                <ul style="color: #44403C; font-size: 0.88rem; line-height: 1.8; padding-left: 1.25rem;">
-                    <li><strong>3 Strategy Runs</strong> per calendar day</li>
-                    <li><strong>2 Stress Regimes</strong> (COVID 2020 & 2008 GFC)</li>
-                    <li>Full 4-Gate Adversarial Risk Verification</li>
-                    <li>Standard Quantitative Performance Metrics</li>
-                    <li>Deterministic Math Engine (Zero Hallucination)</li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        card_free = (
+            '<div style="background: rgba(255, 255, 255, 0.90); border: 1px solid #E5DFD5; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04); min-height: 380px;">'
+            '<div style="display: flex; justify-content: space-between; align-items: center;">'
+            '<h3 style="color: #2A2624; font-size: 1.3rem; font-weight: 700; margin: 0;">Community Plan</h3>'
+            f'{badge_html}'
+            '</div>'
+            '<div style="font-size: 1.75rem; font-weight: 800; color: #2A2624; margin: 0.75rem 0;">₹0 <span style="font-size: 0.85rem; font-weight: 500; color: #78716C;">/ month</span></div>'
+            '<hr style="border: none; border-top: 1px solid #E5DFD5; margin: 1rem 0;">'
+            '<ul style="color: #44403C; font-size: 0.88rem; line-height: 1.8; padding-left: 1.25rem; margin: 0;">'
+            '<li><strong>3 Strategy Runs</strong> per calendar day</li>'
+            '<li><strong>2 Stress Regimes</strong> (COVID 2020 &amp; 2008 GFC)</li>'
+            '<li>Full 4-Gate Adversarial Risk Verification</li>'
+            '<li>Standard Quantitative Performance Metrics</li>'
+            '<li>Deterministic Math Engine (Zero Hallucination)</li>'
+            '</ul>'
+            '</div>'
         )
+        st.markdown(card_free, unsafe_allow_html=True)
 
     # ── Premium Tier Card ─────────────────────────────────────────────────
     with col2:
         is_current_prem = (plan == "premium")
-        badge_prem = """
-            <span style="background: #D1FAE5; color: #065F46; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid #10B981;">
-                ACTIVE PLAN
-            </span>
-        """ if is_current_prem else """
-            <span style="background: #E0E7FF; color: #3730A3; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid #6366F1;">
-                RECOMMENDED
-            </span>
-        """
-
-        st.markdown(
-            f"""
-            <div style="background: rgba(255, 255, 255, 0.95); border: 2px solid #D97706; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(217,119,6,0.12); height: 100%;">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <h3 style="color: #431407; font-size: 1.3rem; font-weight: 700; margin: 0;">Institutional Premium</h3>
-                    {badge_prem}
-                </div>
-                <div style="font-size: 1.75rem; font-weight: 800; color: #92400E; margin: 0.75rem 0;">₹{PREMIUM_PRICE_INR:,.0f} <span style="font-size: 0.85rem; font-weight: 500; color: #78716C;">/ month (TEST MODE)</span></div>
-                <hr style="border: none; border-top: 1px solid #FDE68A; margin: 1rem 0;">
-                <ul style="color: #44403C; font-size: 0.88rem; line-height: 1.8; padding-left: 1.25rem;">
-                    <li><strong>Unlimited Strategy Runs</strong> (No Daily Throttling)</li>
-                    <li><strong>All 4 Crisis Regimes</strong> (COVID, 2008 GFC, 2022 Tech Selloff, 2024 Election)</li>
-                    <li>Full Chief Risk Officer (CRO) Executive Memo</li>
-                    <li>Institutional F&O Derivative Contract & Lot Sizing</li>
-                    <li>Complete Historical Cointegration Spread Diagnostics</li>
-                </ul>
-            </div>
-            """,
-            unsafe_allow_html=True,
+        badge_prem = (
+            '<span style="background: #D1FAE5; color: #065F46; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid #10B981;">'
+            'ACTIVE PLAN'
+            '</span>'
+        ) if is_current_prem else (
+            '<span style="background: #E0E7FF; color: #3730A3; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid #6366F1;">'
+            'RECOMMENDED'
+            '</span>'
         )
+
+        card_prem = (
+            '<div style="background: rgba(255, 255, 255, 0.95); border: 2px solid #D97706; border-radius: 12px; padding: 1.5rem; box-shadow: 0 4px 16px rgba(217,119,6,0.12); min-height: 380px;">'
+            '<div style="display: flex; justify-content: space-between; align-items: center;">'
+            '<h3 style="color: #431407; font-size: 1.3rem; font-weight: 700; margin: 0;">Institutional Premium</h3>'
+            f'{badge_prem}'
+            '</div>'
+            f'<div style="font-size: 1.75rem; font-weight: 800; color: #92400E; margin: 0.75rem 0;">₹{PREMIUM_PRICE_INR:,.0f} <span style="font-size: 0.85rem; font-weight: 500; color: #78716C;">/ month (TEST MODE)</span></div>'
+            '<hr style="border: none; border-top: 1px solid #FDE68A; margin: 1rem 0;">'
+            '<ul style="color: #44403C; font-size: 0.88rem; line-height: 1.8; padding-left: 1.25rem; margin: 0;">'
+            '<li><strong>Unlimited Strategy Runs</strong> (No Daily Throttling)</li>'
+            '<li><strong>All 4 Crisis Regimes</strong> (COVID, 2008 GFC, 2022 Tech Selloff, 2024 Election)</li>'
+            '<li>Full Chief Risk Officer (CRO) Executive Memo</li>'
+            '<li>Institutional F&amp;O Derivative Contract &amp; Lot Sizing</li>'
+            '<li>Complete Historical Cointegration Spread Diagnostics</li>'
+            '</ul>'
+            '</div>'
+        )
+        st.markdown(card_prem, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
         if is_current_prem:

@@ -139,11 +139,21 @@ def render_auth_gate() -> dict[str, Any] | None:
                                     st.rerun()
                                 else:
                                     st.success(res["message"])
-                                    st.info("Switch to 'Verify OTP' tab to enter your 6-digit confirmation code.")
+                                    st.info(
+                                        "Check your email:\n"
+                                        "- If you received a 'Confirm email address' link, click it and then go to the 'Sign In' tab.\n"
+                                        "- If your email includes a 6-digit OTP code, enter it in the 'Verify OTP' tab."
+                                    )
                             else:
                                 st.error(res["message"])
 
         with tab_otp:
+            st.markdown(
+                '<div style="font-size: 0.85rem; color: #78350F; background: #FEF3C7; padding: 0.75rem 1rem; border-radius: 6px; margin-bottom: 1rem; border: 1px solid #F59E0B;">'
+                '<strong>Email Confirmation Tip:</strong> If your Supabase email has a <strong>Confirm email address</strong> link, click that link directly and then switch to the <strong>Sign In</strong> tab to log in. If your email contains a 6-digit code, enter it below.'
+                '</div>',
+                unsafe_allow_html=True,
+            )
             with st.form("otp_form"):
                 otp_email = st.text_input("Email Address", key="otp_email")
                 otp_code = st.text_input("6-Digit OTP Code", max_chars=6, key="otp_code")
