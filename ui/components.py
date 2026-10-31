@@ -414,6 +414,8 @@ def render_agent_trace(
         rej_log = kwargs["rejection_log"] or []
 
     # Verification status banner
+    if getattr(vm.verification if hasattr(view_model_or_rejection_log, "verification") else None, "llm_fallback_used", False):
+        st.warning("LLM unavailable: heuristic defaults used")
     if is_approved is True:
         st.success("**Strategy Approved**: The Adversarial Risk Verifier passed this portfolio.")
     elif is_approved is False:
@@ -589,6 +591,8 @@ def render_verification_summary(view_model: Any) -> None:
         return
 
     ver = view_model.verification
+    if getattr(ver, "llm_fallback_used", False):
+        st.warning("LLM unavailable: heuristic defaults used")
     is_app = getattr(ver, "approved", None)
     if is_app is None:
         is_app = getattr(ver, "is_approved", None)

@@ -35,11 +35,16 @@ GOOGLE_API_KEY: str | None = os.getenv("GOOGLE_API_KEY")
 TAVILY_API_KEY: str | None = os.getenv("TAVILY_API_KEY")
 
 MAX_PAIR_ATTEMPTS: int = int(os.getenv("MAX_PAIR_ATTEMPTS", "5"))
-FAST_LLM_MODEL: str = os.getenv("FAST_LLM_MODEL", "gemini-3-flash-preview")
-REASONING_LLM_MODEL: str = os.getenv("REASONING_LLM_MODEL", "gemini-3-flash-preview")
+GEMINI_FAST_MODEL: str = os.getenv("GEMINI_FAST_MODEL", "gemini-3.8-flash")
+FAST_LLM_MODEL: str = os.getenv("FAST_LLM_MODEL", GEMINI_FAST_MODEL)
+GEMINI_PRO_MODEL: str = os.getenv("GEMINI_PRO_MODEL", "gemini-3.1-pro-preview")
+REASONING_LLM_MODEL: str = os.getenv("REASONING_LLM_MODEL", GEMINI_PRO_MODEL)
 LLM_MAX_RETRIES: int = int(os.getenv("LLM_MAX_RETRIES", "3"))
 LLM_RETRY_BACKOFF: float = float(os.getenv("LLM_RETRY_BACKOFF", "2.0"))
 ALLOW_SYNTHETIC: bool = os.getenv("ALLOW_SYNTHETIC", "false").lower() in ("true", "1", "yes")
+
+# Fundamentals data path
+FUNDAMENTALS_CSV_PATH: Path = PROJECT_ROOT / os.getenv("FUNDAMENTALS_CSV_PATH", "data/fundamentals.csv")
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Verification Guardrail Thresholds

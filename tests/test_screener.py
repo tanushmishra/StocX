@@ -134,3 +134,38 @@ class TestScreenerNodeIntegration:
             assert res["selected_long"] == "TCS.NS"
             assert res["selected_short"] == "WIPRO.NS"
             assert "TCS.NS" in res["messages"][0]["content"]
+
+    def test_screener_excludes_missing_fundamentals_gracefully(self, mock_fundamentals):
+        """Missing fundamentals ticker (e.g. LTIM.NS) must be cleanly excluded with a reason."""
+        constituents = ["TCS.NS", "LTIM.NS", "INFY.NS"]
+        state = {
+            "thesis": "Bullish on Indian IT",
+            "target_sector": "NIFTY IT",
+            "attempt_count": 0,
+            "max_attempts": 5,
+            "rejection_log": [],
+        }
+
+        def mock_get_funds(ticker):
+            if ticker == "LTIM.NS":
+                raise KeyError(f"Ticker '{ticker}' not found in fundamentals CSV")
+            return mock_fundamentals
+
+        with patch("agents.screener.get_sector_constituents", return_value=constituents), patch(
+            "agents.screener.get_fundamentals", side_effect=mock_get_funds
+        ), patch(
+            "agents.screener.fetch_ticker_news", return_value=[]
+        ), patch(
+            "agents.screener.get_gemini_client", side_effect=RuntimeError("LLM unavailable")
+        ):
+            res = screener_node(state)
+
+            assert "selected_long" in res
+            assert "selected_short" in res
+            long_tickers = [c["ticker"] for c in res["long_candidates"]]
+            short_tickers = [c["ticker"] for c in res["short_candidates"]]
+            assert "LTIM.NS" not in long_tickers
+            assert "LTIM.NS" not in short_tickers
+            # Verify explicit exclusion reason is surfaced in trace
+            trace_content = res["messages"][0]["content"]
+            assert "Ticker LTIM.NS excluded: no fundamentals data" in trace_content

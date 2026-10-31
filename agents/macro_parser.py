@@ -178,6 +178,7 @@ def macro_parser_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
     state = wrap_state(state)
     thesis = state.thesis or state.get("thesis", "")
     logger.info("MacroParser ▸ Parsing thesis: %s", thesis[:120])
+    llm_fallback_used = False
 
     try:
         # ── Invoke LLM with structured output ──────────────────────────
@@ -204,6 +205,7 @@ def macro_parser_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
 
     except Exception as exc:
         # Graceful degradation: log the error and use fallback defaults
+        llm_fallback_used = True
         logger.error("MacroParser ▸ LLM call failed (%s). Using heuristic fallback defaults.", exc)
         result = _resolve_fallback_intent(thesis)
 
@@ -218,8 +220,9 @@ def macro_parser_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
     final_stress = user_stress if user_stress else result.stress_regime
 
     # ── Build the partial state update ─────────────────────────────────
+    prefix = "**LLM unavailable: heuristic defaults used**\n\n" if llm_fallback_used else ""
     summary_msg = (
-        f"**Macro Intent Parsed**\n\n"
+        f"{prefix}**Macro Intent Parsed**\n\n"
         f"- **Sector:** {result.target_sector}\n"
         f"- **Benchmark:** {final_benchmark}\n"
         f"- **Lookback:** {final_lookback} days\n"
@@ -232,5 +235,6 @@ def macro_parser_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
         "benchmark": final_benchmark,
         "lookback_days": final_lookback,
         "stress_regime": final_stress,
+        "llm_fallback_used": llm_fallback_used,
         "messages": [{"role": "assistant", "content": summary_msg}],
     }

@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 _CACHE_DIR = Path("data_cache")
 _DATA_DIR = Path("data")
 
-_DEFAULT_FUNDAMENTALS_CSV = _DATA_DIR / "fundamentals.csv"
+_DEFAULT_FUNDAMENTALS_CSV = Path(getattr(config, "FUNDAMENTALS_CSV_PATH", _DATA_DIR / "fundamentals.csv"))
 _FALLBACK_FUNDAMENTALS_CSV = _DATA_DIR / "fundamentals_2026-10-30.csv"
 _DEFAULT_LOT_SIZES_CSV = _DATA_DIR / "nse_lot_sizes.csv"
 

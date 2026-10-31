@@ -118,6 +118,7 @@ class VerificationData:
     attempt_count: Optional[int] = None
     approved: Optional[bool] = None
     messages: List[Any] = field(default_factory=list)
+    llm_fallback_used: bool = False
 
     def __getitem__(self, key: str) -> Any:
         return getattr(self, key)
@@ -529,6 +530,7 @@ def map_state_to_dashboard(
 
     raw_messages = _safe_get(state, "messages", [])
     messages = list(raw_messages) if isinstance(raw_messages, (list, tuple)) else []
+    llm_fallback_used = bool(_safe_get(state, "llm_fallback_used", False))
 
     verification = VerificationData(
         verifier_result=verifier_result,
@@ -536,6 +538,7 @@ def map_state_to_dashboard(
         attempt_count=run_info.attempt_count,
         approved=run_info.approved,
         messages=messages,
+        llm_fallback_used=llm_fallback_used,
     )
 
     # ── 6. Research Data ────────────────────────────────────────────────

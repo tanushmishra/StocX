@@ -92,11 +92,11 @@ This ensures **net portfolio beta = 0**, making the portfolio immune to market-w
 
 | Component | Role | Technology |
 |-----------|------|------------|
-| Macro Parser | Understands natural language thesis | Gemini 2.5 Flash |
-| Screener | Evaluates companies qualitatively | Gemini 2.5 Flash |
+| Macro Parser | Understands natural language thesis | Gemini Flash (`GEMINI_FAST_MODEL`, default `gemini-3.8-flash`) |
+| Screener | Evaluates companies qualitatively | Gemini Flash (`GEMINI_FAST_MODEL`, default `gemini-3.8-flash`) |
 | Quant Engine | Computes exact math (Beta, covariance, weights) | Pure Python (numpy/pandas/scipy) |
-| Risk Verifier | Interprets results & decides pass/fail | Gemini 2.5 Pro |
-| CRO Reporter | Writes institutional-grade report | Gemini 2.5 Pro |
+| Risk Verifier | Interprets results & decides pass/fail | Gemini Pro (`GEMINI_PRO_MODEL`, default `gemini-3.1-pro-preview`) |
+| CRO Reporter | Writes institutional-grade report | Gemini Pro (`GEMINI_PRO_MODEL`, default `gemini-3.1-pro-preview`) |
 
 ---
 

@@ -177,6 +177,7 @@ def screener_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
 
     # ── 2. Fetch fundamentals and score ────────────────────────────────
     all_candidates: list[dict] = []
+    excluded_candidates: list[dict[str, str]] = []
     for ticker in sector_tickers:
         try:
             fundamentals: dict = get_fundamentals(ticker)
@@ -187,8 +188,13 @@ def screener_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
                 **fundamentals,
             }
             all_candidates.append(candidate)
+        except (KeyError, ValueError):
+            logger.warning("Screener ▸ Skipping candidate %s: Ticker %s excluded: no fundamentals data", ticker, ticker)
+            excluded_candidates.append({"ticker": ticker, "reason": f"Ticker {ticker} excluded: no fundamentals data"})
+            continue
         except Exception as exc:
             logger.warning("Screener ▸ Skipping candidate %s: %s", ticker, exc)
+            excluded_candidates.append({"ticker": ticker, "reason": f"Ticker {ticker} excluded: {exc}"})
             continue
 
     # ── 3. Separate into long (high score) and short (low score) ───────
@@ -307,11 +313,17 @@ def screener_node(state: HedgeBuilderState | dict[str, Any]) -> dict:
         )
 
     # ── 7. Build partial state update ──────────────────────────────────
+    excluded_text = ""
+    if excluded_candidates:
+        excluded_lines = "\n".join(f"- {item['reason']}" for item in excluded_candidates)
+        excluded_text = f"\n\n**Excluded Constituents:**\n{excluded_lines}"
+
     summary_msg = (
         f"**Screener – Attempt {attempt + 1}**\n\n"
         f"- **Long:** {selected_long}\n"
         f"- **Short:** {selected_short}\n\n"
         f"**Reasoning:** {reasoning}"
+        f"{excluded_text}"
     )
 
     return {

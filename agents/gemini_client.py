@@ -118,6 +118,8 @@ def is_retryable_error(exc: Exception) -> bool:
         "unauthorized",
         "forbidden",
         "api key not valid",
+        "limit: 0",
+        "limit exceeded on free tier",
     ]
     for term in permanent_indicators:
         if term in err_str:
@@ -254,9 +256,9 @@ def get_gemini_client(
     api_key = get_api_key()
 
     if model_type == "fast":
-        model_name = getattr(config, "FAST_LLM_MODEL", "gemini-3-flash-preview")
+        model_name = getattr(config, "GEMINI_FAST_MODEL", getattr(config, "FAST_LLM_MODEL", "gemini-3.8-flash"))
     elif model_type == "reasoning":
-        model_name = getattr(config, "REASONING_LLM_MODEL", "gemini-3-flash-preview")
+        model_name = getattr(config, "GEMINI_PRO_MODEL", getattr(config, "REASONING_LLM_MODEL", "gemini-3.1-pro-preview"))
     else:
         model_name = model_type
 
@@ -264,7 +266,8 @@ def get_gemini_client(
         model=model_name,
         temperature=temperature,
         google_api_key=api_key,
-        timeout=30.0,
+        timeout=10.0,
+        max_retries=1,
     )
 
     if structured_schema is not None:

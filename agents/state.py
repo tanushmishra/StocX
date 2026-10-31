@@ -43,6 +43,7 @@ STATE_SCHEMA_DEFAULTS: dict[str, Any] = {
     "lookback_days": 252,
     "stress_regime": "COVID_2020",
     "data_source": "yfinance",
+    "llm_fallback_used": False,
     # Screening results
     "sector_tickers": [],
     "long_candidates": [],
@@ -117,6 +118,7 @@ class HedgeBuilderState(MessagesState):
     lookback_days: int = 252
     stress_regime: str = "COVID_2020"
     data_source: Literal["yfinance", "cache", "synthetic_fallback"] = "yfinance"
+    llm_fallback_used: bool = False
 
     # ── Screening results ────────────────────────────────────────────────
     sector_tickers: list[str] = Field(default_factory=list)
