@@ -237,6 +237,10 @@ def render_user_sidebar(user: dict[str, Any]) -> None:
         if st.sidebar.button("Upgrade to Premium", key="sidebar_upgrade_btn", use_container_width=True):
             st.session_state["show_billing_modal"] = True
             st.rerun()
+    else:
+        if st.sidebar.button("Subscription & Billing", key="sidebar_billing_btn", use_container_width=True):
+            st.session_state["show_billing_modal"] = True
+            st.rerun()
 
     if st.sidebar.button("Sign Out", key="sidebar_signout_btn", use_container_width=True):
         sign_out_user(token)

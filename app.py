@@ -148,6 +148,14 @@ def main() -> None:
 
     params = _render_sidebar(user)
 
+    if st.session_state.get("show_billing_modal"):
+        if st.button("← Back to Strategy Dashboard", key="back_from_billing_btn"):
+            st.session_state["show_billing_modal"] = False
+            st.rerun()
+        from ui.billing import render_billing_panel
+        render_billing_panel(user)
+        return
+
     # ── Hero Header ──────────────────────────────────────────────────────
     st.markdown("""
     <div class="hero-header">
