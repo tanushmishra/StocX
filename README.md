@@ -7,7 +7,7 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-red.svg)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A hackathon-winning multi-agent system that constructs **beta-neutral long/short equity pairs** on the Indian stock market (NSE). The system uses **LLMs for qualitative reasoning** (macro analysis, stock screening, risk reporting) and **deterministic Python tools for all quantitative math** (covariance, cointegration, backtesting)—ensuring **zero numerical hallucination**.
+An institutional-grade multi-agent platform that constructs **beta-neutral long/short equity pairs** on the Indian stock market (NSE). The system uses **LLMs for qualitative reasoning** (macro analysis, stock screening, risk reporting) and **deterministic Python tools for all quantitative math** (covariance, cointegration, backtesting)—ensuring **zero numerical hallucination**.
 
 <p align="center">
   <img src="docs/assets/architecture_diagram.png" alt="Architecture Diagram" width="800">
@@ -30,7 +30,7 @@ The system autonomously:
 5. **Self-corrects** by rejecting bad pairs and looping back to try the next best candidate
 6. **Reports** a professional CRO tear sheet with before/after metrics and F&O execution plan
 
-**The result:** A mathematically proven hedge that survived the March 2020 crash with a 4% drawdown instead of 29%.
+**The result:** An uncompromising quantitative evaluation with full adversarial risk gate verification across real historical stress regimes.
 
 ---
 
@@ -244,22 +244,47 @@ python scripts/download_nse_lot_sizes.py
 - **F&O Lot Sizes:** `data/nse_lot_sizes.csv` (46 matched NSE derivative lots, near-month `NOV-26`).
 - **Comprehensive Audit:** [data/PHASE_1_DATA_AUDIT.md](data/PHASE_1_DATA_AUDIT.md)
 - **Data Dictionary:** [data/DATA_DICTIONARY.md](data/DATA_DICTIONARY.md)
-```
 
 ---
 
-## 📊 Sample Output
+## Out-of-Sample Crash Test Benchmark
 
-### Before vs After Metrics (TCS Long / Wipro Short, COVID 2020)
+### Crash Regime Stress Test (TCS.NS Long / WIPRO.NS Short, COVID-19 Crash)
 
-| Metric | Unhedged (100% TCS) | Hedged (Beta-Neutral) | Improvement |
-|--------|---------------------|----------------------|-------------|
-| Portfolio Beta | 1.12 | 0.02 | -98.2% |
-| Max Drawdown | -28.4% | -4.1% | +85.6% |
-| Sharpe Ratio | 0.65 | 1.84 | +183.1% |
-| Sortino Ratio | 0.72 | 2.91 | +304.2% |
-| VaR (95%) | -3.2% | -0.8% | +75.0% |
-| Annual Volatility | 32.1% | 8.4% | -73.8% |
+> [!NOTE]
+> **Adversarial Notice:** This is a crash test, NOT an approved hedge. Although hedged max drawdown was reduced from 25.61% to 11.51%, the pair failed three out of four adversarial gates and was rejected by the verifier.
+
+| Metric | Unhedged (100% TCS.NS) | Hedged (Beta-Neutral) | Metric Gate Status | Source Reference |
+| :--- | :---: | :---: | :---: | :--- |
+| **Max Drawdown** | `25.61%` | `11.51%` | **PASS** (Drawdown cut by 55.1%) | [`docs/QUANT_CHECK_REPORT.md:86-88`](docs/QUANT_CHECK_REPORT.md#L86-L88) |
+| **Drawdown Reduction Ratio** | — | `0.4494` | **PASS** ($< 0.50$ threshold) | [`docs/QUANT_CHECK_REPORT.md:88`](docs/QUANT_CHECK_REPORT.md#L88) |
+| **Realized Hedged Beta** | `0.7811` | `0.4214` | **FAIL** ($|\beta| < 0.15$ threshold) | [`docs/QUANT_CHECK_REPORT.md:89`](docs/QUANT_CHECK_REPORT.md#L89) |
+| **Pair Return Correlation** | — | `0.6200` | **FAIL** ($\ge 0.65$ threshold) | [`docs/QUANT_CHECK_REPORT.md:76`](docs/QUANT_CHECK_REPORT.md#L76) |
+| **Cointegration p-value** | — | `0.6210` | **FAIL** ($p < 0.05$ threshold) | [`docs/QUANT_CHECK_REPORT.md:84`](docs/QUANT_CHECK_REPORT.md#L84) |
+| **Annualized Sharpe Ratio** | `0.65` | `0.49` | Reference Metric | [`docs/QUANT_CHECK_REPORT.md:90`](docs/QUANT_CHECK_REPORT.md#L90) |
+| **Sortino Ratio** | `0.72` | `0.68` | Reference Metric | [`docs/QUANT_CHECK_REPORT.md:91`](docs/QUANT_CHECK_REPORT.md#L91) |
+| **Value at Risk (95% VaR)** | `-3.8%` | `-3.7%` | Reference Metric | [`docs/QUANT_CHECK_REPORT.md:92`](docs/QUANT_CHECK_REPORT.md#L92) |
+
+---
+
+## 🔐 Platform Architecture, Security & Paper Trading
+
+### Multi-User Authentication & Row Level Security
+- **Auth Provider:** Supabase Auth via standard email+password and 6-digit OTP verification.
+- **Row Level Security (RLS):** Enabled on all database tables (`profiles`, `runs`, `paper_accounts`, `orders`, `positions`, `risk_limits`, `payments`, `audit_log`).
+- **Secret Isolation:** The application strictly runs on the user's JWT and Supabase Anon Key. The service-role key is NEVER included in client code.
+
+### Paper Broker & Human Confirmation Gate
+- **Strictly Paper Trading:** Real broker trading is disabled; `LiveBrokerStub` explicitly raises `NotImplementedError`.
+- **Decimal Accounting:** Cash balances, weighted average acquisition costs (WAC), and realized/unrealized P&L use Python `Decimal` to avoid binary float rounding drift.
+- **NSE F&O Derivatives Sizing:** Short selling equity cash overnight is prohibited under SEBI rules; short legs are mapped to NSE F&O contract lot sizes (e.g. TCS = 175, WIPRO = 1500).
+- **Human Confirmation Gate:** No order is ever placed without explicit user confirmation on the exact order proposal.
+- **Verification Guard:** Rejected pairs NEVER generate trading orders.
+
+### Subscription Tiers (Razorpay TEST Mode)
+- **Free Tier:** 3 strategy runs/day, 2 historical stress regimes (COVID 2020 & 2008 GFC), standard tear-sheet.
+- **Institutional Premium Tier:** Unlimited daily runs, all 4 crisis regimes, full CRO executive report, and complete F&O contract execution sizing.
+- **Payment Verification:** Razorpay TEST mode (`rzp_test_...`) with server-side HMAC-SHA256 signature verification and anti-replay protection.
 
 ---
 
