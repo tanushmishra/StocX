@@ -33,8 +33,8 @@ _AMBER  = "#b45309"
 _LAYOUT_COMMON: Dict[str, Any] = dict(
     template="plotly_white",
     paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(247, 244, 235, 0.6)",
-    font=dict(family="Inter, sans-serif", color="#2b2625"),
+    plot_bgcolor="rgba(0,0,0,0)",
+    font=dict(family="Inter, sans-serif", color="#2a2624"),
     margin=dict(l=50, r=20, t=45, b=40),
     legend=dict(
         orientation="h",

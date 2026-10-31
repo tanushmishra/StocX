@@ -14,13 +14,13 @@ MAIN_CSS = """
 
 /* ── Root Variables (Beige Fintech Theme) ────────────────────────── */
 :root {
-    --bg-primary:    #f7f4eb;
-    --bg-secondary:  #efe9dc;
+    --bg-primary:    #F9F6F0;
+    --bg-secondary:  #F3EFE6;
     --bg-card:       #ffffff;
     --bg-card-hover: #faf7f0;
     --border-glass:  rgba(168, 148, 120, 0.32);
     --border-warm:   #dcd2be;
-    --text-primary:  #2b2625;
+    --text-primary:  #2A2624;
     --text-secondary:#5c544e;
     --text-muted:    #7e746c;
     --green:         #15803d;
@@ -115,8 +115,10 @@ section[data-testid="stSidebar"],
 
 /* ── Glass / Card Metric ─────────────────────────────────────────── */
 .metric-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-warm);
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    border: 1px solid #E5DFD5 !important;
     border-radius: var(--radius);
     padding: 1.25rem 1.35rem;
     transition: all 0.25s ease;
@@ -323,6 +325,56 @@ div[data-testid="stButton"] > button[kind="primary"] {
 /* ── Hide Streamlit branding ─────────────────────────────────────── */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
+
+/* ── High Contrast Status Badges (Stage 5) ───────────────────────── */
+.badge-pass {
+    background: #DCFCE7 !important;
+    color: #15803D !important;
+    border: 1px solid #16A34A !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+}
+.badge-fail {
+    background: #FEE2E2 !important;
+    color: #B91C1C !important;
+    border: 1px solid #DC2626 !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+}
+.badge-pending {
+    background: #FEF3C7 !important;
+    color: #92400E !important;
+    border: 1px solid #F59E0B !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+}
+.badge-delayed {
+    background: #E0E7FF !important;
+    color: #3730A3 !important;
+    border: 1px solid #6366F1 !important;
+    font-weight: 700 !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+    font-size: 0.8rem !important;
+}
+.badge-stale {
+    background: #FEE2E2 !important;
+    color: #991B1B !important;
+    border: 1px solid #EF4444 !important;
+    font-weight: 800 !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+    font-size: 0.8rem !important;
+}
+
 </style>
 """
 

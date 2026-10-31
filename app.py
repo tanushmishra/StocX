@@ -164,6 +164,16 @@ def main() -> None:
     </div>
     """, unsafe_allow_html=True)
 
+    # ── Persistent Market Data Status Badge ──────────────────────────────
+    st.markdown(
+        """
+        <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: -0.75rem; margin-bottom: 1.25rem;">
+            <span class="badge-delayed">DELAYED (yfinance) &nbsp;|&nbsp; Market Data Delayed 15m &nbsp;|&nbsp; Paper Trading Only</span>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     # ── Thesis Input Form ────────────────────────────────────────────────
     col_input, col_btn = st.columns([4, 1], gap="medium")
     with col_input:

@@ -1,4 +1,4 @@
-# Streamlit configuration
+# Streamlit configuration: Glass Beige Fintech Theme
 [server]
 headless = true
 port = 8501
@@ -7,9 +7,9 @@ enableCORS = false
 [theme]
 base = "light"
 primaryColor = "#92400E"
-backgroundColor = "#F7F4EB"
-secondaryBackgroundColor = "#EFEAD8"
-textColor = "#2B2625"
+backgroundColor = "#F9F6F0"
+secondaryBackgroundColor = "#F3EFE6"
+textColor = "#2A2624"
 font = "sans serif"
 
 [browser]
