@@ -729,3 +729,165 @@ def render_fno_table(fno_data: Any) -> None:
         st.table(df_fno.set_index("Parameter"))
     else:
         st.write(fno_data)
+
+
+# ==============================================================================
+# PAPER BROKER & ORDER CONFIRMATION FLOW (STAGE 3)
+# ==============================================================================
+
+def render_paper_broker_panel(user: Dict[str, Any], view_model: Optional[Any] = None) -> None:
+    """Render the paper broker trading panel, virtual cash ledger, and order confirmation flow.
+
+    Principles:
+    - Strictly paper trading (real broker trading disabled via LiveBrokerStub).
+    - Requires explicit user confirmation of the exact order set.
+    - Proposes NO orders when verification verdict is REJECTED.
+    - Uses Decimal precision and F&O lot sizing.
+    """
+    from engine.broker import paper_broker, build_order_proposal
+
+    user_id = user.get("user_id", "guest-user")
+    acct = paper_broker.get_account(user_id)
+
+    st.markdown("""
+    <div style="margin-top: 2rem; margin-bottom: 1rem;">
+        <h3 style="font-size: 1.35rem; font-weight: 700; color: #431407; margin-bottom: 0.25rem;">
+            Paper Trading Execution & Portfolio Ledger
+        </h3>
+        <p style="font-size: 0.85rem; color: #78350F; margin: 0;">
+            Simulated Execution | Strict Decimal Accounting | Explicit Human Confirmation Required
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ── Paper Account Summary Cards ───────────────────────────────────────
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown(f"""
+        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #E5DFD5; border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: #78350F; font-weight: 700;">Virtual Cash Balance</div>
+            <div style="font-size: 1.4rem; font-weight: 700; color: #2A2624; margin-top: 0.25rem;">₹{float(acct['cash']):,.2f}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c2:
+        pnl_val = float(acct['realized_pnl'])
+        pnl_color = "#15803D" if pnl_val >= 0 else "#B91C1C"
+        st.markdown(f"""
+        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #E5DFD5; border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: #78350F; font-weight: 700;">Realized P&L</div>
+            <div style="font-size: 1.4rem; font-weight: 700; color: {pnl_color}; margin-top: 0.25rem;">₹{pnl_val:,.2f}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c3:
+        st.markdown(f"""
+        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #E5DFD5; border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: #78350F; font-weight: 700;">Open Positions</div>
+            <div style="font-size: 1.4rem; font-weight: 700; color: #2A2624; margin-top: 0.25rem;">{acct['positions_count']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c4:
+        is_killed = acct.get("kill_switch", False)
+        status_label = "HALTED" if is_killed else "ACTIVE"
+        status_bg = "#FEE2E2" if is_killed else "#DCFCE7"
+        status_fg = "#991B1B" if is_killed else "#166534"
+        st.markdown(f"""
+        <div style="background: rgba(255, 255, 255, 0.8); border: 1px solid #E5DFD5; border-radius: 8px; padding: 1rem; text-align: center;">
+            <div style="font-size: 0.75rem; text-transform: uppercase; color: #78350F; font-weight: 700;">Trading Engine Status</div>
+            <div style="font-size: 1.1rem; font-weight: 700; color: {status_fg}; background: {status_bg}; border-radius: 4px; padding: 2px 6px; margin-top: 0.4rem; display: inline-block;">{status_label}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ── Emergency Controls ────────────────────────────────────────────────
+    col_k1, col_k2 = st.columns([3, 1])
+    with col_k2:
+        if is_killed:
+            if st.button("Resume Trading Engine", key="resume_kill_switch_btn", use_container_width=True):
+                paper_broker.set_kill_switch(user_id, active=False)
+                st.success("Trading operations resumed.")
+                st.rerun()
+        else:
+            if st.button("Emergency Kill Switch", key="emergency_kill_switch_btn", type="secondary", use_container_width=True):
+                paper_broker.set_kill_switch(user_id, active=True)
+                st.warning("Kill switch engaged. All trading halted.")
+                st.rerun()
+
+    # ── Active Positions Table ────────────────────────────────────────────
+    if acct.get("positions"):
+        st.markdown("#### Active Paper Positions")
+        pos_rows = []
+        for p in acct["positions"]:
+            pos_rows.append({
+                "Symbol": p["symbol"],
+                "Quantity": p["qty"],
+                "Side": "LONG" if p["qty"] > 0 else "SHORT",
+                "Avg Entry Price (₹)": f"₹{float(p['avg_price']):,.2f}",
+            })
+        st.table(pd.DataFrame(pos_rows).set_index("Symbol"))
+
+    # ── Order Proposal & Confirmation Flow ────────────────────────────────
+    if view_model is not None and hasattr(view_model, "verification"):
+        st.markdown("---")
+        st.markdown("#### Order Proposal & Confirmation")
+
+        verdict = str(getattr(view_model.verification, "status", "")).upper()
+        if verdict != "APPROVED":
+            st.warning(
+                f"**Paper Order Dispatch Refused**: Quantitative verification verdict is **{verdict}**. "
+                "Under zero-hallucination quant rules, orders cannot be proposed or executed for unverified or rejected pairs."
+            )
+            return
+
+        # Prepare synthetic state dict for proposal builder
+        hedge_state = {
+            "verification": {"verdict": "APPROVED"},
+            "portfolio": {
+                "ticker_a": getattr(view_model.portfolio, "ticker_long", None),
+                "ticker_b": getattr(view_model.portfolio, "ticker_short", None),
+                "weight_a": getattr(view_model.portfolio, "weight_long", 0.5),
+                "weight_b": getattr(view_model.portfolio, "weight_short", 0.5),
+                "price_a": getattr(view_model.portfolio, "price_long", 1000.0),
+                "price_b": getattr(view_model.portfolio, "price_short", 1000.0),
+            },
+        }
+
+        capital = float(getattr(view_model.run_info, "capital", 100000.0))
+        proposal = build_order_proposal(hedge_state, capital=capital)
+
+        if not proposal["eligible"] or not proposal["orders"]:
+            st.info(f"Order proposal unavailable: {proposal.get('reason')}")
+            return
+
+        st.info(f"**Proposed Pair Hedge Orders**: {proposal.get('notes', '')}")
+
+        order_rows = []
+        for o in proposal["orders"]:
+            order_rows.append({
+                "Leg": o["leg"],
+                "Symbol": o["symbol"],
+                "Side": o["side"],
+                "Segment": o["segment"],
+                "Qty": o["qty"],
+                "Lot Size": o["lot_size"],
+                "Est. Price": f"₹{o['price']:,.2f}",
+                "Est. Value": f"₹{o['price'] * o['qty']:,.2f}",
+            })
+        st.table(pd.DataFrame(order_rows).set_index("Leg"))
+
+        col_c1, col_c2, col_c3 = st.columns([1, 2, 1])
+        with col_c2:
+            st.caption("Human Confirmation Gate: Click below to dispatch these paper orders to the virtual execution ledger.")
+            if st.button("Confirm & Execute Paper Orders", key="confirm_paper_order_btn", type="primary", use_container_width=True):
+                with st.spinner("Dispatching paper orders to ledger..."):
+                    res = paper_broker.place_orders(
+                        user_id,
+                        proposal["orders"],
+                        idempotency_key=proposal["idempotency_key"],
+                    )
+                    if res["success"]:
+                        st.success(f"{res['message']} (Idempotency Key: {res['idempotency_key']})")
+                        st.rerun()
+                    else:
+                        st.error(f"Order Execution Blocked: {res['message']}")

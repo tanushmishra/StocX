@@ -42,6 +42,7 @@ from ui.components import (
     render_pair_details,
     render_verification_summary,
     render_zscore_chart,
+    render_paper_broker_panel,
 )
 from ui.adapter import DashboardViewModel, map_state_to_dashboard
 from ui.auth import render_auth_gate, render_user_sidebar
@@ -418,6 +419,11 @@ def _render_dashboard(vm: DashboardViewModel) -> None:
         st.markdown("#### F&O Lot-Size Execution Plan")
         render_fno_table(vm.portfolio.fno_execution)
 
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # ── Section 9: Paper Broker & Human Confirmation Flow ────────────────
+    user = st.session_state.get("user") or {"user_id": "guest-demo-user"}
+    render_paper_broker_panel(user=user, view_model=vm)
     st.markdown("<br>", unsafe_allow_html=True)
 
 
