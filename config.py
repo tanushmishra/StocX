@@ -160,3 +160,13 @@ STAMP_DUTY_PCT: float = 0.00002  # 0.002% stamp duty
 TOTAL_TRANSACTION_COST_PCT: float = (
     BROKERAGE_PCT + STT_FUTURES_PCT + BROKERAGE_PCT * GST_ON_BROKERAGE_PCT + STAMP_DUTY_PCT
 )
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Hosted Platform: Supabase & Razorpay Configuration
+# ──────────────────────────────────────────────────────────────────────────────
+SUPABASE_URL: str | None = os.getenv("SUPABASE_URL")
+SUPABASE_ANON_KEY: str | None = os.getenv("SUPABASE_ANON_KEY")
+RAZORPAY_KEY_ID: str | None = os.getenv("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET: str | None = os.getenv("RAZORPAY_KEY_SECRET")
+FREE_TIER_DAILY_RUNS: int = int(os.getenv("FREE_TIER_DAILY_RUNS", "3"))

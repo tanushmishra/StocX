@@ -44,6 +44,8 @@ from ui.components import (
     render_zscore_chart,
 )
 from ui.adapter import DashboardViewModel, map_state_to_dashboard
+from ui.auth import render_auth_gate, render_user_sidebar
+from engine.auth_client import check_run_limit, record_run
 
 # Inject global fintech dark CSS theme
 inject_css()
@@ -63,7 +65,7 @@ except Exception as _import_exc:
 # SIDEBAR CONTROLS
 # ══════════════════════════════════════════════════════════════════════════
 
-def _render_sidebar() -> Dict[str, Any]:
+def _render_sidebar(user: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Render the sidebar controls and return the collected parameters."""
     with st.sidebar:
         st.markdown("## Configuration")
@@ -122,6 +124,9 @@ def _render_sidebar() -> Dict[str, Any]:
             unsafe_allow_html=True,
         )
 
+        if user:
+            render_user_sidebar(user)
+
     return {
         "capital": float(capital),
         "lookback_days": lookback_days,
@@ -136,7 +141,11 @@ def _render_sidebar() -> Dict[str, Any]:
 
 def main() -> None:
     """Application entry point and execution coordinator."""
-    params = _render_sidebar()
+    user = render_auth_gate()
+    if not user:
+        return
+
+    params = _render_sidebar(user)
 
     # ── Hero Header ──────────────────────────────────────────────────────
     st.markdown("""
@@ -168,6 +177,15 @@ def main() -> None:
             st.session_state["view_model"] = None
             st.session_state["pipeline_error"] = "Engine module unavailable"
         else:
+            limit_info = check_run_limit(
+                user["user_id"],
+                user.get("plan", "free"),
+                user.get("access_token"),
+            )
+            if not limit_info["allowed"]:
+                st.error(f"**Execution Blocked**: {limit_info['message']}")
+                return
+
             # Clear older results and errors
             st.session_state["pipeline_error"] = None
             st.session_state["pipeline_traceback"] = None
@@ -190,6 +208,12 @@ def main() -> None:
                     view_model = map_state_to_dashboard(raw_state, capital=params["capital"])
                     st.session_state["view_model"] = view_model
                     st.session_state["last_thesis"] = thesis_clean
+                    record_run(
+                        user["user_id"],
+                        thesis_clean,
+                        {"status": "completed"},
+                        access_token=user.get("access_token"),
+                    )
                     logger.info("Pipeline completed successfully and ViewModel mapped.")
 
                 except Exception as exc:
